@@ -1,0 +1,27 @@
+---
+title: "R project"
+author: "Anastasiia Revva, Juan Felipe Villamil Lozano, Aliona Hoste"
+date: "27/10/2020"
+output: html_document
+---
+
+### Select the data
+
+
+
+### Define the objectives
+
+
+
+### Define the main hypotheses
+
+
+
+### Analyses needed or intended
+
+
+```{r, echo=FALSE}
+
+```
+
+
