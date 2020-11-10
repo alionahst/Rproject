@@ -6,19 +6,29 @@ output: html_document
 ---
 
 ### Select the data
-Aliona is Dumb
-
+We are going to work with the data from the paper **"Evaluation of salt tolerance in *Eruca sativa* accessions based on morpho-physiological traits"**
+(Afsar et. al 2020)
+https://peerj.com/articles/9749/
 
 
 ### Define the objectives
+Our main objectives are:
 
-
+1. Explore the effects of salt stress on various morpho-physiological traits in different *E. sativa* accessions. 
+2. Define the susceptible and resistant accessions
+3. Identify traits the salt stress has the biggest influence on
+4. Compare our results with the ones from the paper
 
 ### Define the main hypotheses
+Main hypothesis:
 
-
+- Susceptible accessions have statistically different morpho-physiological traits compared to their control.
+- The susceptible accessions have more morpho-physiological traits affected 
 
 ### Analyses needed or intended
+- Convert raw data into a synthetic table (mean value for each morpho-physiological trait for control and treatment)
+- Anova to compare control and treatment for each accession 
+- Principle components to identify which trait is affected the most by salt stress
 
 
 ```{r, echo=FALSE}
