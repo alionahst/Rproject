@@ -1,0 +1,26 @@
+---
+title: "Title of project"
+author: "Anastasiia Revva, Juan Felipe Villamil Lozano, Aliona Hoste"
+date: "17/11/2020"
+output: html_document
+---
+
+### Introduction
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Objectives and hypotheses
+
+### Methods 
+What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
+
+### Results 
+Figures and tables with captions and description of what do they mean.
+
+### Discussion 
+From your objectives.
+
+### Conclusions
+
+
