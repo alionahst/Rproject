@@ -28,7 +28,7 @@ for (i in excel.sheet){
 # organise column names and fill the first 2 columns
 library(tidyr)
 for(i in names(X)){
-  names(X[[i]])[1:3] <- c("Sr_No","Code", "Treatment")
+  names(X[[i]])[1:3] <- c("Sr.No","Code", "Treatment")
   X[[i]] <- X[[i]][-1,]
   X[[i]] <- fill(X[[i]], 1:2)
 }
@@ -47,5 +47,15 @@ download.file(word, w, mode="wb")
 #creating data frame for the location of accessions
 #install.packages("docxtractr")
 library(docxtractr)
-accession_loc <- docx_extract_all(read_docx(w, track_changes = NULL), guess_header = TRUE, preserve = FALSE, trim = TRUE)
+accession_loc <- docx_extract_all_tbls(read_docx(w, track_changes = NULL), guess_header = TRUE, preserve = FALSE, trim = TRUE)
 accession_loc<- as.data.frame(accession_loc)
+
+#transforming data in the accession_loc
+accession_loc[1:2] <- lapply(accession_loc[1:2], as.numeric)
+accession_loc[3:8] <- lapply(accession_loc[3:8], as.factor)
+str(accession_loc)
+
+Chlor_cont[2:3] <- lapply(Chlor_cont[2:3], as.factor)
+Gas_par[-(2:3)] <- lapply(Gas_par[-(2:3)], as.numeric)
+Gas_par[2:3] <- lapply(Gas_par[2:3], as.factor)
+
