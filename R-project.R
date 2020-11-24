@@ -1,10 +1,10 @@
 ## Data dowload and transfromation 
 
 
-install.packages("ggplot2", dependencies = TRUE)
-library("ggplot2")
-install.packages("readxl")
-library("readxl")
+#install.packages("ggplot2", dependencies = TRUE)
+library(ggplot2)
+#install.packages("readxl")
+library(readxl)
 
 #downoald excel sheet from internet and store it into Excel object
 Excel <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Raw_data_Afsar_et_al.%2C_2020-PeerJ_20.5.2020.xlsx"
@@ -19,44 +19,23 @@ download.file(Excel, f, mode="wb")
 # get the name of excel sheets
 excel.sheet <- excel_sheets(f)
 
-#X <- list()
-#for (i in excel.sheet){
-#  X[[i]] <- read_xlsx(f,i)
-#}
-#names(X$`Gas Exchange parameters`[1:2]) <- names(X$`Gas Exchange parameters`[1, 1:2])
-#names(X$`Gas Exchange parameters`)
-
-Morphological_traits <- read_xlsx(f,1) #data.1
-FW_DW_RWC_Ions_EL <- read_xlsx(f,2)
-Chlorophyll_content <- read_xlsx(f,3)
-Gas_Exchange_parameter <- read_xlsx(f,4)
-general <- read_xlsx(f)
-
-table_names <- c(Morphological_traits, FW_DW_RWC_Ions_EL, Chlorophyll_content, Gas_Exchange_parameter)
-
-
-
-
-library(tidyr)
-d1 <- d2 <- d3 <- d4 <- data.frame()
-
-i = Morphological_traits
-for(i in table_names){
-  names(i)[1:2] <- i[1, 1:2]
+# created a list with the 4 sheet table from excel 
+X <- list()
+for (i in excel.sheet){
+  X[[i]] <- as.data.frame(read_xlsx(f,i))
 }
 
-#  names(i) [3] <- "Treatment"
-#  i <- i[-1,] 
-#  i <- fill(i, 1:2) 
-#  }
-
-
-
-names(Morphological_traits)[1:2] <- Morphological_traits[1, 1:2]
-names(Morphological_traits) [3] <- "Treatment"
-
-Morphological_traits <- Morphological_traits[-1,] 
-
+# organise column names and fill the first 2 columns
 library(tidyr)
-Morphological_traits<- fill(Morphological_traits, 1:2)
+for(i in names(X)){
+  names(X[[i]])[1:3] <- c("Sr_No","Accession", "Treatment")
+  X[[i]] <- X[[i]][-1,]
+  X[[i]] <- fill(X[[i]], 1:2)
+}
+
+Morph_tr <- X$`Morphological traits`
+Weight_ions <- X$`FW DW RWC Ions EL`
+Chlor_cont <- X$`Chlorophyll content`
+Gas_par <- X$`Gas Exchange parameters`
+
 
