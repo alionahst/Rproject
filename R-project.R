@@ -33,18 +33,18 @@ for(i in names(X)){
   X[[i]] <- fill(X[[i]], 1:2)
 }
 
+# creating data frames from different xlsx sheets
 Morph_tr <- X$`Morphological traits`
 Weight_ions <- X$`FW DW RWC Ions EL`
 Chlor_cont <- X$`Chlorophyll content`
 Gas_par <- X$`Gas Exchange parameters`
 
-
-
-
+# downloading data for the location of accessions
 word <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Table_S1.docx"
 w <- paste0(d, "/location.docx")
 download.file(word, w, mode="wb")
 
+#creating data frame for the location of accessions
 #install.packages("docxtractr")
 library(docxtractr)
 accession_loc <- docx_extract_all(read_docx(w, track_changes = NULL), guess_header = TRUE, preserve = FALSE, trim = TRUE)
