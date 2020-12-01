@@ -33,23 +33,11 @@ for(i in names(X)){
   X[[i]] <- fill(X[[i]], 1:2)
 }
 
-for(i in (X)){
-  names(X[[i]])[1:3] <- c("Sr.No","Code", "Treatment")
-  X[[i]] <- X[[i]][-1,]
-  X[[i]] <- fill(X[[i]], 1:2)
+#transforming columns data format 
+for (i in seq_along(X)){
+  X[[i]][2:3] <- lapply(X[[i]][2:3], as.factor)
+  X[[i]][-(2:3)] <- lapply(X[[i]][-(2:3)], as.numeric)
 }
-
-#transforme data in the Chlor_cont
-Chlor_cont[2:3] <- lapply(Chlor_cont[2:3], as.factor)
-#transforming data in the Gas_par
-Gas_par[-(2:3)] <- lapply(Gas_par[-(2:3)], as.numeric)
-Gas_par[2:3] <- lapply(Gas_par[2:3], as.factor)
-#transforming data in the Morph_tr
-Morph_tr[-(2:3)] <- lapply(Morph_tr[-(2:3)], as.numeric)
-Morph_tr[2:3] <- lapply(Morph_tr[2:3], as.factor)
-#transforming data in the Weight_ions
-Weight_ions[-(2:3)] <- lapply(Weight_ions[-(2:3)], as.numeric)
-Weight_ions[2:3] <- lapply(Weight_ions[2:3], as.factor)
 
 # creating data frames from different xlsx sheets
 Morph_tr <- X$`Morphological traits`
