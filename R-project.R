@@ -28,22 +28,23 @@ for (i in excel.sheet){
 # organise column names and fill the first 2 columns
 library(tidyr)
 for(i in names(X)){
-  names(X[[i]])[1:3] <- c("Sr.No","Code", "Treatment")
+  names(X[[i]])[2:3] <- c("Code", "Treatment")
   X[[i]] <- X[[i]][-1,]
+  X[[i]] <- X[[i]][,-1]
   X[[i]] <- fill(X[[i]], 1:2)
 }
 
 #transforming columns data format 
 for (i in seq_along(X)){
-  X[[i]][2:3] <- lapply(X[[i]][2:3], as.factor)
-  X[[i]][-(2:3)] <- lapply(X[[i]][-(2:3)], as.numeric)
+  X[[i]][1:2] <- lapply(X[[i]][1:2], as.factor)
+  X[[i]][-(1:2)] <- lapply(X[[i]][-(1:2)], as.numeric)
 }
 
 # creating data frames from different xlsx sheets
-Morph_tr <- X$`Morphological traits`
-Weight_ions <- X$`FW DW RWC Ions EL`
-Chlor_cont <- X$`Chlorophyll content`
-Gas_par <- X$`Gas Exchange parameters`
+MT <- X$`Morphological traits`
+WI <- X$`FW DW RWC Ions EL`
+ChC <- X$`Chlorophyll content`
+GP <- X$`Gas Exchange parameters`
 
 # downloading data for the location of accessions
 word <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Table_S1.docx"
@@ -53,10 +54,28 @@ download.file(word, w, mode="wb")
 #creating data frame for the location of accessions
 #install.packages("docxtractr")
 library(docxtractr)
-Accession_loc <- docx_extract_all_tbls(read_docx(w, track_changes = NULL), guess_header = TRUE, preserve = FALSE, trim = TRUE)
-Accession_loc<- as.data.frame(accession_loc)
+AL <- docx_extract_all_tbls(read_docx(w, track_changes = NULL), guess_header = TRUE, preserve = FALSE, trim = TRUE)
+AL<- as.data.frame(AL)
 
 #transforming data in the accession_loc
-Accession_loc[1:2] <- lapply(Accession_loc[1:2], as.numeric)
-Accession_loc[3:8] <- lapply(Accession_loc[3:8], as.factor)
+AL[1:2] <- lapply(AL[1:2], as.numeric)
+AL[3:8] <- lapply(AL[3:8], as.factor)
 
+
+library(dplyr)
+names(MT)[3:7] <- c('SL', 'RL', 'PH', 'NL', 'LA')
+
+MT %>% 
+  group_by(Code, Treatment) %>% 
+  summarise(SL = mean(SL), 
+            RL = mean(RL), 
+            PH = mean(PH), 
+            NL = mean(NL), 
+            LA = mean(LA))
+table <- data.frame(MT %>% 
+                      group_by(Code, Treatment) %>% 
+                      summarise(SL = mean(SL), 
+                                RL = mean(RL), 
+                                PH = mean(PH), 
+                                NL = mean(NL), 
+                                LA = mean(LA)))
