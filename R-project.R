@@ -60,7 +60,7 @@ Acc_loc <- as.data.frame(Acc_loc)
 #transforming data in the accession_loc
 Acc_loc[1:2] <- lapply(Acc_loc[1:2], as.numeric)
 Acc_loc[3:8] <- lapply(Acc_loc[3:8], as.factor)
-
+#need to do each X2
 
 library(dplyr)
 names(Morpho_t)[4:8] <- c('Shoot_Length', 'Root_Length', 'Plant_Height', 'Number_Leaves', 'Leaf_Area')
@@ -76,6 +76,8 @@ a <- Morpho_t %>%
             Plant_Height = mean(Plant_Height), 
             Number_Leaves = mean(Number_Leaves), 
             Leaf_Area = mean(Leaf_Area))
+a <- a[-(13:14),]
+a <- a[-(29:30),]
 
 # remove NA values from Weight_ion table
 Weight_ion <- na.omit(Weight_ion)
@@ -92,6 +94,8 @@ b <- Weight_ion %>%
             K_Na =mean(K_Na),
             Electrolyte_Leakage= mean(Electrolyte_Leakage))
 #take only the columns number 4 to 12 to avoid repetition of number, code and treatment
+b <- b[-(13:14),]
+b <- b[-(29:30),]
 b <- b[4:12] 
 
 #Create summary table for Weight_ion
@@ -99,6 +103,8 @@ c <- Chloro_c %>%
   group_by(Number, Code, Treatment) %>% 
   summarise(Chlorophyll_Content = mean(Chlorophyll_Content))
 #take only the columns number 4 to avoid repetition of number, code and treatment
+c <- c[-(13:14),]
+c <- c[-(29:30),]
 c <- c[4]  
 
 #Create summary table for Gas_e
