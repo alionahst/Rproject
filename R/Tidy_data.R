@@ -29,7 +29,8 @@ library(tidyr)
 for(i in names(X)){
   names(X[[i]])[1:3] <- c("Number", "Code", "Treatment")
   X[[i]] <- X[[i]][-1,]
-  #X[[i]] <- X[[i]][,-1]
+  #X[[i]] <- X[[i]][,-1] - deletion of numbers
+  X[[i]] <- X[[i]][, -"Es-7"]
   X[[i]] <- fill(X[[i]], 1:2)
 }
 
@@ -44,6 +45,16 @@ Morpho_t <- X$`Morphological traits`
 Weight_ion <- X$`FW DW RWC Ions EL`
 Chloro_c <- X$`Chlorophyll content`
 Gas_e <- X$`Gas Exchange parameters`
+
+#deleting the accession ##7 and 16 from Morpho_t, Weight_ion, Chloro_c,
+#because there is no data for that accessions in the Gas_e
+
+Morpho_t <- Morpho_t[-(13:14),]
+
+Weight_ion <- X$`FW DW RWC Ions EL`
+Chloro_c <- X$`Chlorophyll content`
+Gas_e <- X$`Gas Exchange parameters`
+
 
 # downloading data for the location of accessions
 word <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Table_S1.docx"
