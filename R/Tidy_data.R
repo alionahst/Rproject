@@ -30,8 +30,15 @@ for(i in names(X)){
   names(X[[i]])[1:3] <- c("Number", "Code", "Treatment")
   X[[i]] <- X[[i]][-1,]
   #X[[i]] <- X[[i]][,-1] - deletion of numbers
-  X[[i]] <- X[[i]][, -"Es-7"]
   X[[i]] <- fill(X[[i]], 1:2)
+}
+
+#deleting the accession #7 and #16 from Morphological traits, Weight_ion, Chloro_c,
+#because there is no data for that accessions in the Gas_e
+
+for(i in names(X)){
+  X[[i]] <- X[[i]][!X[[i]]$Code == "Es-7", ]
+  X[[i]] <- X[[i]][!X[[i]]$Code == "Es-16", ]
 }
 
 #transforming columns data format 
@@ -45,16 +52,6 @@ Morpho_t <- X$`Morphological traits`
 Weight_ion <- X$`FW DW RWC Ions EL`
 Chloro_c <- X$`Chlorophyll content`
 Gas_e <- X$`Gas Exchange parameters`
-
-#deleting the accession ##7 and 16 from Morpho_t, Weight_ion, Chloro_c,
-#because there is no data for that accessions in the Gas_e
-
-Morpho_t <- Morpho_t[-(13:14),]
-
-Weight_ion <- X$`FW DW RWC Ions EL`
-Chloro_c <- X$`Chlorophyll content`
-Gas_e <- X$`Gas Exchange parameters`
-
 
 # downloading data for the location of accessions
 word <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Table_S1.docx"
@@ -86,8 +83,6 @@ a <- Morpho_t %>%
             Plant_Height = mean(Plant_Height), 
             Number_Leaves = mean(Number_Leaves), 
             Leaf_Area = mean(Leaf_Area))
-a <- a[-(13:14),]
-a <- a[-(29:30),]
 
 # remove NA values from Weight_ion table
 Weight_ion <- na.omit(Weight_ion)
@@ -104,8 +99,6 @@ b <- Weight_ion %>%
             K_Na =mean(K_Na),
             Electrolyte_Leakage= mean(Electrolyte_Leakage))
 #take only the columns number 4 to 12 to avoid repetition of number, code and treatment
-b <- b[-(13:14),]
-b <- b[-(29:30),]
 b <- b[4:12] 
 
 #Create summary table for Weight_ion
@@ -113,23 +106,17 @@ c <- Chloro_c %>%
   group_by(Number, Code, Treatment) %>% 
   summarise(Chlorophyll_Content = mean(Chlorophyll_Content))
 #take only the columns number 4 to avoid repetition of number, code and treatment
-c <- c[-(13:14),]
-c <- c[-(29:30),]
 c <- c[4]  
 
 #Create summary table for Gas_e
-d <-Gas_e %>% 
+d <- Gas_e %>% 
   group_by(Number, Code, Treatment) %>% 
   summarise(Photsynthesis_Rate= mean(Photsynthesis_Rate),
             Intercellular_CO2= mean(Intercellular_CO2), 
             Transpiration_Rate= mean(Transpiration_Rate), 
             Stomatal_Conductance=mean(Stomatal_Conductance))
 #take only the columns number 4 to 7 to avoid repetition of number, code and treatment
-d<-d[4:7]
+d <- d[4:7]
 
 #create data frame with all the summarized tables 
 table <- data.frame(a, b, c, d)
-
-
-
-
