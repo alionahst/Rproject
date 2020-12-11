@@ -41,10 +41,10 @@ for (i in seq_along(X)){
 }
 
 # creating data frames from different xlsx sheets
-MT <- X$`Morphological traits`
-WI <- X$`FW DW RWC Ions EL`
-ChC <- X$`Chlorophyll content`
-GP <- X$`Gas Exchange parameters`
+Morpho_t <- X$`Morphological traits`
+Weight_ion <- X$`FW DW RWC Ions EL`
+Chloro_c <- X$`Chlorophyll content`
+Gas_e <- X$`Gas Exchange parameters`
 
 # downloading data for the location of accessions
 word <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Table_S1.docx"
@@ -54,26 +54,21 @@ download.file(word, w, mode="wb")
 #creating data frame for the location of accessions
 #install.packages("docxtractr")
 library(docxtractr)
-AL <- docx_extract_all_tbls(read_docx(w, track_changes = NULL), guess_header = TRUE, preserve = FALSE, trim = TRUE)
-AL <- as.data.frame(AL)
+Acc_loc <- docx_extract_all_tbls(read_docx(w, track_changes = NULL), guess_header = TRUE, preserve = FALSE, trim = TRUE)
+Acc_loc <- as.data.frame(Acc_loc)
 
 #transforming data in the accession_loc
-AL[1:2] <- lapply(AL[1:2], as.numeric)
-AL[3:8] <- lapply(AL[3:8], as.factor)
+Acc_loc[1:2] <- lapply(Acc_loc[1:2], as.numeric)
+Acc_loc[3:8] <- lapply(Acc_loc[3:8], as.factor)
 
 
 library(dplyr)
-names(MT)[3:7] <- c('SL', 'RL', 'PH', 'NL', 'LA')
+names(Morpho_t)[4:8] <- c('Shoot_length', 'Root_Length', 'Plant_Height', 'Number_Leaves', 'Leaf_area')
 
-MT %>% 
-  group_by(Number, Code, SL, ) %>% 
-  summarise(RL = mean(RL), 
-            PH = mean(PH), 
-            NL = mean(NL), 
-            LA = mean(LA))
-table <- data.frame(MT %>% 
-                      group_by(Number, Code, SL) %>% 
-                      summarise(RL = mean(RL), 
-                                PH = mean(PH), 
-                                NL = mean(NL), 
-                                LA = mean(LA)))
+table <- data.frame(Morpho_t %>% 
+                      group_by(Number, Code, Treatment) %>% 
+                      summarise(Shoot_length = mean(Shoot_length),
+                                Root_Length = mean(Root_Length), 
+                                Plant_Height = mean(Plant_Height), 
+                                Number_Leaves = mean(Number_Leaves), 
+                                Leaf_area = mean(Leaf_area)))
