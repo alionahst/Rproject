@@ -17,14 +17,19 @@ a8<- subset(table$Number_Leaves, table$Treatment=="Treatment")
 a9<- subset(table$Leaf_Area, table$Treatment=="Control")
 a10<- subset(table$Leaf_Area, table$Treatment=="Treatment")
 
-STI <- data.frame(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)
+STI <- data.frame(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10, table$Code)
 STI <- tab1 %>%
-  mutate(STI_Shoot_Length = a1/a2,
-         STI_Root_Length = a3/a4,
-         STI_Plant_Height = a5/a6,
-         STI_Number_Leaves = a7/a8,
-         STI_Leaf_Area = a9/a10) %>%
+  mutate(STI_Shoot_Length = a2/a1,
+         STI_Root_Length = a4/a3,
+         STI_Plant_Height = a6/a5,
+         STI_Number_Leaves = a8/a7,
+         STI_Leaf_Area = a10/a9) %>%
   select (STI_Shoot_Length, STI_Root_Length, STI_Plant_Height, STI_Number_Leaves, STI_Leaf_Area)
+
+Number<- c(1:6, 8:15,17:25)
+STI$Number <- Number
+
+
 
 # try to make loop
 #for (i in names(table[4:8])){
@@ -38,6 +43,12 @@ STI <- tab1 %>%
 
 #Membership function value
 
+x <- numeric()
+for (i in 1:23){
+  a <- (STI$STI_Shoot_Length[i] - min(STI$STI_Shoot_Length))/(max(STI$STI_Shoot_Length)- min(STI$STI_Shoot_Length))
+  x <- c(x, a)
+}
 
+x <- data.frame(x, Number)
 
 

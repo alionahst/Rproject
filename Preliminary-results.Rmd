@@ -17,6 +17,10 @@ What have you done? And what did you use to do it? Step by step, so anyone could
 
 We deleted accessions number 7 and 16 because last table 'Gas exchange parameters' does not contain informations
 
+
+For calculating MFV, we used the same formula, however according to our method we used the min and max of the mean STI
+
+
 ### Results 
 Figures and tables with captions and description of what do they mean.
 
