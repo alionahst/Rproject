@@ -6,15 +6,15 @@ library(ggplot2)
 #install.packages("readxl")
 library(readxl)
 
-#downoald excel sheet from internet and store it into Excel object
+# downoald excel sheet from internet and store it into Excel object
 Excel <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Raw_data_Afsar_et_al.%2C_2020-PeerJ_20.5.2020.xlsx"
 
 # create the folder datafile if it doesnt exist
 d <- "datafile"
 if (!dir.exists(d)) dir.create(d)
 
-f <- paste0 (d, "/data.xlsx") 
-#dowload excel into the file datafile (created beforehand) under the name data.xlsx
+f <- paste0 (d, "/data.xlsx")
+# dowload excel into the file datafile (created beforehand) under the name data.xlsx
 download.file(Excel, f, mode="wb")
 # get the name of excel sheets
 excel.sheet <- excel_sheets(f)
@@ -30,14 +30,14 @@ library(tidyr)
 for(i in names(X)){
   names(X[[i]])[2:3] <- c("Code", "Treatment")
   X[[i]] <- X[[i]][-1,]
-  X[[i]] <- X[[i]][,-1]
+  #X[[i]] <- X[[i]][,-1]
   X[[i]] <- fill(X[[i]], 1:2)
 }
 
 #transforming columns data format 
 for (i in seq_along(X)){
-  X[[i]][1:2] <- lapply(X[[i]][1:2], as.factor)
-  X[[i]][-(1:2)] <- lapply(X[[i]][-(1:2)], as.numeric)
+  X[[i]][2:3] <- lapply(X[[i]][2:3], as.factor)
+  X[[i]][-(2:3)] <- lapply(X[[i]][-(2:3)], as.numeric)
 }
 
 # creating data frames from different xlsx sheets
@@ -55,7 +55,7 @@ download.file(word, w, mode="wb")
 #install.packages("docxtractr")
 library(docxtractr)
 AL <- docx_extract_all_tbls(read_docx(w, track_changes = NULL), guess_header = TRUE, preserve = FALSE, trim = TRUE)
-AL<- as.data.frame(AL)
+AL <- as.data.frame(AL)
 
 #transforming data in the accession_loc
 AL[1:2] <- lapply(AL[1:2], as.numeric)
@@ -66,16 +66,14 @@ library(dplyr)
 names(MT)[3:7] <- c('SL', 'RL', 'PH', 'NL', 'LA')
 
 MT %>% 
-  group_by(Code, Treatment) %>% 
-  summarise(SL = mean(SL), 
-            RL = mean(RL), 
+  group_by(Code, SL) %>% 
+  summarise(RL = mean(RL), 
             PH = mean(PH), 
             NL = mean(NL), 
             LA = mean(LA))
 table <- data.frame(MT %>% 
-                      group_by(Code, Treatment) %>% 
-                      summarise(SL = mean(SL), 
-                                RL = mean(RL), 
+                      group_by(Code, SL) %>% 
+                      summarise(RL = mean(RL), 
                                 PH = mean(PH), 
                                 NL = mean(NL), 
                                 LA = mean(LA)))
