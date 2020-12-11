@@ -28,7 +28,7 @@ for (i in excel.sheet){
 # organise column names and fill the first 2 columns
 library(tidyr)
 for(i in names(X)){
-  names(X[[i]])[2:3] <- c("Code", "Treatment")
+  names(X[[i]])[1:3] <- c("Number", "Code", "Treatment")
   X[[i]] <- X[[i]][-1,]
   #X[[i]] <- X[[i]][,-1]
   X[[i]] <- fill(X[[i]], 1:2)
@@ -66,13 +66,13 @@ library(dplyr)
 names(MT)[3:7] <- c('SL', 'RL', 'PH', 'NL', 'LA')
 
 MT %>% 
-  group_by(Code, SL) %>% 
+  group_by(Number, Code, SL, ) %>% 
   summarise(RL = mean(RL), 
             PH = mean(PH), 
             NL = mean(NL), 
             LA = mean(LA))
 table <- data.frame(MT %>% 
-                      group_by(Code, SL) %>% 
+                      group_by(Number, Code, SL) %>% 
                       summarise(RL = mean(RL), 
                                 PH = mean(PH), 
                                 NL = mean(NL), 
