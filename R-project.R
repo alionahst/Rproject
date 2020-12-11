@@ -63,12 +63,53 @@ Acc_loc[3:8] <- lapply(Acc_loc[3:8], as.factor)
 
 
 library(dplyr)
-names(Morpho_t)[4:8] <- c('Shoot_length', 'Root_Length', 'Plant_Height', 'Number_Leaves', 'Leaf_area')
+names(Morpho_t)[4:8] <- c('Shoot_Length', 'Root_Length', 'Plant_Height', 'Number_Leaves', 'Leaf_Area')
+names(Chloro_c)[4] <- c('Chlorophyll_Content')
+names(Weight_ion) [4:12] <- c('Fresh_Weight', 'Dry_Weight', 'RWC','Na','K', 'Ca', 'Mg', 'K_Na', 'Electrolyte_Leakage')
+names(Gas_e) [4:7] <- c('Photsynthesis_Rate', 'Intercellular_CO2', 'Transpiration_Rate', 'Stomatal_Conductance')
 
-table <- data.frame(Morpho_t %>% 
-                      group_by(Number, Code, Treatment) %>% 
-                      summarise(Shoot_length = mean(Shoot_length),
-                                Root_Length = mean(Root_Length), 
-                                Plant_Height = mean(Plant_Height), 
-                                Number_Leaves = mean(Number_Leaves), 
-                                Leaf_area = mean(Leaf_area)))
+# create summary table for morphological trait
+a <- Morpho_t %>% 
+  group_by(Number, Code, Treatment) %>% 
+  summarise(Shoot_Length = mean(Shoot_Length),
+            Root_Length = mean(Root_Length), 
+            Plant_Height = mean(Plant_Height), 
+            Number_Leaves = mean(Number_Leaves), 
+            Leaf_Area = mean(Leaf_Area))
+
+# remove NA values from Weight_ion table
+Weight_ion <- na.omit(Weight_ion)
+#Create summary table for Weight ion
+b <- Weight_ion %>% 
+  group_by(Number, Code, Treatment) %>% 
+  summarise(Fresh_Weight= mean(Fresh_Weight),
+            Dry_Weight= mean(Dry_Weight),
+            RWC = mean(RWC),
+            Na =mean(Na),
+            K =mean(K),
+            Ca =mean(Ca),
+            Mg= mean(Mg),
+            K_Na =mean(K_Na),
+            Electrolyte_Leakage= mean(Electrolyte_Leakage))
+#take only the columns number 4 to 12 to avoid repetition of number, code and treatment
+b <- b[4:12] 
+
+#Create summary table for Weight_ion
+c <- Chloro_c %>% 
+  group_by(Number, Code, Treatment) %>% 
+  summarise(Chlorophyll_Content = mean(Chlorophyll_Content))
+#take only the columns number 4 to avoid repetition of number, code and treatment
+c <- c[4]  
+
+#Create summary table for Gas_e
+d <-Gas_e %>% 
+  group_by(Number, Code, Treatment) %>% 
+  summarise(Photsynthesis_Rate= mean(Photsynthesis_Rate),
+            Intercellular_CO2= mean(Intercellular_CO2), 
+            Transpiration_Rate= mean(Transpiration_Rate), 
+            Stomatal_Conductance=mean(Stomatal_Conductance))
+#take only the columns number 4 to 7 to avoid repetition of number, code and treatment
+d<-d[4:7]
+
+#create data frame with all the summarized tables 
+table <- data.frame(a, b, c, d)
