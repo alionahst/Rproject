@@ -15,6 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Methods 
 What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
 
+We deleted accessions number 7 and 16 because last table 'Gas exchange parameters' does not contain informations
+
 ### Results 
 Figures and tables with captions and description of what do they mean.
 
