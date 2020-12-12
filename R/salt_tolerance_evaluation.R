@@ -2,7 +2,7 @@
 
 x <- data.frame(dplyr::filter(table, table$Treat_Contr=="Treatment"))
 x <- x[4:8]
-y <- data.frame(dplyr::filter(table, table$Treatment=="Control"))
+y <- data.frame(dplyr::filter(table, table$Treat_Contr=="Control"))
 y <- y[4:8]
 
 STI_Shoot_Length <- x[1]/y[1]
