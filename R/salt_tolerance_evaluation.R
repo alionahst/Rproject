@@ -25,37 +25,14 @@ STI <- data.frame(STI_Shoot_Length,STI_Root_Length, STI_Plant_Height, STI_Number
 
 #Membership function value for morphological trait 
 
-SL <- numeric()
-for (i in 1:25){
-  a <- (STI_Shoot_Length[i,1] - min(STI_Shoot_Length))/(max(STI_Shoot_Length)- min(STI_Shoot_Length))
-  SL <- c(SL, a)
-}
+MFV <- SL<- RL <- PH <- NL<- LA<- c()
 
-RL <- numeric()
-for (i in 1:25){
-  a <- (STI_Root_Length[i,1] - min(STI_Root_Length))/(max(STI_Root_Length)- min(STI_Root_Length))
-  RL <- c(RL, a)
-}
-
-PH <- numeric()
-for (i in 1:25){
-  a <- (STI_Plant_Height[i,1] - min(STI_Plant_Height))/(max(STI_Plant_Height)- min(STI_Plant_Height))
-  PH <- c(PH, a)
-}
-
-NL <- numeric()
-for (i in 1:25){
-  a <- (STI_Number_Leaves[i,1] - min(STI_Number_Leaves))/(max(STI_Number_Leaves)- min(STI_Number_Leaves))
-  NL <- c(NL, a)
-}
-
-LA <- numeric()
-for (i in 1:25){
-  a <- (STI_Leaf_Area[i,1] - min(STI_Leaf_Area))/(max(STI_Leaf_Area)- min(STI_Leaf_Area))
-  LA <- c(LA, a)
-}
-
-MFV <- data.frame(SL, RL, PH, NL, LA)
-
+MFV <- STI %>%
+  mutate(SL= (STI$Shoot_Length - min(STI$Shoot_Length))/(max(STI$Shoot_Length)- min(STI$Shoot_Length)),
+         RL=(STI$Root_Length - min(STI$Root_Length))/(max(STI$Root_Length)- min(STI$Root_Length)),
+         PH=(STI$Plant_Height - min(STI$Plant_Height))/(max(STI$Plant_Height)- min(STI$Plant_Height)),
+         NL=(STI$Number_Leaves - min(STI$Number_Leaves))/(max(STI$Number_Leaves)- min(STI$Number_Leaves)),
+         LA=(STI$Leaf_Area - min(STI$Leaf_Area))/(max(STI$Leaf_Area)- min(STI$Leaf_Area)))%>%
+  select(SL, RL, PH,NL, LA)
 
 
