@@ -24,6 +24,56 @@ For calculating MFV, we used the same formula, however according to our method w
 ### Results 
 Figures and tables with captions and description of what do they mean.
 
+
+
+```{r morphological traits significant difference}
+
+boxplot(Shoot_Length ~ Treat_Contr, data = Morpho_t)
+boxplot(Root_Length ~ Treat_Contr, data = Morpho_t)
+boxplot(Height_Height ~ Treat_Contr, data = Morpho_t)
+boxplot(Number_Leaves ~ Treat_Contr, data = Morpho_t)
+boxplot(Leaf_Area ~ Treat_Contr, data = Morpho_t)
+
+
+a1 <- aov(Shoot_Length ~ Treat_Contr, data = Morpho_t)
+shapiro.test(a1$residuals)
+#No normality
+kruskal.test(Shoot_Length ~ Treat_Contr, data = Morpho_t)
+# statistical difference
+
+a2 <- aov(Root_Length ~ Treat_Contr, data = Morpho_t)
+shapiro.test(a2$residuals)
+#No normality
+kruskal.test(Root_Length ~ Treat_Contr, data = Morpho_t)
+# statistical difference
+
+
+a3 <- aov(Plant_Height ~ Treat_Contr, data = Morpho_t)
+shapiro.test(a3$residuals)
+# No normality
+kruskal.test(Plant_Height ~ Treat_Contr, data = Morpho_t)
+# statistical difference
+
+
+a4 <- aov(Number_Leaves ~ Treat_Contr, data = Morpho_t)
+shapiro.test(a4$residuals)
+# No normality 
+kruskal.test(Number_Leaves ~ Treat_Contr, data = Morpho_t)
+# statistical difference
+
+
+a5 <- aov(Leaf_Area ~ Treat_Contr, data = Morpho_t)
+shapiro.test(a5$residuals)
+# no normality 
+kruskal.test(Leaf_Area ~ Treat_Contr, data = Morpho_t)
+# statistical difference
+
+```
+
+
+
+
+
 ### Discussion 
 From your objectives.
 
