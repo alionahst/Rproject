@@ -49,6 +49,17 @@ kruskal.test(Leaf_Area ~ Treat_Contr, data = Morpho_t)
 # statistical difference
 
 
+for (i in names(Morpho_t[4:8])) { 
+  boxplot(Morpho_t[, i] ~ Morpho_t$Treat_Contr, 
+          ylab = names(Morpho_t[i]), 
+          xlab = "Treatment"
+  )
+  print(kruskal.test(Morpho_t[, i] ~ Morpho_t$Treat_Contr))
+}
+
+
+
+
 ########### 
 
 
