@@ -1,10 +1,13 @@
-#salt tolerance index for morphological traits
 
 x <- data.frame(dplyr::filter(table, table$Treat_Contr=="Treatment"))
-x <- x[4:8]
+x <- x[-(1:3)]
 y <- data.frame(dplyr::filter(table, table$Treat_Contr=="Control"))
-y <- y[4:8]
+y <- y[-(1:3)]
 
+
+## MORPHOLOGICAL TRAIT
+
+#salt tolerance index for morphological traits
 STI_Shoot_Length <- x[1]/y[1]
 STI_Root_Length <- x[2]/y[2]
 STI_Plant_Height <- x[3]/y[3]
@@ -23,9 +26,7 @@ STI <- data.frame(STI_Shoot_Length,STI_Root_Length, STI_Plant_Height, STI_Number
 
 
 #Membership function value for morphological trait 
-
 MFV <- SL<- RL <- PH <- NL<- LA<- c()
-
 MFV <- STI %>%
   mutate(SL= (STI$Shoot_Length - min(STI$Shoot_Length))/(max(STI$Shoot_Length)- min(STI$Shoot_Length)),
          RL=(STI$Root_Length - min(STI$Root_Length))/(max(STI$Root_Length)- min(STI$Root_Length)),
@@ -34,4 +35,8 @@ MFV <- STI %>%
          LA=(STI$Leaf_Area - min(STI$Leaf_Area))/(max(STI$Leaf_Area)- min(STI$Leaf_Area)))%>%
   select(SL, RL, PH,NL, LA)
 
+
+## BIOMASS
+STI_Fresh_Weight <- x[6]/y[6]
+STI_Dry_Weight <- x[7]/y[7]
 

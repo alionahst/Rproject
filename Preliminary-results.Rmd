@@ -259,26 +259,37 @@ for (i in names(Morpho_t[4:8])) {
 #mean(y$Number_Leaves)
 #mean(x$Leaf_Area)
 #mean(y$Leaf_Area)
+
+sd(x$Shoot_Length)
+sd(y$Shoot_Length)
+sd(x$Root_Length)
+sd(y$Root_Length)
+sd(x$Plant_Height)
+sd(y$Plant_Height)
+sd(x$Number_Leaves)
+sd(y$Number_Leaves)
+sd(x$Leaf_Area)
+sd(y$Leaf_Area)
 ```
 
 There is a statistical difference between control and treatment for all morphological trait
 
 
-- **SL**: Shoot length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for SL in salt-stressed plants is 1.10 ± and 2.30 ± for control plants. SL stress index of accessions varied from 16.73 to 89.12
+- **SL**: Shoot length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for SL in salt-stressed plants is 1.10 ± 0.48 and 2.30 ± 0.56 for control plants. SL stress index of accessions varied from 16.73 to 89.12
 
-- **RL**: Root length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for RL in salt-stressed plants is 0.98 ± and 2.17 ± for control plants. 
+- **RL**: Root length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for RL in salt-stressed plants is 0.98 ± 0.43 and 2.17 ± 0.42 for control plants. 
 RL stress index of accessions varied from 15.91 to 73.53 
 
 - **PH**: Plant height is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
-The mean value for PH in salt-stressed plants is 2.18 ± and 4.43 ± for control plants. 
+The mean value for PH in salt-stressed plants is 2.18 ± 0.76 and 4.43 ± 0.77 for control plants. 
 PH stress index of accessions varied from 19.83 to 74.07 
 
 - **NL**: Number of leaves is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
-The mean value for NL in salt-stressed plants is 2.43 ± and 4.22 ± for control plants. 
+The mean value for NL in salt-stressed plants is 2.43 ± 0.82 and 4.22 ± 0.78 for control plants. 
 NL stress index of accessions varied from 28.00 to 94.12
 
 - **LA**: Leaf area is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
-The mean value for LA in salt-stressed plants is 0.03 ± and 0.07 ± for control plants. 
+The mean value for LA in salt-stressed plants is 0.03 ± 0.02 and 0.07 ± 0.03 for control plants. 
 LA stress index of accessions varied from 75.95 to 100
 
 ### Discussion 
