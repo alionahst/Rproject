@@ -260,16 +260,16 @@ for (i in names(Morpho_t[4:8])) {
 #mean(x$Leaf_Area)
 #mean(y$Leaf_Area)
 
-sd(x$Shoot_Length)
-sd(y$Shoot_Length)
-sd(x$Root_Length)
-sd(y$Root_Length)
-sd(x$Plant_Height)
-sd(y$Plant_Height)
-sd(x$Number_Leaves)
-sd(y$Number_Leaves)
-sd(x$Leaf_Area)
-sd(y$Leaf_Area)
+#sd(x$Shoot_Length)
+#sd(y$Shoot_Length)
+#sd(x$Root_Length)
+#sd(y$Root_Length)
+#sd(x$Plant_Height)
+#sd(y$Plant_Height)
+#sd(x$Number_Leaves)
+#sd(y$Number_Leaves)
+#sd(x$Leaf_Area)
+#sd(y$Leaf_Area)
 ```
 
 There is a statistical difference between control and treatment for all morphological trait
