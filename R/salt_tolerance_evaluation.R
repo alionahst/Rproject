@@ -59,6 +59,3 @@ MFV <- data.frame(SL, RL, PH, NL, LA)
 
 
 
-
-
-
