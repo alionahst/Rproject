@@ -22,7 +22,6 @@ STI <- data.frame(STI_Shoot_Length,STI_Root_Length, STI_Plant_Height, STI_Number
 #    vecteur <- c(vecteur, name)}}
 
 
-
 #Membership function value for morphological trait 
 
 MFV <- SL<- RL <- PH <- NL<- LA<- c()
