@@ -1,5 +1,6 @@
 ## Data download and transfromation 
-
+library(dplyr)
+library(tidyr)
 #install.packages("ggplot2", dependencies = TRUE)
 library(ggplot2)
 #install.packages("readxl")
@@ -25,7 +26,6 @@ for (i in excel.sheet){
 }
 
 # organise column names and fill the first 2 columns
-library(tidyr)
 for(i in names(X)){
   names(X[[i]])[1:3] <- c("Number", "Code", "Treat_Contr")
   X[[i]] <- X[[i]][-1,]
