@@ -42,7 +42,7 @@ STI_K_Na <- x[13]/y[13]
 STI_Photosynthesis_rate <- x[16]/y[16]
 STI_Intercellular_CO2 <- x[17]/y[17]
 STI_Transpiration_Rate <- x[18]/y[18]
-STI_Stomata_Conductance <- x[19]/y[19]
+STI_Stomatal_Conductance <- x[19]/y[19]
 
 STI <- data.frame(STI_Shoot_Length,
                   STI_Root_Length, 
@@ -62,12 +62,11 @@ STI <- data.frame(STI_Shoot_Length,
                   STI_Photosynthesis_rate,
                   STI_Intercellular_CO2,
                   STI_Transpiration_Rate,
-                  STI_Stomata_Conductance)
+                  STI_Stomatal_Conductance)
 
 summary(STI)
 
 #Membership function value for morphological trait, biomass
-MFV <- SL<- RL <- PH <- NL<- LA<- FW <- DW <- RWC <- EL <- CC <- Na <- K <- Ca <- Mg <- K_Na <- PR <- ICO2 <- TR <- SC <- c()
 MFV <- STI %>%
   mutate(SL = (STI$Shoot_Length - min(STI$Shoot_Length))/(max(STI$Shoot_Length)- min(STI$Shoot_Length)),
          RL = (STI$Root_Length - min(STI$Root_Length))/(max(STI$Root_Length)- min(STI$Root_Length)),
@@ -83,15 +82,20 @@ MFV <- STI %>%
          K = (STI$K - min(STI$K))/(max(STI$K)- min(STI$K)),
          Ca =(STI$Ca - min(STI$Ca))/(max(STI$Ca)- min(STI$Ca)),
          Mg=(STI$Mg - min(STI$Mg))/(max(STI$Mg)- min(STI$Mg)),
-         K_Na= (STI$K_Na - min(STI$K_Na))/(max(STI$K_Na)- min(STI$K_Na)))%>%
-#         PR= (STI$Photsynthesis_Rate - min(STI$Photosynthesis_Rate, skipna = FALSE))/(max(STI$Photosynthesis_Rate)- min(STI$Photosynthesis_Rate)))%>%
-#         ICO2= (STI$Intercellular_CO2 - min(STI$Intercellular_CO2))/(max(STI$Intercellular_CO2)- min(STI$Intercellular_CO2)))%>%
-#         TR= (STI$Transpiration_Rate - min(STI$Transpiration_Rate))/(max(STI$Transpiration_Rate)- min(STI$Transpiration_Rate)),
-#         SC= (STI$Stomata_Conductance - min(STI$Stomata_Conductance))/(max(STI$Stomata_Conductance)- min(STI$Stomata_Conductance))
-  select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na)
+         K_Na= (STI$K_Na - min(STI$K_Na))/(max(STI$K_Na)- min(STI$K_Na)),
+         PR= (STI$Photsynthesis_Rate - min(STI$Photsynthesis_Rate, na.rm=T))/(max(STI$Photsynthesis_Rate, na.rm=T)- min(STI$Photsynthesis_Rate, na.rm=T)),
+         ICO2= (STI$Intercellular_CO2 - min(STI$Intercellular_CO2, na.rm=T))/(max(STI$Intercellular_CO2, na.rm=T)- min(STI$Intercellular_CO2, na.rm=T)),
+         TR= (STI$Transpiration_Rate - min(STI$Transpiration_Rate, na.rm=T))/(max(STI$Transpiration_Rate, na.rm=T)- min(STI$Transpiration_Rate, na.rm=T)),
+         SC= (STI$Stomatal_Conductance - min(STI$Stomatal_Conductance, na.rm=T))/(max(STI$Stomatal_Conductance, na.rm=T)- min(STI$Stomatal_Conductance, na.rm=T)))%>%
+  select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC)
 
 
 
-STI <- na.omit(STI)
+# make the mean of the mean 
+MFV <- MFV %>%
+  mutate(Mean = rowMeans(MFV, na.rm=T))%>%
+  select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC, Mean)%>%
+
+
 
 
