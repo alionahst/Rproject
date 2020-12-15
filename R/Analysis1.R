@@ -52,7 +52,7 @@ kruskal.test(Leaf_Area ~ Treat_Contr, data = Morpho_t)
 for (i in names(Morpho_t[4:8])) { 
   boxplot(Morpho_t[, i] ~ Morpho_t$Treat_Contr, 
           ylab = names(Morpho_t[i]), 
-          xlab = "Treatment"
+          xlab = names(Morpho_t[3])
   )
   print(kruskal.test(Morpho_t[, i] ~ Morpho_t$Treat_Contr))
 }
@@ -73,6 +73,16 @@ shapiro.test(a7$residuals)
 kruskal.test(Dry_Weight ~ Treat_Contr, data = Weight_ion)
 # statistical difference
 
+for (i in names(Weight_ion[4:5])) { 
+  boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
+          ylab = names(Weight_ion[i]), 
+          xlab = names(Weight_ion[3])
+  )
+  print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+}
+
+
+
 ###  RWC, EL and chlorophyl content
 
 a8 <- aov(RWC ~ Treat_Contr, data = Weight_ion)
@@ -92,6 +102,22 @@ shapiro.test(a10$residuals)
 # No normality
 kruskal.test(Chlorophyll_Content ~ Treat_Contr, data = Chloro_c)
 # Statistical difference
+
+for (i in names(Weight_ion[c(6,12)])) { 
+  boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
+          ylab = names(Weight_ion[i]), 
+          xlab = names(Weight_ion[3])
+  )
+  print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+}
+
+for (i in names(Chloro_c[4])) { 
+  boxplot(Chloro_c[, i] ~ Chloro_c$Treat_Contr, 
+          ylab = names(Chloro_c[i]), 
+          xlab = names(Chloro_c[3])
+  )
+  print(kruskal.test(Chloro_c[, i] ~ Chloro_c$Treat_Contr))
+}
 
 
 
@@ -127,6 +153,13 @@ shapiro.test(a15$residuals)
 kruskal.test(K_Na ~ Treat_Contr, data = Weight_ion)
 # statistical difference
 
+for (i in names(Weight_ion[7:11])) { 
+  boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
+          ylab = names(Weight_ion[i]), 
+          xlab = names(Weight_ion[3])
+  )
+  print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+}
 
 ## Gas parameters
 a16 <- aov(Photsynthesis_Rate ~ Treat_Contr, data = Gas_e)
@@ -157,7 +190,13 @@ kruskal.test(Stomatal_Conductance ~ Treat_Contr, data = Gas_e)
 # statistical difference
 
 
-
+for (i in names(Gas_e[4:7])) { 
+  boxplot(Gas_e[, i] ~ Gas_e$Treat_Contr, 
+          ylab = names(Gas_e[i]), 
+          xlab = names(Gas_e[3])
+  )
+  print(kruskal.test(Gas_e[, i] ~ Gas_e$Treat_Contr))
+}
 
 
 
