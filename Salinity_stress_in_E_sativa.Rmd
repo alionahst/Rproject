@@ -9,11 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ### Introduction
-*change the text so its not the same*
-Salinity is one of the most lethal abiotic stresses which affect multiple aspects of plant physiology. Natural variations in plant germplasm are a great resource that could be exploited for improvement in salt tolerance. Eruca sativa (E. sativa) exhibits tolerance to abiotic stresses. However, thorough evaluation of its salt stress tolerance and screening for traits that could be reliably applied for salt tolerance needs to be studied. The current study was designed to characterize 25 E. sativa accessions, originating from diverse geographical regions of Pakistan, for the salt stress tolerance.
-
-Methods
-Salt stress (150 mM NaCl) was applied for 2 weeks to the plants at four leaf stage in hydroponics. Data of the following morpho-physiological traits were collected from control and treated plants of all the accessions: root length (RL), shoot length (SL), plant height (PH), leaf number (LN), leaf area (LA), fresh weight (FW), dry weight (DW), chlorophyl content (SPAD), electrolyte leakage (EL), relative water content (RWC), gas exchange parameters and mineral ion content. Salt tolerance was determined based on membership function value (MFV) of the tested traits.
+Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. In function of their location, plants from the same species could exhibit difference tolerance to abiotic stress. In the study we will review, 25 accession of E. sativa from different region of Pakistan were analysed. Each accession have been seperated into two groups receiving different treatment: first group is the control and the second underwent salt stress (150 mM NaCl) during two weeks. Following, that 19 morpho-physiological traits were mesured.
 
 ### Objectives and hypotheses
 Our main objectives are:
