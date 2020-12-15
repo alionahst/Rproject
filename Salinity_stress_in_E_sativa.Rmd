@@ -9,7 +9,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ### Introduction
-Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. In function of their location, plants from the same species could exhibit difference tolerance to abiotic stress. In the study we will review, 25 accession of E. sativa from different region of Pakistan were analysed. Each accession have been seperated into two groups receiving different treatment: first group is the control and the second underwent salt stress (150 mM NaCl) during two weeks. Following, that 19 morpho-physiological traits were mesured.
+Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. In function of their location, plants from the same species could exhibit difference tolerance to abiotic stress. In the study we will review, 25 accessions of E. sativa from different regions of Pakistan were analysed. Each accession have been separated into two groups receiving different treatment: first group is the control and the second underwent salt stress (150 mM NaCl) during two weeks. Following that 19 morpho-physiological traits were measured.
+
+The data was obtained from the paper **"Evaluation of salt tolerance in *Eruca sativa* accessions based on morpho-physiological traits"**
+(Afsar et. al 2020)
+https://peerj.com/articles/9749/
 
 ### Objectives and hypotheses
 Our main objectives are:
