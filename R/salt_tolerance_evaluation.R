@@ -99,7 +99,8 @@ MFV <- MFV %>%
 # dendograme 
 
 
-# Pearson test
+# Pearson test 
+# do it on raw data and not on MFV and try to make a matrix 
 cor.test(MFV$SL,MFV$RL, method="pearson") #
 cor.test(MFV$SL,MFV$PH, method="pearson") #
 cor.test(MFV$SL,MFV$NL, method="pearson") #
