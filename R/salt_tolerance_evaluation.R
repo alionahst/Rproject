@@ -97,7 +97,7 @@ MFV <- MFV %>%
   select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC, Mean)
 
 
-
+# Pearson test
 cor.test(MFV$SL,MFV$RL, method="pearson") #
 cor.test(MFV$SL,MFV$PH, method="pearson") #
 cor.test(MFV$SL,MFV$NL, method="pearson") #
