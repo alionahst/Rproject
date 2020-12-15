@@ -76,11 +76,11 @@ MFV <- STI %>%
          FW = (STI$Fresh_Weight - min(STI$Fresh_Weight))/(max(STI$Fresh_Weight)- min(STI$Fresh_Weight)) ,
          DW = (STI$Dry_Weight - min(STI$Dry_Weight))/(max(STI$Dry_Weight)- min(STI$Dry_Weight)),
          RWC = (STI$Relative_water_content - min(STI$Relative_water_content))/(max(STI$Relative_water_content)- min(STI$Relative_water_content)),
-         EL = (STI$Electrolyte_Leakage - min(STI$Electrolyte_Leakage))/(max(STI$Electrolyte_Leakage)- min(STI$Electrolyte_Leakage)),
+         EL = 1-(STI$Electrolyte_Leakage - min(STI$Electrolyte_Leakage))/(max(STI$Electrolyte_Leakage)- min(STI$Electrolyte_Leakage)),
          CC = (STI$Chlorophyll_Content - min(STI$Chlorophyll_Content))/(max(STI$Chlorophyll_Content)- min(STI$Chlorophyll_Content)),
-         Na = (STI$Na - min(STI$Na))/(max(STI$Na)- min(STI$Na)),
-         K = (STI$K - min(STI$K))/(max(STI$K)- min(STI$K)),
-         Ca =(STI$Ca - min(STI$Ca))/(max(STI$Ca)- min(STI$Ca)),
+         Na = 1-(STI$Na - min(STI$Na))/(max(STI$Na)- min(STI$Na)),
+         K = 1-(STI$K - min(STI$K))/(max(STI$K)- min(STI$K)),
+         Ca =1- (STI$Ca - min(STI$Ca))/(max(STI$Ca)- min(STI$Ca)),
          Mg=(STI$Mg - min(STI$Mg))/(max(STI$Mg)- min(STI$Mg)),
          K_Na= (STI$K_Na - min(STI$K_Na))/(max(STI$K_Na)- min(STI$K_Na)),
          PR= (STI$Photsynthesis_Rate - min(STI$Photsynthesis_Rate, na.rm=T))/(max(STI$Photsynthesis_Rate, na.rm=T)- min(STI$Photsynthesis_Rate, na.rm=T)),
@@ -96,8 +96,15 @@ MFV <- MFV %>%
   mutate(Mean = rowMeans(MFV[1:5], na.rm=T))%>% #mutate(Mean = rowMeans(MFV[*column needed*], na.rm=T))%>%
   select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC, Mean)
 
+# dendograme 
 
-# Pearson test
+
+
+
+
+
+# Pearson test 
+#peason test with MFV table 
 cor.test(MFV$SL,MFV$RL, method="pearson") #
 cor.test(MFV$SL,MFV$PH, method="pearson") #
 cor.test(MFV$SL,MFV$NL, method="pearson") #
@@ -170,3 +177,45 @@ cor.test(MFV$CC,MFV$K_Na, method="pearson") #
 cor.test(MFV$CC,MFV$PR, method="pearson") #
 
 cor.test(MFV$K_Na,MFV$PR, method="pearson") #
+
+#install.packages('Hmisc')
+#install.packages('ggpubr')
+#install.packages('tidyverse')
+#install.packages('corrplot')
+library(dplyr)
+library(lattice)
+library(survival)
+library(Formula)
+library(ggplot2)
+library(Hmisc)
+library(ggpubr)
+library(tidyverse)
+library(Hmisc)
+library(corrplot)
+
+
+
+
+# Pearson correlation test on data table  
+# variables used in the paper 
+my_data <- select(table, Shoot_Length, Root_Length, Plant_Height, Number_Leaves, Leaf_Area, Fresh_Weight, Dry_Weight, Chlorophyll_Content, Electrolyte_Leakage, K_Na, Photsynthesis_Rate)
+my_data <- na.omit(my_data)
+# all the variables
+all_data <- na.omit(table[4:23])
+
+#get p-value of my_data
+cor_1 <- rcorr(as.matrix(my_data))
+cor_1_P <- as.data.frame(cor_1$P) # put p values into a data frame 
+# get p-value of all_data
+cor_2 <- rcorr(as.matrix(all_data))
+cor_2_P <- as.data.frame(cor_2$P) # put p values into a data frame 
+
+
+res1 <- cor.mtest(all_data, conf.level = .95)
+M1 <-cor(all_data)
+corrplot(M1, p.mat = res1$p, sig.level = .05, type = "lower")
+
+res2 <- cor.mtest(my_data, conf.level = .95)
+M2 <-cor(my_data)
+corrplot(M2, p.mat = res1$p, sig.level = .05, type = "lower")
+
