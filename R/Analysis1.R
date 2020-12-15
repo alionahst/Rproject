@@ -260,7 +260,7 @@ Means <- rbind(Mean_Treat, Mean_Control)
 Means$Treat_Contr <- Treatment
 
 Sd_Treatment <- x %>%
-    summarise(SD_SL = sd(Shoot_Length),
+  summarise(SD_SL = sd(Shoot_Length),
             SD_RL = sd(Root_Length),
             SD_PH = sd(Plant_Height),
             SD_NL = sd(Number_Leaves),
@@ -302,5 +302,5 @@ Sd_Control <-   y %>%
 Treatment <- c('Treatment','Control')
 SD <- rbind(Sd_Treatment,Sd_Control)
 SD$Treat_Contr <- Treatment
-  
+
 
