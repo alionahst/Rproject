@@ -224,10 +224,10 @@ For calculating MFV, we used the same formula, however according to our method w
 
 
 ### Results 
-Figures and tables with captions and description of what do they mean.
+####Figures and tables with captions and description of what do they mean.
 
 
-
+#####(1) Morphological traits
 ```{r morphological traits significant difference}
 a1 <- aov(Shoot_Length ~ Treat_Contr, data = Morpho_t)
 shapiro.test(a1$residuals)
@@ -306,6 +306,22 @@ NL stress index of accessions varied from 28.00 to 94.12
 - **LA**: Leaf area is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for LA in salt-stressed plants is 0.03 ± 0.02 and 0.07 ± 0.03 for control plants. 
 LA stress index of accessions varied from 75.95 to 100
+
+
+##### (2) RWC, EL and chlorophyl content
+
+BLA
+
+
+##### (3) Mineral ion content
+
+BLA
+
+
+##### (4) Gas exchange attributes
+
+BLA
+
 
 ### Discussion 
 ####From your objectives.

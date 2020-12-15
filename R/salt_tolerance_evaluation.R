@@ -96,6 +96,8 @@ MFV <- MFV %>%
   mutate(Mean = rowMeans(MFV[1:5], na.rm=T))%>% #mutate(Mean = rowMeans(MFV[*column needed*], na.rm=T))%>%
   select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC, Mean)
 
+# dendograme 
+
 
 # Pearson test
 cor.test(MFV$SL,MFV$RL, method="pearson") #
