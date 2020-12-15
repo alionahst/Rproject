@@ -60,19 +60,108 @@ for (i in names(Morpho_t[4:8])) {
 
 
 
-########### 
-
-
-a1 <- aov(Fresh_Weight ~ Treat_Contr, data = Morpho_t)
-shapiro.test(a1$residuals)
+#Biomasse 
+a6 <- aov(Fresh_Weight ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a6$residuals)
 # no normality 
-kruskal.test(Fresh_Weight ~ Treat_Contr, data = table)
+kruskal.test(Fresh_Weight ~ Treat_Contr, data = Weight_ion)
+# Statistical difference 
 
-
-a1 <- aov(Dry_Weight ~ Treat_Contr, data = Morpho_t)
-shapiro.test(a1$residuals)
+a7 <- aov(Dry_Weight ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a7$residuals)
 # no normality 
-kruskal.test(Dry_Weight ~ Treat_Contr, data = table)
+kruskal.test(Dry_Weight ~ Treat_Contr, data = Weight_ion)
+# statistical difference
+
+###  RWC, EL and chlorophyl content
+
+a8 <- aov(RWC ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a8$residuals)
+# No normality
+kruskal.test(RWC ~ Treat_Contr, data = Weight_ion)
+# No statistical difference
+
+a9 <- aov(Electrolyte_Leakage ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a9$residuals)
+# No normality
+kruskal.test(Electrolyte_Leakage ~ Treat_Contr, data = Weight_ion)
+# Statistical difference
+
+a10 <- aov( Chlorophyll_Content ~ Treat_Contr, data = Chloro_c)
+shapiro.test(a10$residuals)
+# No normality
+kruskal.test(Chlorophyll_Content ~ Treat_Contr, data = Chloro_c)
+# Statistical difference
+
+
+
+
+#### Mineral ion content
+a11 <- aov(Na ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a11$residuals)
+#No normality
+kruskal.test(Na ~ Treat_Contr, data = Weight_ion)
+# statistical difference
+
+a12 <- aov(K ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a12$residuals)
+# No normality
+kruskal.test(K ~ Treat_Contr, data = Weight_ion)
+# statistical difference
+
+a13 <- aov(Ca ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a13$residuals)
+#No normality
+kruskal.test(Ca ~ Treat_Contr, data = Weight_ion)
+# statistical difference
+
+a14 <- aov(Mg ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a14$residuals)
+#No normality
+kruskal.test(Mg ~ Treat_Contr, data = Weight_ion)
+# statistical difference
+
+a15 <- aov(K_Na ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a15$residuals)
+#No normality
+kruskal.test(K_Na ~ Treat_Contr, data = Weight_ion)
+# statistical difference
+
+
+## Gas parameters
+a16 <- aov(Photsynthesis_Rate ~ Treat_Contr, data = Gas_e)
+shapiro.test(a16$residuals)
+#No normality
+kruskal.test(Photsynthesis_Rate ~ Treat_Contr, data = Gas_e)
+# statistical difference
+
+a17 <- aov(Intercellular_CO2 ~ Treat_Contr, data = Gas_e)
+shapiro.test(a17$residuals)
+# NORMALITYYYYY
+#ANOVAAAA
+a17_aov <- agricolae::HSD.test(a17, "Treat_Contr")
+a17_aov
+#kruskal.test(Intercellular_CO2 ~ Treat_Contr, data = Gas_e)
+# No statistical difference 
+
+a18 <- aov(Transpiration_Rate ~ Treat_Contr, data = Gas_e)
+shapiro.test(a18$residuals)
+#No normality
+kruskal.test(Transpiration_Rate ~ Treat_Contr, data = Gas_e)
+# statistical difference
+
+a19 <- aov(Stomatal_Conductance ~ Treat_Contr, data = Gas_e)
+shapiro.test(a19$residuals)
+#No normality
+kruskal.test(Stomatal_Conductance ~ Treat_Contr, data = Gas_e)
+# statistical difference
+
+
+
+
+
+
+
 
 
 
