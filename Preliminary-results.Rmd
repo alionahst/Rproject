@@ -1,15 +1,19 @@
 ---
-title: "Title of project"
+title: "Salinity stress in Eruca sativa ((E. sativa) )"
 author: "Anastasiia Revva, Juan Felipe Villamil Lozano, Aliona Hoste"
 date: "17/11/2020"
 output: html_document
 ---
-
-
-### Introduction
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+### Introduction
+*change the text so its not the same*
+Salinity is one of the most lethal abiotic stresses which affect multiple aspects of plant physiology. Natural variations in plant germplasm are a great resource that could be exploited for improvement in salt tolerance. Eruca sativa (E. sativa) exhibits tolerance to abiotic stresses. However, thorough evaluation of its salt stress tolerance and screening for traits that could be reliably applied for salt tolerance needs to be studied. The current study was designed to characterize 25 E. sativa accessions, originating from diverse geographical regions of Pakistan, for the salt stress tolerance.
+
+Methods
+Salt stress (150 mM NaCl) was applied for 2 weeks to the plants at four leaf stage in hydroponics. Data of the following morpho-physiological traits were collected from control and treated plants of all the accessions: root length (RL), shoot length (SL), plant height (PH), leaf number (LN), leaf area (LA), fresh weight (FW), dry weight (DW), chlorophyl content (SPAD), electrolyte leakage (EL), relative water content (RWC), gas exchange parameters and mineral ion content. Salt tolerance was determined based on membership function value (MFV) of the tested traits.
 
 ### Objectives and hypotheses
 Our main objectives are:
@@ -26,13 +30,28 @@ Main hypothesis:
 
 
 ### Methods 
-Firs we had to download and tidy the data.
-
-
-
 ####What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
+First we had to download and tidy the data. Once we have the table containing the mean values of variables for each accessions and treatments, we tested the normality of variables with shapiro.test. Then, we analysed if there is a significant difference between salt-treated and control plants for each variable. If there was normality, the analysis was performed with anova (only one variable), otherwise we used kruskal-Wallis test.
 
-**
+Additionaly, we did a summary table for the mean and sd of treated and control plant.
+
+We created another table with data converted into salt tolerance index (STI): ratio of value for treated plant to control.
+
+Then, we computed the MVF table using the formula provided in the article: **Xp=X−XminXmax−Xmin×100%**. For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula: **Xp=1−(X−Xmin)(Xmax−Xmin)×100%**
+For calculating MFV, we used the same formula, however we used the min and max of the mean STI.
+
+
+We performed the Principal Component Analysis on the MFV values of all the variables, except for RWC and ICO2 because they did not show significant difference between treatment and control. We used 8 highest ranked variables from the results: PH, SL, RL, NL, DW, FW, LA, K_Na. 
+
+We computed the mean of MFV from MFV values of the variables above. With the results, we ranked the accessions from highly tolerant to highly sensitive. 
+
+We still need to make the dendogram, add map with accession and check for correlation between altitude and MFV ranking. 
+
+
+### Results 
+####Figures and tables with captions and description of what do they mean.
+
+#### Tidying of data
 ```{r Tidy_data_Nastya_experimenting.R, echo = TRUE, message=FALSE }
 ##Calling for the libraries to transform and tidy the data
 library(dplyr)
@@ -149,14 +168,14 @@ Acc_loc_double <- Acc_loc[rep(1:25, each = 2), ]
 
 ###
 #experimenting with mapping the data
-map <- data.frame(Code = Acc_loc$Code,
-                  Latitude = Acc_loc$Latitude,
-                  Longitude = Acc_loc$Longitude)
-m <- ggplot(map, aes(x = Latitude,
-                     y = Longitude))
-m +
-  geom_jitter() +
-  geom_label(aes(label = Code))
+#map <- data.frame(Code = Acc_loc$Code,
+#                  Latitude = Acc_loc$Latitude,
+#                  Longitude = Acc_loc$Longitude)
+#m <- ggplot(map, aes(x = Latitude,
+#                     y = Longitude))
+#m +
+#  geom_jitter() +
+#  geom_label(aes(label = Code))
 
 
 # create summary table for morphological trait
@@ -208,23 +227,15 @@ e <- e[6]
 
 #create data frame with all the summarized tables 
 table <- data.frame(a, b, c, d, e)
+
+```
+
+```{r, tidy table, echo=FALSE}
+knitr::kable(table, caption = "Table 1. Mean values of variables for each accessions and treatments ")
 ```
 
 
 
-
-
-
-
-
-We deleted accessions number 7 and 16 because last table 'Gas exchange parameters' does not contain informations
-
-
-For calculating MFV, we used the same formula, however according to our method we used the min and max of the mean STI
-
-
-### Results 
-####Figures and tables with captions and description of what do they mean.
 
 
 #####(1) Morphological traits
@@ -282,7 +293,23 @@ LA stress index of accessions varied from 75.95 to 100
 
 ##### (2) Biomass
 ```{r analysis for biomass}
-#summary(STI)
+a6 <- aov(Fresh_Weight ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a6$residuals)
+# no normality 
+
+a7 <- aov(Dry_Weight ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a7$residuals)
+# no normality 
+
+for (i in names(Weight_ion[4:5])) { 
+  boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
+          ylab = names(Weight_ion[i]), 
+          xlab = names(Weight_ion[3])
+  )
+  print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+}
+
+
 ```
 
 - **Fresh weight (FW)**:
@@ -298,6 +325,33 @@ DW stress index of accessions varied from 24.67 to 88.26
 
 ##### (3) RWC, EL and chlorophyll content
 ```{r analysis for RWC, EL and chlorophyll content}
+a8 <- aov(RWC ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a8$residuals)
+# No normality
+
+a9 <- aov(Electrolyte_Leakage ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a9$residuals)
+# No normality
+
+a10 <- aov( Chlorophyll_Content ~ Treat_Contr, data = Chloro_c)
+shapiro.test(a10$residuals)
+# No normality
+
+for (i in names(Weight_ion[c(6,12)])) { 
+  boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
+          ylab = names(Weight_ion[i]), 
+          xlab = names(Weight_ion[3])
+  )
+  print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+}
+
+for (i in names(Chloro_c[4])) { 
+  boxplot(Chloro_c[, i] ~ Chloro_c$Treat_Contr, 
+          ylab = names(Chloro_c[i]), 
+          xlab = names(Chloro_c[3])
+  )
+  print(kruskal.test(Chloro_c[, i] ~ Chloro_c$Treat_Contr))
+}
 
 ```
 
@@ -318,6 +372,33 @@ The mean value for CC in salt-stressed plants is 14.06 ± 6.02 and 18.17 ± 4.79
 
 ##### (4) Mineral ion content
 ```{r analysis for mineral ion content}
+a11 <- aov(Na ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a11$residuals)
+#No normality
+
+a12 <- aov(K ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a12$residuals)
+# No normality
+
+a13 <- aov(Ca ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a13$residuals)
+#No normality
+
+a14 <- aov(Mg ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a14$residuals)
+#No normality
+
+a15 <- aov(K_Na ~ Treat_Contr, data = Weight_ion)
+shapiro.test(a15$residuals)
+#No normality
+
+for (i in names(Weight_ion[7:11])) { 
+  boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
+          ylab = names(Weight_ion[i]), 
+          xlab = names(Weight_ion[3])
+  )
+  print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+}
 
 ```
 
@@ -332,46 +413,71 @@ Potassium is significantly reduced in the salt-stressed plants compared with the
 The mean value for K in salt-stressed plants is 19.72 ± 7.48 and 15.48 ± 6.09 for control plants.
 
 
-- **K/Na ratio**:
-K/Na ratio is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
-The mean value for K/Na ratio in salt-stressed plants is 0.67 ± 0.20 and 1.20 ± 0.36 for control plants.
-X stress index of accessions varied from X to X
-
 - **Calcium (Ca)**:
 Calcium is significantly increased in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for Ca in salt-stressed plants is 9.12 ± 5.32 and 6.03 ± 2.60 for control plants.
-X stress index of accessions varied from X to X
+
 
 - **Magnesium (Mg)**:
 Magnesium is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for Mg in salt-stressed plants is 4.37 ± 1.83 and 5.95 ± 2.85 for control plants.
-X stress index of accessions varied from X to X
+
+
+- **K/Na ratio**:
+K/Na ratio is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+The mean value for K/Na ratio in salt-stressed plants is 0.67 ± 0.20 and 1.20 ± 0.36 for control plants.
+
 
 
 ##### (5) Gas exchange attributes
 ```{r analysis for gas exchange attributes}
+a17 <- aov(Intercellular_CO2 ~ Treat_Contr, data = Gas_e)
+shapiro.test(a17$residuals)
+# NORMALITYYYYY
+#ANOVAAAA
+a17_aov <- agricolae::HSD.test(a17, "Treat_Contr")
+box17 <- boxplot(Intercellular_CO2 ~ Treat_Contr, data = Gas_e)
+#kruskal.test(Intercellular_CO2 ~ Treat_Contr, data = Gas_e)
+# No statistical difference
+
+a16 <- aov(Photsynthesis_Rate ~ Treat_Contr, data = Gas_e)
+shapiro.test(a16$residuals)
+#No normality
+
+a18 <- aov(Transpiration_Rate ~ Treat_Contr, data = Gas_e)
+shapiro.test(a18$residuals)
+#No normality
+
+a19 <- aov(Stomatal_Conductance ~ Treat_Contr, data = Gas_e)
+shapiro.test(a19$residuals)
+#No normality
+
+for (i in names(Gas_e[c(4,6:7)])) { 
+  boxplot(Gas_e[, i] ~ Gas_e$Treat_Contr, 
+          ylab = names(Gas_e[i]), 
+          xlab = names(Gas_e[3])
+  )
+  print(kruskal.test(Gas_e[, i] ~ Gas_e$Treat_Contr))
+}
+
 
 ```
 
 - **Photosynthesis rate (PR)**:
 Photosynthesus rate is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for PR in salt-stressed plants is 1.95 ± 1.02 and 7.53 ± 4.84 for control plants.
-X stress index of accessions varied from X to X
 
 - **Intercellular CO2 (ICO2)**:
 Intercellular CO2 is not significantly different in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for ICO2 in salt-stressed plants is 284.70 ± 42.57 and 281.20 ± 22.90 for control plants.
-X stress index of accessions varied from X to X
 
 - **Transpiration rate (TR)**:
 Transpiration rate is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for TR in salt-stressed plants is 0.94 ± 0.48 and 2.57 ± 1.13 for control plants.
-X stress index of accessions varied from X to X
 
 - **Stomatal conductance (SC)**:
 Stomatal conductance is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for SC in salt-stressed plants is 0.039 ± 0.02 and 0.15 ± 0.08 for control plants.
-X stress index of accessions varied from X to X
 
 
 ```{r recap table for mean and median, echo=FALSE}
