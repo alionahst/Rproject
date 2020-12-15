@@ -12,16 +12,28 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ### Objectives and hypotheses
+Our main objectives are:
 
+1. Explore the effects of salt stress on various morpho-physiological traits in different *E. sativa* accessions. 
+2. Define the susceptible and resistant accessions
+3. Identify traits the salt stress has the biggest influence on
+4. Compare our results with the ones from the paper
 
+Main hypothesis:
 
+- Susceptible accessions have statistically different morpho-physiological traits compared to their control.
+- The susceptible accessions have more morpho-physiological traits affected 
 
 
 ### Methods 
+Firs we had to download and tidy the data.
+
+
+
 ####What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
 
 **
-```{r Tidy_data_Nastya_experimenting.R}
+```{r Tidy_data_Nastya_experimenting.R, echo = TRUE, message=FALSE }
 ##Calling for the libraries to transform and tidy the data
 library(dplyr)
 library(tidyr)
