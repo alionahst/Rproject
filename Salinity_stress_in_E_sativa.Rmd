@@ -57,7 +57,7 @@ We still need to make the dendogram, add map with accession and check for correl
 ####Figures and tables with captions and description of what do they mean.
 
 #### Tidying of data
-```{r Tidy_data_Nastya_experimenting.R, echo = TRUE, message=FALSE }
+```{r Tidy_data.R, echo = TRUE, message=FALSE }
 ##Calling for the libraries to transform and tidy the data
 library(dplyr)
 library(tidyr)
