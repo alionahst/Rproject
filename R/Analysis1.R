@@ -142,7 +142,7 @@ shapiro.test(a17$residuals)
 a17_aov <- agricolae::HSD.test(a17, "Treat_Contr")
 a17_aov
 #kruskal.test(Intercellular_CO2 ~ Treat_Contr, data = Gas_e)
-# No statistical difference 
+# No statistical difference
 
 a18 <- aov(Transpiration_Rate ~ Treat_Contr, data = Gas_e)
 shapiro.test(a18$residuals)
@@ -155,6 +155,10 @@ shapiro.test(a19$residuals)
 #No normality
 kruskal.test(Stomatal_Conductance ~ Treat_Contr, data = Gas_e)
 # statistical difference
+
+
+
+
 
 
 
@@ -213,7 +217,7 @@ Mean_Control <- y %>%
             Transpiration_Rate = mean(Transpiration_Rate, na.rm=T),
             Stomatal_Conductance = mean(Stomatal_Conductance, na.rm=T)) 
 Treatment <- c('Treatment','Control')
-Means <- rbind(Treatment, Mean_Treat)
+Means <- rbind(Mean_Treat, Mean_Control)
 Means$Treat_Contr <- Treatment
 
 Sd_Treatment <- x %>%

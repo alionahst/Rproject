@@ -260,67 +260,193 @@ for (i in names(Morpho_t[4:8])) {
 
 ```
 
-```{r mean value for salt-stressed }
-#mean(x$Shoot_Length)
-#mean(y$Shoot_Length)
-#mean(x$Root_Length)
-#mean(y$Root_Length)
-#mean(x$Plant_Height)
-#mean(y$Plant_Height)
-#mean(x$Number_Leaves)
-#mean(y$Number_Leaves)
-#mean(x$Leaf_Area)
-#mean(y$Leaf_Area)
+```{r recap table for mean and median, echo=FALSE}
+x <- data.frame(dplyr::filter(table, table$Treat_Contr=="Treatment"))
+x <- x[-(1:3)]
+y <- data.frame(dplyr::filter(table, table$Treat_Contr=="Control"))
+y <- y[-(1:3)]
 
-#sd(x$Shoot_Length)
-#sd(y$Shoot_Length)
-#sd(x$Root_Length)
-#sd(y$Root_Length)
-#sd(x$Plant_Height)
-#sd(y$Plant_Height)
-#sd(x$Number_Leaves)
-#sd(y$Number_Leaves)
-#sd(x$Leaf_Area)
-#sd(y$Leaf_Area)
+Mean_Treat <- x %>% 
+  summarise(Mean_SL = mean(Shoot_Length),
+            Mean_SL = mean(Root_Length), 
+            Mean_PH = mean(Plant_Height), 
+            Mean_NL = mean(Number_Leaves), 
+            Mean_LA = mean(Leaf_Area),
+            Mean_FW = mean(Fresh_Weight),
+            Mean_DW = mean(Dry_Weight),
+            Mean_RWC = mean(RWC),
+            Mean_Na = mean(Na),
+            Mean_K = mean(K),
+            Mean_Ca = mean(Ca),
+            Mean_Mg = mean(Mg),
+            Mean_K_Na = mean(K_Na),
+            Mean_EL = mean(Electrolyte_Leakage),
+            Mean_CC = mean(Chlorophyll_Content),
+            Mean_PR = mean (Photsynthesis_Rate, na.rm=T),
+            Mean_ICO2 = mean(Intercellular_CO2, na.rm=T),
+            Mean_TR = mean(Transpiration_Rate, na.rm=T),
+            Mean_S = mean(Stomatal_Conductance, na.rm=T)) 
+Mean_Control <- y %>% 
+  summarise(Mean_SL = mean(Shoot_Length),
+            Mean_SL = mean(Root_Length), 
+            Mean_PH = mean(Plant_Height), 
+            Mean_NL = mean(Number_Leaves), 
+            Mean_LA = mean(Leaf_Area),
+            Mean_FW = mean(Fresh_Weight),
+            Mean_DW = mean(Dry_Weight),
+            Mean_RWC = mean(RWC),
+            Mean_Na = mean(Na),
+            Mean_K = mean(K),
+            Mean_Ca = mean(Ca),
+            Mean_Mg = mean(Mg),
+            Mean_K_Na = mean(K_Na),
+            Mean_EL = mean(Electrolyte_Leakage),
+            Mean_CC = mean(Chlorophyll_Content),
+            Mean_PR = mean (Photsynthesis_Rate, na.rm=T),
+            Mean_ICO2 = mean(Intercellular_CO2, na.rm=T),
+            Mean_TR = mean(Transpiration_Rate, na.rm=T),
+            Mean_S = mean(Stomatal_Conductance, na.rm=T)) 
+Treatment <- c('Treatment','Control')
+Means <- rbind(Mean_Treat, Mean_Control)
+Means$Treat_Contr <- Treatment
 
-#add JuanFe code from Analysis 1
+Sd_Treatment <- x %>%
+    summarise(SD_SL = sd(Shoot_Length),
+            SD_RL = sd(Root_Length),
+            SD_PH = sd(Plant_Height),
+            SD_NL = sd(Number_Leaves),
+            SD_LA = sd(Leaf_Area),
+            SD_FW = sd(Fresh_Weight),
+            SD_DW = sd(Dry_Weight),
+            SD_RWC = sd(RWC),
+            SD_Na = sd(Na),
+            SD_K = sd(K),
+            SD_Ca = sd(Ca),
+            SD_Mg = sd(Mg),
+            SD_K_NA = sd(K_Na),
+            SD_EL = sd(Electrolyte_Leakage),
+            SD_CC = sd(Chlorophyll_Content),
+            SD_PR = sd (Photsynthesis_Rate, na.rm=T),
+            SD_I_CO2 = sd(Intercellular_CO2, na.rm=T),
+            SD_TR = sd(Transpiration_Rate, na.rm=T),
+            SD_SC = sd(Stomatal_Conductance, na.rm=T))
+Sd_Control <-   y %>%
+  summarise(SD_SL = sd(Shoot_Length),
+            SD_RL = sd(Root_Length),
+            SD_PH = sd(Plant_Height),
+            SD_NL = sd(Number_Leaves),
+            SD_LA = sd(Leaf_Area),
+            SD_FW = sd(Fresh_Weight),
+            SD_DW = sd(Dry_Weight),
+            SD_RWC = sd(RWC),
+            SD_Na = sd(Na),
+            SD_K = sd(K),
+            SD_Ca = sd(Ca),
+            SD_Mg = sd(Mg),
+            SD_K_NA = sd(K_Na),
+            SD_EL = sd(Electrolyte_Leakage),
+            SD_CC = sd(Chlorophyll_Content),
+            SD_PR = sd (Photsynthesis_Rate, na.rm=T),
+            SD_I_CO2 = sd(Intercellular_CO2, na.rm=T),
+            SD_TR = sd(Transpiration_Rate, na.rm=T),
+            SD_SC = sd(Stomatal_Conductance, na.rm=T))
+Treatment <- c('Treatment','Control')
+SD <- rbind(Sd_Treatment,Sd_Control)
+SD$Treat_Contr <- Treatment
 
+knitr::kable(Means, caption = "Summary table for the mean of treated and control plants")
+knitr::kable(SD, caption = "Summary table for the standard deviation (SD) of treated and control plants")
 ```
 
 There is a statistical difference between control and treatment for all morphological trait
 
 
-- **SL**: Shoot length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for SL in salt-stressed plants is 1.10 ± 0.48 and 2.30 ± 0.56 for control plants. SL stress index of accessions varied from 16.73 to 89.12
+- **Shoot length (SL)**: Shoot length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for SL in salt-stressed plants is 1.10 ± 0.48 and 2.30 ± 0.56 for control plants. SL stress index of accessions varied from 16.73 to 89.12
 
-- **RL**: Root length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for RL in salt-stressed plants is 0.98 ± 0.43 and 2.17 ± 0.42 for control plants. 
+- **Root length (RL)**: Root length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for RL in salt-stressed plants is 0.98 ± 0.43 and 2.17 ± 0.42 for control plants. 
 RL stress index of accessions varied from 15.91 to 73.53 
 
-- **PH**: Plant height is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+- **Plant height (PH)**: Plant height is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for PH in salt-stressed plants is 2.18 ± 0.76 and 4.43 ± 0.77 for control plants. 
 PH stress index of accessions varied from 19.83 to 74.07 
 
-- **NL**: Number of leaves is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+- **Number of leaves(NL)**: Number of leaves is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for NL in salt-stressed plants is 2.43 ± 0.82 and 4.22 ± 0.78 for control plants. 
 NL stress index of accessions varied from 28.00 to 94.12
 
-- **LA**: Leaf area is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+- **Leaf area (LA)**: Leaf area is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for LA in salt-stressed plants is 0.03 ± 0.02 and 0.07 ± 0.03 for control plants. 
 LA stress index of accessions varied from 75.95 to 100
 
+##### (2) Biomass
+```{r analysis for biomass}
 
-##### (2) RWC, EL and chlorophyl content
+```
 
-BLA
+- **Fresh weight (FW)**:
+Fresh weight is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+The mean value for FW in salt-stressed plants 96.22 ± 66.00 and 241.06 ± 164.75 for control plants.
+
+- **Dry weight (DW)**:
+Dry weight is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+The mean value for DW in salt-stressed plants is 6.26 ± 4.00 and 10.58 ± 6.89 for control plants.
 
 
-##### (3) Mineral ion content
+##### (3) RWC, EL and chlorophyll content
+```{r analysis for RWC, EL and chlorophyll content}
 
-BLA
+```
+
+- **Relative water content (RWC)**:
+Relative water content is not significantly reduced in the salt-stressed plants compared with the control (p > 0.05).
+The mean value for RWC in salt-stressed plants 92.77 X ± 2.65 and 92.10 ± 7.00 for control plants.
+
+- **Electrolyte leakage (EL)**:
+The mean value for EL in salt-stressed plants is 60.60 ± 9.32 and 56.51 ± 6.48 for control plants.
+
+- **Chlorophyll content (CC)**: 
+The mean value for CC in salt-stressed plants is 14.06 ± 6.02 and 18.17 ± 4.79 for control plants.
+
+##### (4) Mineral ion content
+```{r analysis for mineral ion content}
+
+```
 
 
-##### (4) Gas exchange attributes
+- **Sodium (Na)**:
+The mean value for Na in salt-stressed plants is 30.03 ± 8.84 and 13.60 ± 5.00 for control plants.
 
-BLA
+- **Potassium (K)**:
+The mean value for K in salt-stressed plants is 19.72 ± 7.48 and 15.48 ± 6.09 for control plants.
+
+- **K/Na ratio**:
+The mean value for K/Na ratio in salt-stressed plants is 0.67 ± 0.20 and 1.20 ± 0.36 for control plants.
+
+- **Calcium (Ca)**:
+The mean value for Ca in salt-stressed plants is 9.12 ± 5.32 and 6.03 ± 2.60 for control plants.
+
+- **Magnesium (Mg)**:
+The mean value for Mg in salt-stressed plants is 4.37 ± 1.83 and 5.95 ± 2.85 for control plants.
+
+
+
+##### (5) Gas exchange attributes
+```{r analysis for gas exchange attributes}
+
+```
+
+- **Photosynthesis rate (PR)**:
+The mean value for PR in salt-stressed plants is 1.95 ± 1.02 and 7.53 ± 4.84 for control plants.
+
+- **Intercellular CO2 (ICO2)**:
+The mean value for ICO2 in salt-stressed plants is 284.70 ± 42.57 and 281.20 ± 22.90 for control plants.
+
+- **Transpiration rate (TR)**:
+The mean value for TR in salt-stressed plants is 0.94 ± 0.48 and 2.57 ± 1.13 for control plants.
+
+- **Stomatal conductance (SC)**:
+The mean value for SC in salt-stressed plants is 0.039 ± 0.02 and 0.15 ± 0.08 for control plants.
+
 
 
 ### Discussion 
