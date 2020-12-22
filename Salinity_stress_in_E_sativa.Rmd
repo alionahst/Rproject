@@ -37,7 +37,7 @@ Additionaly, we did a summary table for the mean and sd of treated and control p
 
 We created another table with data converted into salt tolerance index (STI): ratio of value for treated plant to control.
 
-Then, we computed the MVF table using the formula provided in the article: **Xp=X−XminXmax−Xmin×100%**. For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula: **Xp=1−(X−Xmin)(Xmax−Xmin)×100%**
+Then, we computed the MVF table using the formula provided in the article: **$Xp=X−XminXmax−Xmin×100%$**. For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula: **$Xp=1−(X−Xmin)(Xmax−Xmin)×100%$**
 For calculating MFV, we used the same formula, however we used the min and max of the mean STI.
 
 
