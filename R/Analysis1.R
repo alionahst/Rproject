@@ -49,6 +49,12 @@ kruskal.test(Leaf_Area ~ Treat_Contr, data = Morpho_t)
 # statistical difference
 
 
+spm <- list()
+for(i in names(Morpho_t[4:8])) { 
+  an1 <- aov(Morpho_t[, i] ~ Morpho_t$Treat_Contr)
+  spm[i] <- shapiro.test(an1$residuals)$p.value
+}
+
 for (i in names(Morpho_t[4:8])) { 
   boxplot(Morpho_t[, i] ~ Morpho_t$Treat_Contr, 
           ylab = names(Morpho_t[i]), 
@@ -72,6 +78,12 @@ shapiro.test(a7$residuals)
 # no normality 
 kruskal.test(Dry_Weight ~ Treat_Contr, data = Weight_ion)
 # statistical difference
+
+spb <- list()
+for(i in names(Weight_ion[4:5])) { 
+  an2 <- aov(Weight_ion[, i] ~ Weight_ion$Treat_Contr)
+  spb[i] <- shapiro.test(an2$residuals)$p.value
+}
 
 for (i in names(Weight_ion[4:5])) { 
   boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
@@ -103,12 +115,25 @@ shapiro.test(a10$residuals)
 kruskal.test(Chlorophyll_Content ~ Treat_Contr, data = Chloro_c)
 # Statistical difference
 
+spe <- list()
+for(i in names(Weight_ion[c(6,12)])) { 
+  an3 <- aov(Weight_ion[, i] ~ Weight_ion$Treat_Contr)
+  spe[i] <- shapiro.test(an3$residuals)$p.value
+}
+
+
 for (i in names(Weight_ion[c(6,12)])) { 
   boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
           ylab = names(Weight_ion[i]), 
           xlab = names(Weight_ion[3])
   )
   print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+}
+
+spc <- list()
+for(i in names(Chloro_c[4])) { 
+  an4 <- aov(Chloro_c[, i] ~ Chloro_c$Treat_Contr)
+  spc[i] <- shapiro.test(an4$residuals)$p.value
 }
 
 for (i in names(Chloro_c[4])) { 
@@ -153,6 +178,12 @@ shapiro.test(a15$residuals)
 kruskal.test(K_Na ~ Treat_Contr, data = Weight_ion)
 # statistical difference
 
+spw <- list()
+for(i in names(Weight_ion[7:11])) { 
+  an5 <- aov(Weight_ion[, i] ~ Weight_ion$Treat_Contr)
+  spw[i] <- shapiro.test(an5$residuals)$p.value
+}
+
 for (i in names(Weight_ion[7:11])) { 
   boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
           ylab = names(Weight_ion[i]), 
@@ -189,6 +220,11 @@ shapiro.test(a19$residuals)
 kruskal.test(Stomatal_Conductance ~ Treat_Contr, data = Gas_e)
 # statistical difference
 
+spg <- list()
+for(i in names(Gas_e[c(4,6:7)])) { 
+  an6 <- aov(Gas_e[, i] ~ Gas_e$Treat_Contr)
+  spg[i] <- shapiro.test(an6$residuals)$p.value
+}
 
 for (i in names(Gas_e[4:7])) { 
   boxplot(Gas_e[, i] ~ Gas_e$Treat_Contr, 
