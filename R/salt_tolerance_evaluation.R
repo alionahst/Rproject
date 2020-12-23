@@ -90,16 +90,3 @@ MFV <- STI %>%
          SC= (STI$Stomatal_Conductance - min(STI$Stomatal_Conductance, na.rm=T))/(max(STI$Stomatal_Conductance, na.rm=T)- min(STI$Stomatal_Conductance, na.rm=T)))%>%
   select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC)
 
-# Result from PCA analysis (from PCA_analysis.R)
-print(MFV_var_scores_ranked)
-
-# We used 8 highest ranked variables to include in the final MFV based ranking
-# of salt tolerance
-MFV <- MFV %>%
-  mutate(Mean = rowMeans(MFV[c(1:7, 15)], na.rm=T))%>%
-  #mutate(Mean = rowMeans(MFV[1:5], na.rm=T))%>% 
-  select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC, Mean)
-
-# dendograme 
-
-
