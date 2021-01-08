@@ -29,7 +29,7 @@ MFV_pc12 + ggtitle("Scatterplot of PC1 and PC2")                            #add
 #putting absolute values of the loading scores from PCA1 into a vector
 MFV_loading_scores <- abs(MFV_salt.pca$rotation[,1])
 #ranking the variables
-MFV_var_scores_ranked <- sort(MFV_loading_scores)
+MFV_var_scores_ranked <- sort(MFV_loading_scores, decreasing = TRUE)
 print(MFV_var_scores_ranked)
 # We used 8 highest ranked variables to include in the final MFV-based ranking
 # of salt tolerance accessions
