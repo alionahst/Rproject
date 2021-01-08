@@ -1,12 +1,16 @@
-## Data download and transfromation 
+## Data download and transformation 
+#install.packages("dplyr")
 library(dplyr)
+#install.packages("tidyr")
 library(tidyr)
 #install.packages("ggplot2", dependencies = TRUE)
 library(ggplot2)
 #install.packages("readxl")
 library(readxl)
+#install.packages("docxtractr")
+library(docxtractr)
 
-# downoald excel sheet from internet and store it into Excel object
+# download excel sheet from internet and store it into Excel object
 Excel <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Raw_data_Afsar_et_al.%2C_2020-PeerJ_20.5.2020.xlsx"
 
 # create the folder "data" if it doesn't exist
@@ -90,8 +94,6 @@ w <- paste0(D, "/location.docx")
 download.file(word, w, mode="wb")
 
 #creating data frame for the location of accessions
-#install.packages("docxtractr")
-library(docxtractr)
 Acc_loc <- docx_extract_all_tbls(read_docx(w, track_changes = NULL),
                                  guess_header = TRUE, preserve = FALSE,
                                  trim = TRUE)
