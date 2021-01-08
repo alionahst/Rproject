@@ -1,3 +1,5 @@
+## @knitr PearsonCor
+
 # Pearson correlation test on all the variables
 
 #install.packages('Hmisc')
