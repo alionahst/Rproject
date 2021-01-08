@@ -9,12 +9,12 @@ library(readxl)
 # downoald excel sheet from internet and store it into Excel object
 Excel <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Raw_data_Afsar_et_al.%2C_2020-PeerJ_20.5.2020.xlsx"
 
-# create the folder datafile if it doesnt exist
+# create the folder "data" if it doesn't exist
 D <- "data"
 if (!dir.exists(D)) dir.create(D)
 
 f <- paste0 (D, "/data.xlsx")
-# dowload excel into the file datafile (created beforehand) under the name data.xlsx
+# download excel into the folder "data" (created beforehand) under the name "data.xlsx"
 download.file(Excel, f, mode="wb")
 # get the name of excel sheets
 excel.sheet <- excel_sheets(f)
@@ -25,28 +25,20 @@ for (i in excel.sheet){
   X[[i]] <- as.data.frame(read_xlsx(f,i))
 }
 
-# organise column names and fill the first 2 columns
+# organize column names and fill the first 2 columns
 for(i in names(X)){
   names(X[[i]])[1:3] <- c("Number", "Code", "Treat_Contr")
   X[[i]] <- X[[i]][-1,]
-  #X[[i]] <- X[[i]][,-1] - deletion of numbers
   X[[i]] <- fill(X[[i]], 1:2)
 }
 
-#deleting the accession #7 and #16 from Morphological traits,
-#Weight_ion, Chloro_c, because there is no data for that accessions in the Gas_e
-#for(i in names(X)){
-#  X[[i]] <- X[[i]][!X[[i]]$Code == "Es-7", ]
-#  X[[i]] <- X[[i]][!X[[i]]$Code == "Es-16", ]
-#}
-
-#transforming columns data format 
+#transforming columns' data format 
 for (i in seq_along(X)){
   X[[i]][2:3] <- lapply(X[[i]][2:3], as.factor)
   X[[i]][-(2:3)] <- lapply(X[[i]][-(2:3)], as.numeric)
 }
 
-# creating data frames from different xlsx sheets
+# creating data frames from different .xlsx sheets
 Morpho_t <- X$`Morphological traits`
 Weight_ion <- X$`FW DW RWC Ions EL`
 Chloro_c <- X$`Chlorophyll content`
@@ -113,18 +105,6 @@ Acc_loc[-c(1,6)] <- lapply(Acc_loc[-c(1,6)], as.factor)
 #we need to double all the rows
 Acc_loc_double <- Acc_loc[rep(1:25, each = 2), ]
 
-###
-#experimenting with mapping the data
-map <- data.frame(Code = Acc_loc$Code,
-                  Latitude = Acc_loc$Latitude,
-                  Longitude = Acc_loc$Longitude)
-m <- ggplot(map, aes(x = Latitude,
-                     y = Longitude))
-m +
-  geom_jitter() +
-  geom_label(aes(label = Code))
-
-
 # create summary table for morphological trait
 a <- Morpho_t %>% 
   group_by(Number, Code, Treat_Contr) %>% 
@@ -155,7 +135,7 @@ b <- b[4:12]
 c <- Chloro_c %>% 
   group_by(Number, Code, Treat_Contr) %>% 
   summarise(Chlorophyll_Content = mean(Chlorophyll_Content))
-#take only the columns number 4 to avoid repetition of number, code and treatment
+#take only the column number 4 to avoid repetition of number, code and treatment
 c <- c[4]  
 
 #Create summary table for Gas_e
