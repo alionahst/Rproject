@@ -59,10 +59,24 @@ Main hypothesis:
 
 
 ### Methods 
-####What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
-First we had to download and tidy the data. Once we have the table containing the mean values of variables for each accessions and treatments, we tested the normality of variables with shapiro.test. Then, we analysed if there is a significant difference between salt-treated and control plants for each variable. If there was normality, the analysis was performed with anova (only one variable), otherwise we used kruskal-Wallis test.
+#### What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
+#### (1) Downloading and tidying the data.
 
-Additionaly, we did a summary table for the mean and sd of treated and control plant.
+
+First we had to download the .xls data from the paper. The tables needed to be tidied (column names organized, empty cells filled, the values formatted, etc.). Then we had to download the location of accessions data and tidy this table.
+
+
+In order to be able to work with all of morpho-physiological parameters we had to unify them (because of different number of replicates in different categories of morpho-physiological traits). The unification was done trough the mean of every accession and treatment. With unified data we created a summary table.
+
+
+#### (2) Test of normality and statistical difference of variables.
+Once we had the summary table, we tested the normality of variables with Shapiro test. If the normality was rejected we proceeded with Kruskal-Wallis test, otherwise we used ANOVA to see if there was a significant difference between salt-treated and control plants for each variable.
+Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into 2 tables.
+
+
+#### (3) Correlation analysis.
+In order to see how the parameters correlated with each other as a response to the salt stress we performed Pearson correlation analysis and summarized it in the Figure  
+
 
 We created another table with data converted into salt tolerance index (STI): ratio of treated plant values to control.
 
@@ -87,23 +101,29 @@ We still need to make the dendogram, add map with accession and check for correl
 
 #### (1) Tidying of data
 ```{r Tidy_data.R, message=FALSE}
-##Calling for the libraries to transform and tidy the data
+## Data download and transformation 
+#install.packages("dplyr")
 library(dplyr)
+#install.packages("tidyr")
 library(tidyr)
-##Downloading the data and transforming it 
 #install.packages("ggplot2", dependencies = TRUE)
 library(ggplot2)
 #install.packages("readxl")
 library(readxl)
-# downloading excel sheet from internet and storing it into Excel object
+#install.packages("docxtractr")
+library(docxtractr)
+
+# download excel sheet from internet and store it into Excel object
 Excel <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Raw_data_Afsar_et_al.%2C_2020-PeerJ_20.5.2020.xlsx"
-# creating the folder datafile if it doesn't exist
+
+# create the folder "data" if it doesn't exist
 D <- "data"
 if (!dir.exists(D)) dir.create(D)
+
 f <- paste0 (D, "/data.xlsx")
-# downloading excel into the file datafile under the name data.xlsx
+# download excel into the folder "data" (created beforehand) under the name "data.xlsx"
 download.file(Excel, f, mode="wb")
-# getting the name of excel sheets
+# get the name of excel sheets
 excel.sheet <- excel_sheets(f)
 
 # created a list with the 4 sheet table from excel 
@@ -112,28 +132,20 @@ for (i in excel.sheet){
   X[[i]] <- as.data.frame(read_xlsx(f,i))
 }
 
-# organise column names and fill the first 2 columns
+# organize column names and fill the first 2 columns
 for(i in names(X)){
   names(X[[i]])[1:3] <- c("Number", "Code", "Treat_Contr")
   X[[i]] <- X[[i]][-1,]
-  #X[[i]] <- X[[i]][,-1] - deletion of numbers
   X[[i]] <- fill(X[[i]], 1:2)
 }
 
-#deleting the accession #7 and #16 from Morphological traits,
-#Weight_ion, Chloro_c, because there is no data for that accessions in the Gas_e
-#for(i in names(X)){
-#  X[[i]] <- X[[i]][!X[[i]]$Code == "Es-7", ]
-#  X[[i]] <- X[[i]][!X[[i]]$Code == "Es-16", ]
-#}
-
-#transforming columns data format 
+#transforming columns' data format 
 for (i in seq_along(X)){
   X[[i]][2:3] <- lapply(X[[i]][2:3], as.factor)
   X[[i]][-(2:3)] <- lapply(X[[i]][-(2:3)], as.numeric)
 }
 
-# creating data frames from different xlsx sheets
+# creating data frames from different .xlsx sheets
 Morpho_t <- X$`Morphological traits`
 Weight_ion <- X$`FW DW RWC Ions EL`
 Chloro_c <- X$`Chlorophyll content`
@@ -185,8 +197,6 @@ w <- paste0(D, "/location.docx")
 download.file(word, w, mode="wb")
 
 #creating data frame for the location of accessions
-#install.packages("docxtractr")
-library(docxtractr)
 Acc_loc <- docx_extract_all_tbls(read_docx(w, track_changes = NULL),
                                  guess_header = TRUE, preserve = FALSE,
                                  trim = TRUE)
@@ -199,18 +209,6 @@ Acc_loc[-c(1,6)] <- lapply(Acc_loc[-c(1,6)], as.factor)
 #In order to fit the length of this table to the length of the ultimate table
 #we need to double all the rows
 Acc_loc_double <- Acc_loc[rep(1:25, each = 2), ]
-
-###
-#experimenting with mapping the data
-#map <- data.frame(Code = Acc_loc$Code,
-#                  Latitude = Acc_loc$Latitude,
-#                  Longitude = Acc_loc$Longitude)
-#m <- ggplot(map, aes(x = Latitude,
-#                     y = Longitude))
-#m +
-#  geom_jitter() +
-#  geom_label(aes(label = Code))
-
 
 # create summary table for morphological trait
 a <- Morpho_t %>% 
@@ -242,7 +240,7 @@ b <- b[4:12]
 c <- Chloro_c %>% 
   group_by(Number, Code, Treat_Contr) %>% 
   summarise(Chlorophyll_Content = mean(Chlorophyll_Content))
-#take only the columns number 4 to avoid repetition of number, code and treatment
+#take only the column number 4 to avoid repetition of number, code and treatment
 c <- c[4]  
 
 #Create summary table for Gas_e
