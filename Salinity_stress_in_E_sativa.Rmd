@@ -6,6 +6,12 @@ output:
   html_document:
     code_folding: hide
 ---
+<style>
+body {
+text-align: justify
+}
+</style>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -30,7 +36,7 @@ library(ggfortify)
 
 
 ### Introduction
-Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. In function of their location, plants from the same species could exhibit difference tolerance to abiotic stress. In the study we will review, 25 accessions of E. sativa from different regions of Pakistan were analysed. Each accession have been separated into two groups receiving different treatment: first group is the control and the second underwent salt stress (150 mM NaCl) during two weeks. Following that 19 morpho-physiological traits were measured.
+Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. As function of their location, plants from the same species can exhibit different tolerance to abiotic stress. In the study we will review, 25 accessions of *Eruca sativa* from different regions of Pakistan were analysed. Each accession have been separated into two groups  according to the received treatment: first group underwent salt stress (150 mM NaCl) during two weeks and the second was the control. Following that 19 morpho-physiological traits were measured.
 
 The data was obtained from the paper **"Evaluation of salt tolerance in *Eruca sativa* accessions based on morpho-physiological traits"**
 (Afsar et. al 2020)
@@ -40,14 +46,16 @@ https://peerj.com/articles/9749/
 Our main objectives are:
 
 1. Explore the effects of salt stress on various morpho-physiological traits in different *E. sativa* accessions. 
-2. Define the susceptible and resistant accessions
-3. Identify traits the salt stress has the biggest influence on
+2. Identify traits the salt stress has the biggest influence on
+3. Define the susceptible and resistant accessions
 4. Compare our results with the ones from the paper
+5. Explore if location can be linked to salt-tolerance
 
 Main hypothesis:
 
-- Susceptible accessions have statistically different morpho-physiological traits compared to their control.
-- The susceptible accessions have more morpho-physiological traits affected 
+- We expect to observe statistically significant differences in morpho-physiological traits between control and salt-treated plants.
+- Salt-tolerant and salt-susceptible accessions will belong to different groups based on how much salt stress affects morpho-physiological parameters.
+- Geographical location and/or elevation may impact adaptation to salinity. 
 
 
 ### Methods 
