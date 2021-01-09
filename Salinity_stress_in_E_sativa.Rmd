@@ -5,11 +5,15 @@ date: "17/11/2020"
 output:
   html_document:
     code_folding: hide
+    theme: paper
+    highlight: zenburn
+    toc: true
+    toc_depth: 4
 ---
 <style>
 body {
-text-align: justify
-}
+text-align: justify;
+padding: 2em;}
 </style>
 
 ```{r setup, include=FALSE}
@@ -38,9 +42,8 @@ library(ggfortify)
 ### Introduction
 Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. As function of their location, plants from the same species can exhibit different tolerance to abiotic stress. In the study we will review, 25 accessions of *Eruca sativa* from different regions of Pakistan were analysed. Each accession have been separated into two groups  according to the received treatment: first group underwent salt stress (150 mM NaCl) during two weeks and the second was the control. Following that 19 morpho-physiological traits were measured.
 
-The data was obtained from the paper **"Evaluation of salt tolerance in *Eruca sativa* accessions based on morpho-physiological traits"**
-(Afsar et. al 2020)
-https://peerj.com/articles/9749/
+The data was obtained from the paper [**"Evaluation of salt tolerance in *Eruca sativa* accessions based on morpho-physiological traits"**
+(Afsar et. al 2020)](https://peerj.com/articles/9749/)
 
 ### Objectives and hypotheses
 Our main objectives are:
@@ -59,12 +62,9 @@ Main hypothesis:
 
 
 ### Methods 
-#### What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
+What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
 #### (1) Downloading and tidying the data.
-
-
-First we had to download the .xls data from the paper. The tables needed to be tidied (column names organized, empty cells filled, the values formatted, etc.). Then we had to download the location of accessions data and tidy this table.
-
+First we had to download the data.xls file from the paper. The tables needed to be tidied (column names organized, empty cells filled, the values formatted, etc.). Then we had to download the location of accessions  .doc data and tidy this table as well.
 
 In order to be able to work with all of morpho-physiological parameters we had to unify them (because of different number of replicates in different categories of morpho-physiological traits). The unification was done trough the mean of every accession and treatment. With unified data we created a summary table.
 
@@ -259,7 +259,6 @@ e <- e[6]
 
 #create data frame with all the summarized tables 
 table <- data.frame(a, b, c, d, e)
-
 ```
 
 ```{r, tidy table}
