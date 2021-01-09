@@ -2,11 +2,32 @@
 title: "Salinity stress in Eruca sativa (E. sativa)"
 author: "Anastasiia Revva, Juan Felipe Villamil Lozano, Aliona Hoste"
 date: "17/11/2020"
-output: html_document
+output:
+  html_document:
+    code_folding: hide
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+```{r packages and library required, message=FALSE}
+#install.packages("ggpubr")
+#install.packages("ggfortify")
+library(ggpubr)
+library(dplyr)
+library(lattice)
+library(survival)
+library(Formula)
+library(ggplot2)
+library(Hmisc)
+library(ggpubr)
+library(tidyverse)
+library(Hmisc)
+library(corrplot)
+library(dendextend)
+library(ggfortify)
+```
+
 
 ### Introduction
 Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. In function of their location, plants from the same species could exhibit difference tolerance to abiotic stress. In the study we will review, 25 accessions of E. sativa from different regions of Pakistan were analysed. Each accession have been separated into two groups receiving different treatment: first group is the control and the second underwent salt stress (150 mM NaCl) during two weeks. Following that 19 morpho-physiological traits were measured.
@@ -35,9 +56,9 @@ First we had to download and tidy the data. Once we have the table containing th
 
 Additionaly, we did a summary table for the mean and sd of treated and control plant.
 
-We created another table with data converted into salt tolerance index (STI): ratio of value for treated plant to control.
+We created another table with data converted into salt tolerance index (STI): ratio of treated plant values to control.
 
-Then, we computed the MVF table using the formula provided in the article: **$Xp=X−XminXmax−Xmin×100%$**. For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula: **$Xp=1−(X−Xmin)(Xmax−Xmin)×100%$**
+Then, we computed the MVF table using the formula provided in the article: **$Xp=[(X−Xmin)/(Xmax−Xmin)]×100%$**. For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula: **$Xp=[1−(X−Xmin)/(Xmax−Xmin)]×100%$**
 For calculating MFV, we used the same formula, however we used the min and max of the mean STI.
 
 
@@ -54,10 +75,10 @@ We still need to make the dendogram, add map with accession and check for correl
 
 
 ### Results 
-####Figures and tables with captions and description of what do they mean.
+#####(Figures and tables with captions and description of what do they mean.)
 
-#### Tidying of data
-```{r Tidy_data.R, echo = TRUE, message=FALSE }
+#### (1) Tidying of data
+```{r Tidy_data.R, message=FALSE}
 ##Calling for the libraries to transform and tidy the data
 library(dplyr)
 library(tidyr)
@@ -235,49 +256,15 @@ table <- data.frame(a, b, c, d, e)
 
 ```
 
-```{r, tidy table, echo=FALSE}
-knitr::kable(table, caption = "Table 1. Mean values of variables for each accessions and treatments ")
+```{r, tidy table}
+knitr::kable(table, caption = "Table 1. Mean values of variables for each accessions and treatments", align="c" , digits = round(2))
 ```
 
 
 
-
-
-#####(1) Morphological traits
-```{r morphological traits significant difference}
-a1 <- aov(Shoot_Length ~ Treat_Contr, data = Morpho_t)
-shapiro.test(a1$residuals)
-#No normality
-
-a2 <- aov(Root_Length ~ Treat_Contr, data = Morpho_t)
-shapiro.test(a2$residuals)
-#No normality
-
-a3 <- aov(Plant_Height ~ Treat_Contr, data = Morpho_t)
-shapiro.test(a3$residuals)
-# No normality
-
-a4 <- aov(Number_Leaves ~ Treat_Contr, data = Morpho_t)
-shapiro.test(a4$residuals)
-# No normality 
-
-a5 <- aov(Leaf_Area ~ Treat_Contr, data = Morpho_t)
-shapiro.test(a5$residuals)
-# no normality 
-
-for (i in names(Morpho_t[4:8])) { 
-  boxplot(Morpho_t[, i] ~ Morpho_t$Treat_Contr, 
-          ylab = names(Morpho_t[i]), 
-          xlab = "Treatment"
-  )
-  print(kruskal.test(Morpho_t[, i] ~ Morpho_t$Treat_Contr))
-}
-
-
-```
-
+##### (2) Statistical analysis on variables 
+##### i. Morphological traits
 There is a statistical difference between control and treatment for all morphological trait
-
 
 - **Shoot length (SL)**: Shoot length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for SL in salt-stressed plants is 1.10 ± 0.48 and 2.30 ± 0.56 for control plants. SL stress index of accessions varied from 16.73 to 89.12
 
@@ -296,26 +283,37 @@ NL stress index of accessions varied from 28.00 to 94.12
 The mean value for LA in salt-stressed plants is 0.03 ± 0.02 and 0.07 ± 0.03 for control plants. 
 LA stress index of accessions varied from 75.95 to 100
 
-##### (2) Biomass
-```{r analysis for biomass}
-a6 <- aov(Fresh_Weight ~ Treat_Contr, data = Weight_ion)
-shapiro.test(a6$residuals)
-# no normality 
-
-a7 <- aov(Dry_Weight ~ Treat_Contr, data = Weight_ion)
-shapiro.test(a7$residuals)
-# no normality 
-
-for (i in names(Weight_ion[4:5])) { 
-  boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
-          ylab = names(Weight_ion[i]), 
-          xlab = names(Weight_ion[3])
-  )
-  print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+```{r morphological traits normality test}
+spm <-  numeric()
+nor_spm <- c()
+for(i in names(Morpho_t[4:8])) { 
+  an1 <- aov(Morpho_t[, i] ~ Morpho_t$Treat_Contr)
+  spm[i] <- shapiro.test(an1$residuals)$p.value
+  nor_spm <- c(nor_spm, ifelse (spm[i] <= 0.05, "False", "True"))
 }
+spm_table <- data.frame ("P-value" = spm, "Normality" = nor_spm)
 
+knitr::kable(spm_table, caption = "Table 2. Shapiro test results for morphological traits", align="c")
 ```
 
+```{r morphological traits significant difference, fig.cap ="blabla"}
+#install.packages("ggpubr")
+library(ggpubr)
+
+for (i in names(Morpho_t[4:8])) {
+  bmorpho <- ggboxplot(Morpho_t, 
+                 x = "Treat_Contr",
+                 y = names(Morpho_t[i]), 
+                 color = names(Morpho_t[3]),
+                 palette = c("blue", "red"),
+                 add = "jitter") + 
+    stat_compare_means(data = Morpho_t, method = "kruskal.test", label.x.npc = "center",
+                       label.y.npc = "top")
+  print(bmorpho)
+} 
+```
+
+##### ii) Biomass
 - **Fresh weight (FW)**:
 Fresh weight is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for FW in salt-stressed plants 96.22 ± 66.00 and 241.06 ± 164.75 for control plants.
@@ -327,38 +325,39 @@ Dry weight is significantly reduced in the salt-stressed plants compared with th
 The mean value for DW in salt-stressed plants is 6.26 ± 4.00 and 10.58 ± 6.89 for control plants.
 DW stress index of accessions varied from 24.67 to 88.26
 
-##### (3) RWC, EL and chlorophyll content
-```{r analysis for RWC, EL and chlorophyll content}
-a8 <- aov(RWC ~ Treat_Contr, data = Weight_ion)
-shapiro.test(a8$residuals)
-# No normality
-
-a9 <- aov(Electrolyte_Leakage ~ Treat_Contr, data = Weight_ion)
-shapiro.test(a9$residuals)
-# No normality
-
-a10 <- aov( Chlorophyll_Content ~ Treat_Contr, data = Chloro_c)
-shapiro.test(a10$residuals)
-# No normality
-
-for (i in names(Weight_ion[c(6,12)])) { 
-  boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
-          ylab = names(Weight_ion[i]), 
-          xlab = names(Weight_ion[3])
-  )
-  print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+```{r Biomass normality test}
+spb <- numeric()
+nor_spb <- c()
+for(i in names(Weight_ion[4:5])) { 
+  an2 <- aov(Weight_ion[, i] ~ Weight_ion$Treat_Contr)
+  spb[i] <- shapiro.test(an2$residuals)$p.value
+  nor_spb <- c(nor_spb, ifelse (spb[i] <= 0.05, "False", "True"))
 }
+spb_table <- data.frame ("P-value" = spb, "Normality" = nor_spb)
 
-for (i in names(Chloro_c[4])) { 
-  boxplot(Chloro_c[, i] ~ Chloro_c$Treat_Contr, 
-          ylab = names(Chloro_c[i]), 
-          xlab = names(Chloro_c[3])
-  )
-  print(kruskal.test(Chloro_c[, i] ~ Chloro_c$Treat_Contr))
-}
+
+
+knitr::kable(spb_table, caption = "Table 3. Shapiro test results for biomass", align="c")
+```
+
+```{r Biomass significant difference}
+for (i in names(Weight_ion[c(6,12)])) {
+  bwei2 <- ggboxplot(Weight_ion, 
+                 x = "Treat_Contr",
+                 y = names(Weight_ion[i]), 
+                 color = names(Weight_ion[3]),
+                 palette = c("blue", "red"),
+                 add = "jitter") + 
+    stat_compare_means(data = Weight_ion, method = "kruskal.test", label.x.npc = "center",
+                       label.y.npc = "top")
+  print(bwei2)
+} 
+
 
 ```
 
+
+##### iii) RWC, EL and chlorophyll content
 - **Relative water content (RWC)**:
 Relative water content is not significantly different in the salt-stressed plants compared with the control (p > 0.05).
 The mean value for RWC in salt-stressed plants 92.77 X ± 2.65 and 92.10 ± 7.00 for control plants.
@@ -372,41 +371,58 @@ The mean value for EL in salt-stressed plants is 60.60 ± 9.32 and 56.51 ± 6.48
 - **Chlorophyll content (CC)**: 
 Chlorophyll content is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for CC in salt-stressed plants is 14.06 ± 6.02 and 18.17 ± 4.79 for control plants.
-
-
-##### (4) Mineral ion content
-```{r analysis for mineral ion content}
-a11 <- aov(Na ~ Treat_Contr, data = Weight_ion)
-shapiro.test(a11$residuals)
-#No normality
-
-a12 <- aov(K ~ Treat_Contr, data = Weight_ion)
-shapiro.test(a12$residuals)
-# No normality
-
-a13 <- aov(Ca ~ Treat_Contr, data = Weight_ion)
-shapiro.test(a13$residuals)
-#No normality
-
-a14 <- aov(Mg ~ Treat_Contr, data = Weight_ion)
-shapiro.test(a14$residuals)
-#No normality
-
-a15 <- aov(K_Na ~ Treat_Contr, data = Weight_ion)
-shapiro.test(a15$residuals)
-#No normality
-
-for (i in names(Weight_ion[7:11])) { 
-  boxplot(Weight_ion[, i] ~ Weight_ion$Treat_Contr, 
-          ylab = names(Weight_ion[i]), 
-          xlab = names(Weight_ion[3])
-  )
-  print(kruskal.test(Weight_ion[, i] ~ Weight_ion$Treat_Contr))
+```{r RWC, EL and chlorophyll content normality test}
+spe <- numeric()
+nor_spe <- c()
+for(i in names(Weight_ion[c(6,12)])) { 
+  an3 <- aov(Weight_ion[, i] ~ Weight_ion$Treat_Contr)
+  spe[i] <- shapiro.test(an3$residuals)$p.value
+  nor_spe <- c(nor_spe, ifelse (spe[i] <= 0.05, "False", "True"))
 }
+spe_table <- data.frame ("P-value" = spe, "Normality" = nor_spe)
 
+nor_spc <- c()
+an4 <- aov(Chloro_c$Chlorophyll_Content ~ Chloro_c$Treat_Contr)
+spc <- shapiro.test(an4$residuals)$p.value
+nor_spc <- c(nor_spc, ifelse (spc <= 0.05, "False", "True"))
+
+spc_table <- data.frame ("P-value" = spc, "Normality" = nor_spc)
+row.names(spc_table) <- "Chlorophyll_Content"
+
+spec_table <- dplyr::bind_rows(spe_table, spc_table)
+
+
+knitr::kable(spec_table, caption = "Table 4. Shapiro test results for RWC, EL and chlorophyll content", align="c")
+```
+
+```{r RWC, EL and chlorophyll content significant difference}
+for (i in names(Weight_ion[7:11])) {
+  bwei3 <- ggboxplot(Weight_ion, 
+                 x = "Treat_Contr",
+                 y = names(Weight_ion[i]), 
+                 color = names(Weight_ion[3]),
+                 palette = c("blue", "red"),
+                 add = "jitter") + 
+    stat_compare_means(data = Weight_ion, method = "kruskal.test", label.x.npc = "center",
+                       label.y.npc = "top")
+  print(bwei3)
+} 
+
+bchlo <- ggboxplot(Chloro_c, 
+                 x = "Treat_Contr",
+                 y = "Chlorophyll_Content", 
+                 color = names(Chloro_c[3]),
+                 palette = c("blue", "red"),
+                 add = "jitter") 
+bchlo + stat_compare_means(data = Chloro_c, method = "kruskal.test", label.x.npc = "center",
+                       label.y.npc = "top")
 ```
 
 
+
+
+
+##### iv) Mineral ion content
 - **Sodium (Na)**:
 Sodium is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for Na in salt-stressed plants is 30.03 ± 8.84 and 13.60 ± 5.00 for control plants.
@@ -431,42 +447,39 @@ The mean value for Mg in salt-stressed plants is 4.37 ± 1.83 and 5.95 ± 2.85 f
 K/Na ratio is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for K/Na ratio in salt-stressed plants is 0.67 ± 0.20 and 1.20 ± 0.36 for control plants.
 
-
-
-##### (5) Gas exchange attributes
-```{r analysis for gas exchange attributes}
-a17 <- aov(Intercellular_CO2 ~ Treat_Contr, data = Gas_e)
-shapiro.test(a17$residuals)
-#Normality
-#Use anova
-a17_aov <- agricolae::HSD.test(a17, "Treat_Contr")
-box17 <- boxplot(Intercellular_CO2 ~ Treat_Contr, data = Gas_e)
-#kruskal.test(Intercellular_CO2 ~ Treat_Contr, data = Gas_e)
-# No statistical difference
-
-a16 <- aov(Photsynthesis_Rate ~ Treat_Contr, data = Gas_e)
-shapiro.test(a16$residuals)
-#No normality
-
-a18 <- aov(Transpiration_Rate ~ Treat_Contr, data = Gas_e)
-shapiro.test(a18$residuals)
-#No normality
-
-a19 <- aov(Stomatal_Conductance ~ Treat_Contr, data = Gas_e)
-shapiro.test(a19$residuals)
-#No normality
-
-for (i in names(Gas_e[c(4,6:7)])) { 
-  boxplot(Gas_e[, i] ~ Gas_e$Treat_Contr, 
-          ylab = names(Gas_e[i]), 
-          xlab = names(Gas_e[3])
-  )
-  print(kruskal.test(Gas_e[, i] ~ Gas_e$Treat_Contr))
+```{r Mineral ion content normality test}
+spw <- numeric()
+nor_spw <- c()
+for(i in names(Weight_ion[7:11])) { 
+  an5 <- aov(Weight_ion[, i] ~ Weight_ion$Treat_Contr)
+  spw[i] <- shapiro.test(an5$residuals)$p.value
+  nor_spw <- c(nor_spw, ifelse (spw[i] <= 0.05, "False", "True"))
 }
+spw_table <- data.frame ("P-value" = spw, "Normality" = nor_spw)
 
-
+knitr::kable(spw_table, caption = "Table 5. Shapiro test results for Mineral ion content", align="c")
 ```
 
+```{r Mineral ion content significant difference}
+for (i in names(Weight_ion[7:11])) {
+  bwei3 <- ggboxplot(Weight_ion, 
+                 x = "Treat_Contr",
+                 y = names(Weight_ion[i]), 
+                 color = names(Weight_ion[3]),
+                 palette = c("blue", "red"),
+                 add = "jitter") + 
+    stat_compare_means(data = Weight_ion, method = "kruskal.test", label.x.npc = "center",
+                       label.y.npc = "top")
+  print(bwei3)
+} 
+```
+
+
+
+
+
+
+##### v) Gas exchange attributes
 - **Photosynthesis rate (PR)**:
 Photosynthesus rate is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for PR in salt-stressed plants is 1.95 ± 1.02 and 7.53 ± 4.84 for control plants.
@@ -483,8 +496,45 @@ The mean value for TR in salt-stressed plants is 0.94 ± 0.48 and 2.57 ± 1.13 f
 Stomatal conductance is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for SC in salt-stressed plants is 0.039 ± 0.02 and 0.15 ± 0.08 for control plants.
 
+```{r Gas exchange attributes normality test}
+spg <- numeric()
+nor_spg <- c()
+for (i in names(Gas_e[c(4,5,6:7)])) { 
+  an6 <- aov(Gas_e[, i] ~ Gas_e$Treat_Contr)
+  spg[i] <- shapiro.test(an6$residuals)$p.value
+  nor_spg <- c(nor_spg, ifelse (spg[i] <= 0.05, "False", "True"))
+}
 
-```{r recap table for mean and median, echo=FALSE}
+spg_table <- data.frame ("P-value" = spg, "Normality" = nor_spg)
+
+knitr::kable(spg_table, caption = "Table 6. Shapiro test results for gas exchange attributes", align="c")
+```
+
+```{r Gas exchange attributes significant difference}
+Gas_e_withoutNA <- na.omit(Gas_e)
+for (i in names(Gas_e_withoutNA[c(4,6:7)])) {
+  bgas <- ggboxplot(Gas_e_withoutNA, 
+                 x = "Treat_Contr",
+                 y = names(Gas_e_withoutNA[i]), 
+                 color = names(Gas_e_withoutNA[3]),
+                 palette = c("blue", "red"),
+                 add = "jitter") + 
+    stat_compare_means(data = Gas_e_withoutNA, method = "kruskal.test", label.x.npc = "center",label.y.npc = "top")
+print(bgas)} 
+
+banova <- ggboxplot(Gas_e_withoutNA,
+          x="Treat_Contr", 
+          y= "Intercellular_CO2",
+          color = names(Gas_e_withoutNA[3]),
+          palette = c("blue", "red"),
+          add = "jitter") 
+banova  +   stat_compare_means(method = "anova")  
+```
+
+
+
+
+```{r recap table for mean and median}
 x <- data.frame(dplyr::filter(table, table$Treat_Contr=="Treatment"))
 x <- x[-(1:3)]
 y <- data.frame(dplyr::filter(table, table$Treat_Contr=="Control"))
@@ -578,11 +628,23 @@ Treatment <- c('Treatment','Control')
 SD <- rbind(Sd_Treatment,Sd_Control)
 SD$Treat_Contr <- Treatment
 
-knitr::kable(Means, caption = "Summary table for the mean of treated and control plants")
-knitr::kable(SD, caption = "Summary table for the standard deviation (SD) of treated and control plants")
+knitr::kable(Means, caption = "Table 7. Summary table for the mean of treated and control plants")
+knitr::kable(SD, caption = "Table 8. Summary table for the standard deviation (SD) of treated and control plants")
+```
+
+##### (3) Pearson correlation 
+```{r Pearson test, fig.cap = "Figure 3.1. Pearson correlation table for all variables. X represent non-significative correlation (p-value > 0.05)"}
+# table with all the variables but without 3 first columns
+all_data <- na.omit(table[4:23])
+
+res1 <- cor.mtest(all_data, conf.level = .95)
+M1 <-cor(all_data)
+corrplot(M1, p.mat = res1$p, sig.level = .05, type = "lower")
+
 ```
 
 
+#### (4) Salt tolerance index (STI)
 ```{r STI}
 x <- data.frame(dplyr::filter(table, table$Treat_Contr=="Treatment"))
 x <- x[-(1:3)]
@@ -648,14 +710,12 @@ STI <- data.frame(STI_Shoot_Length,
                   STI_Intercellular_CO2,
                   STI_Transpiration_Rate,
                   STI_Stomatal_Conductance)
+
+knitr::kable(STI, caption = "Table 4.1. Summary table for salt tolerance index")
 ```
 
 
-
-
-
-
-
+#### (5) Membership function value (MFV) 
 ```{r MFV}
 #Membership function value 
 # 1-results for the traits inversely related to salt tolerance: which are electrolyte leakage, Na, K and Ca
@@ -680,9 +740,11 @@ MFV <- STI %>%
          TR= (STI$Transpiration_Rate - min(STI$Transpiration_Rate, na.rm=T))/(max(STI$Transpiration_Rate, na.rm=T)- min(STI$Transpiration_Rate, na.rm=T)),
          SC= (STI$Stomatal_Conductance - min(STI$Stomatal_Conductance, na.rm=T))/(max(STI$Stomatal_Conductance, na.rm=T)- min(STI$Stomatal_Conductance, na.rm=T)))%>%
   select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC)
+
+knitr::kable(MFV, caption = "Table 5.1. MFV table based on STI", align="c")
 ```
 
-
+#### (6) Principal component analysis (PCA)
 ```{r PCA}
 ####------PCA on MFV-------###
 
@@ -691,174 +753,72 @@ MFV_salt.pca <- prcomp((na.omit(MFV[-c(8, 17, 20)])), scale. = TRUE)
 #results of the PCA
 MFV_salt.pca$sdev
 summary(MFV_salt.pca)
-#check, if the sums equal to quantity of observations (=20)
+#check, if the sums equal to quantity of observations (=17)
 sum((MFV_salt.pca$sdev)^2)
-#plotting the results in order to evaluate the PCs
-MFV_plot <- screeplot(MFV_salt.pca, type = "lines")
-#another variant of the plot
-#install.packages("factoextra")
-#library(factoextra)
-#fviz_eig(MFV_salt.pca)
-#make a scatterplot of PC1 and PC2
-plot(MFV_salt.pca$x[,1],MFV_salt.pca$x[,2])
-text(MFV_salt.pca$x[,1],MFV_salt.pca$x[,2], 
-     table$Code[-c(14, 15, 32, 33)], cex=0.7, pos=4, col=c(1:2))
-MFV_pca.var <- round(MFV_salt.pca$sdev^2/sum(MFV_salt.pca$sdev^2)*100, 1)
-barplot(MFV_pca.var)
+#plotting the results in order to evaluate the principal components
+MFV_plot <- screeplot(MFV_salt.pca,
+                      npcs = length(MFV_salt.pca$sdev),
+                      type = "lines")
 #plotting the results of the PCA
 library(ggplot2)
-MFV_pca.data <- data.frame(data_labels = table$Code[-c(13, 14, 31, 32)],
-                       color_labels = rep(c(1:23), each = 2),
-                       X_axis = MFV_salt.pca$x[,1],
-                       Y_axis = MFV_salt.pca$x[,2])
-
-#ggplot(data = pca.data, aes(x = X_axis, y = Y_axis, label = data_labels, color = color_labels ))+
-#        geom_text()+
-#        xlab(paste("PC1 - ", pca.var[1], "%", sep=""))+
-#        ylab(paste("PC2 - ", pca.var[2], "%", sep=""))+
-#        theme_bw()+
-#        ggtitle("MFV PCA graph")
+#install.packages("ggfortify")
+library(ggfortify)
+#making a scatterplot of PC1 and PC2
+#creating data.frame for data labels in future plot
+MFV_labels <- data.frame(Acc_loc$Elevation[-c(7, 16)])
+row.names(MFV_labels) <- paste0("Ess-", c(1:6, 8:15, 17:25))
+#creating the plot
+MFV_pc12 <- autoplot(MFV_salt.pca, loadings = TRUE, loadings.colour = 'blue',
+         loadings.label = TRUE, loadings.label.size = 5,                #plotting the variables
+         data = MFV_labels, shape = FALSE, label.size = 3,              #plotting the accessions
+         frame = TRUE)                                                  #plotting the frame (to see if there are any groups)
+MFV_pc12 + ggtitle("Scatterplot of PC1 and PC2")                            #adding the title
 
 #putting absolute values of the loading scores from PCA1 into a vector
 MFV_loading_scores <- abs(MFV_salt.pca$rotation[,1])
 #ranking the variables
-MFV_var_scores_ranked <- sort(MFV_loading_scores)
+MFV_var_scores_ranked <- sort(MFV_loading_scores, decreasing = TRUE)
+# We used 8 highest ranked variables to include in the final MFV-based ranking
+# of salt tolerance accessions
+print(MFV_var_scores_ranked) # Result from PCA analysis (from PCA_analysis.R)
 ```
 
 
 
-
-
+#### (7) MFV Ranking 
 ```{r MFV ranking}
-# Result from PCA analysis (from PCA_analysis.R)
-print(MFV_var_scores_ranked)
-
-# We used 8 highest ranked variables to include in the final MFV based ranking
-# of salt tolerance
 MFV <- MFV %>%
   mutate(Mean = rowMeans(MFV[c(1:7, 15)], na.rm=T))%>%
-  #mutate(Mean = rowMeans(MFV[1:5], na.rm=T))%>% 
   select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC, Mean)
+
+MFV_Ranked <- MFV[order(-MFV$Mean),]
+MFV_Ranked <- MFV_Ranked[20]
+MFV_Ranked$Category <- c("Highly tolerant",(rep("Tolerant", 5)), (rep("Moderately tolerant", 13)), (rep("Sensitive", 5)), "Highly sensitive")
+
+knitr::kable(MFV_Ranked, caption = "Table 7.1. Salt tolerance ranking based on MFV mean from 8 variables identified by PCA", align="c")
 ```
 
 
+#### (8) Dendogram
+```{r, fig.cap = "Figure 8.1. The MFV dendogram based on 8 variables identified by PCA"}
+#table with MFV from 8 important variables of PCA
+important_var <- na.omit(MFV)
+important_var <- MFV[c(1:7, 15)]
 
+#make the dendogram
+dend <- important_var %>% # change MFV_Ranked with important_var in function of professor answer 
+  scale %>% 
+  dist(method = "euclidean") %>% 
+  hclust(method = "ward.D2") %>% 
+  as.dendrogram %>%
+  set("branches_k_color", 
+      value = c("red", "orange","blue", "green"), 
+      k = 4)
 
-```{r Pearson test}
-#pearson test with MFV table 
-cor.test(MFV$SL,MFV$RL, method="pearson") #
-cor.test(MFV$SL,MFV$PH, method="pearson") #
-cor.test(MFV$SL,MFV$NL, method="pearson") #
-cor.test(MFV$SL,MFV$LA, method="pearson") #
-cor.test(MFV$SL,MFV$FW, method="pearson") #
-cor.test(MFV$SL,MFV$DW, method="pearson") #
-cor.test(MFV$SL,MFV$RWC, method="pearson")
-cor.test(MFV$SL,MFV$EL, method="pearson") #
-cor.test(MFV$SL,MFV$CC, method="pearson") #
-cor.test(MFV$SL,MFV$Na, method="pearson")
-cor.test(MFV$SL,MFV$K, method="pearson")
-cor.test(MFV$SL,MFV$Ca, method="pearson")
-cor.test(MFV$SL,MFV$Mg, method="pearson")
-cor.test(MFV$SL,MFV$K_Na, method="pearson") #
-cor.test(MFV$SL,MFV$PR, method="pearson") #
-cor.test(MFV$SL,MFV$ICO2, method="pearson")
-cor.test(MFV$SL,MFV$TR, method="pearson")
-cor.test(MFV$SL,MFV$SC, method="pearson")
-
-cor.test(MFV$RL,MFV$PH, method="pearson") #
-cor.test(MFV$RL,MFV$NL, method="pearson") #
-cor.test(MFV$RL,MFV$LA, method="pearson") #
-cor.test(MFV$RL,MFV$FW, method="pearson") #
-cor.test(MFV$RL,MFV$DW, method="pearson") #
-cor.test(MFV$RL,MFV$EL, method="pearson") #
-cor.test(MFV$RL,MFV$CC, method="pearson") #
-cor.test(MFV$RL,MFV$K_Na, method="pearson") #
-cor.test(MFV$RL,MFV$PR, method="pearson") #
-
-cor.test(MFV$PH,MFV$NL, method="pearson") #
-cor.test(MFV$PH,MFV$LA, method="pearson") #
-cor.test(MFV$PH,MFV$FW, method="pearson") #
-cor.test(MFV$PH,MFV$DW, method="pearson") #
-cor.test(MFV$PH,MFV$EL, method="pearson") #
-cor.test(MFV$PH,MFV$CC, method="pearson") #
-cor.test(MFV$PH,MFV$K_Na, method="pearson") #
-cor.test(MFV$PH,MFV$PR, method="pearson") #
-
-cor.test(MFV$NL,MFV$LA, method="pearson") #
-cor.test(MFV$NL,MFV$FW, method="pearson") #
-cor.test(MFV$NL,MFV$DW, method="pearson") #
-cor.test(MFV$NL,MFV$EL, method="pearson") #
-cor.test(MFV$NL,MFV$CC, method="pearson") #
-cor.test(MFV$NL,MFV$K_Na, method="pearson") #
-cor.test(MFV$NL,MFV$PR, method="pearson") #
-
-cor.test(MFV$LA,MFV$FW, method="pearson") #
-cor.test(MFV$LA,MFV$DW, method="pearson") #
-cor.test(MFV$LA,MFV$EL, method="pearson") #
-cor.test(MFV$LA,MFV$CC, method="pearson") #
-cor.test(MFV$LA,MFV$K_Na, method="pearson") #
-cor.test(MFV$LA,MFV$PR, method="pearson") #
-
-cor.test(MFV$FW,MFV$DW, method="pearson") #
-cor.test(MFV$FW,MFV$EL, method="pearson") #
-cor.test(MFV$FW,MFV$CC, method="pearson") #
-cor.test(MFV$FW,MFV$K_Na, method="pearson") #
-cor.test(MFV$FW,MFV$PR, method="pearson") #
-
-cor.test(MFV$DW,MFV$EL, method="pearson") #
-cor.test(MFV$DW,MFV$CC, method="pearson") #
-cor.test(MFV$DW,MFV$K_Na, method="pearson") #
-cor.test(MFV$DW,MFV$PR, method="pearson") #
-
-cor.test(MFV$EL,MFV$CC, method="pearson") #
-cor.test(MFV$EL,MFV$K_Na, method="pearson") #
-cor.test(MFV$EL,MFV$PR, method="pearson") #
-
-cor.test(MFV$CC,MFV$K_Na, method="pearson") #
-cor.test(MFV$CC,MFV$PR, method="pearson") #
-
-cor.test(MFV$K_Na,MFV$PR, method="pearson") #
-
-
-# Pearson correlation test on "data" table  
-#install.packages('Hmisc')
-#install.packages('ggpubr')
-#install.packages('tidyverse')
-#install.packages('corrplot')
-library(dplyr)
-library(lattice)
-library(survival)
-library(Formula)
-library(ggplot2)
-library(Hmisc)
-library(ggpubr)
-library(tidyverse)
-library(Hmisc)
-library(corrplot)
-
-# variables used in the paper 
-my_data <- select(table, Shoot_Length, Root_Length, Plant_Height, Number_Leaves, Leaf_Area, Fresh_Weight, Dry_Weight, Chlorophyll_Content, Electrolyte_Leakage, K_Na, Photsynthesis_Rate)
-my_data <- na.omit(my_data)
-# all the variables
-all_data <- na.omit(table[4:23])
-
-#get p-value of my_data
-cor_1 <- rcorr(as.matrix(my_data))
-cor_1_P <- as.data.frame(cor_1$P) # put p values into a data frame 
-# get p-value of all_data
-cor_2 <- rcorr(as.matrix(all_data))
-cor_2_P <- as.data.frame(cor_2$P) # put p values into a data frame 
-
-
-res1 <- cor.mtest(all_data, conf.level = .95)
-M1 <-cor(all_data)
-corrplot(M1, p.mat = res1$p, sig.level = .05, type = "lower")
-
-res2 <- cor.mtest(my_data, conf.level = .95)
-M2 <-cor(my_data)
-corrplot(M2, p.mat = res1$p, sig.level = .05, type = "lower")
+#plot dendogram
+dend %>% plot(main = "MFV Dendrogram")
 ```
-
+#### (9) Accessions map
 
 
 

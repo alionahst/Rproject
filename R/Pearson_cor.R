@@ -1,4 +1,4 @@
-## @knitr PearsonCor
+## ---- PearsonCor
 
 # Pearson correlation test on all the variables
 

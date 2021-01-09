@@ -3,6 +3,7 @@ library(dplyr)
 # Result from PCA analysis (from PCA_analysis.R)
 print(MFV_var_scores_ranked)
 
+
 # We used 8 highest ranked variables to include in the final MFV based ranking of salt tolerance
 # Add into the data the mean MFV column from the 8 important variables 
 MFV <- MFV %>%
@@ -13,6 +14,7 @@ MFV <- MFV %>%
 # create the ranking table out of MFV mean from 8 important variables
 MFV_Ranked <- MFV[order(-MFV$Mean),]
 MFV_Ranked <- MFV_Ranked[20]
+MFV_Ranked$Category <- c("Highly tolerant",(rep("Tolerant", 5)), (rep("Moderately tolerant", 13)), (rep("Sensitive", 5)), "Highly sensitive" )
 
 #table with MFV from 8 important variables of PCA
 important_var <- na.omit(MFV)
