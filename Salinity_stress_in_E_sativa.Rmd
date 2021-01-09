@@ -294,7 +294,7 @@ e <- e[6]
 #create data frame with all the summarized tables 
 table <- data.frame(a, b, c, d, e)
 
-## Creating the caption for the summary table
+##Creating the caption for the summary table
 knitr::kable(table, caption = "Table 1.1 Mean values of salt tolerance traits for each accession and treatment type", align="c" , digits = round(2))
 ```
 #### (2) Statistical analysis on variables 
@@ -318,21 +318,24 @@ NL stress index of accessions varied from 28.00 to 94.12
 The mean value for LA in salt-stressed plants is 0.03 ± 0.02 and 0.07 ± 0.03 for control plants. 
 LA stress index of accessions varied from 75.95 to 100
 
-```{r morphological traits normality test}
-spm <-  numeric()
+```{r Normality test Morphological traits}
+#Performing Shapiro–Wilk test of normality
+spm <- numeric()
 nor_spm <- c()
 for(i in names(Morpho_t[4:8])) { 
   an1 <- aov(Morpho_t[, i] ~ Morpho_t$Treat_Contr)
   spm[i] <- shapiro.test(an1$residuals)$p.value
   nor_spm <- c(nor_spm, ifelse (spm[i] <= 0.05, "False", "True"))
 }
+#Creating summary table with the results
 spm_table <- data.frame ("P-value" = spm, "Normality" = nor_spm)
 
-knitr::kable(spm_table, caption = "Table 2. Shapiro test results for morphological traits", align="c")
+#Creating the caption for the summary table
+knitr::kable(spm_table, caption = "Table 2.1 Shapiro–Wilk test of normality results for morphological traits", align="c")
 ```
 
-```{r morphological traits significant difference, fig.cap ="blabla"}
-
+```{r Significance test Morphological traits, fig.cap ="blabla"}
+#Performing significance test and plotting the results and values distribution
 for (i in names(Morpho_t[4:8])) {
   bmorpho <- ggboxplot(Morpho_t, 
                  x = "Treat_Contr",
@@ -340,8 +343,11 @@ for (i in names(Morpho_t[4:8])) {
                  color = names(Morpho_t[3]),
                  palette = c("blue", "red"),
                  add = "jitter") + 
-    stat_compare_means(data = Morpho_t, method = "kruskal.test", label.x.npc = "center",
-                       label.y.npc = "top")
+    stat_compare_means(data = Morpho_t, method = "kruskal.test", 
+                       label.x.npc = "center",
+                       label.y.npc = "top") +
+    labs(x = "",
+         caption = "Table")
   print(bmorpho)
 } 
 ```
