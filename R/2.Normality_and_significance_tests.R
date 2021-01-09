@@ -1,21 +1,27 @@
+###----Normality and significance tests----###
+
+##Required packages and libraries
 #install.packages("ggpubr")
 #install.packages("dplyr")
 library(ggpubr)
 library(dplyr)
 
-#MORPHOLOGICAL TRAITS 
 
-# Shapiro test
-spm <-  numeric()
+##Morphological traits (shoot length, root length, plant height,
+##number of leaves, leaf area)
+
+#Performing Shapiro–Wilk test
+spm <- numeric()
 nor_spm <- c()
 for(i in names(Morpho_t[4:8])) { 
   an1 <- aov(Morpho_t[, i] ~ Morpho_t$Treat_Contr)
   spm[i] <- shapiro.test(an1$residuals)$p.value
   nor_spm <- c(nor_spm, ifelse (spm[i] <= 0.05, "False", "True"))
 }
+#Creating summary table with the results
 spm_table <- data.frame ("P-value" = spm, "Normality" = nor_spm)
 
-# boxplot and statistical differences
+#Performing significance test and plotting the results and values distribution
 for (i in names(Morpho_t[4:8])) {
   bmorpho <- ggboxplot(Morpho_t, 
                  x = "Treat_Contr",
@@ -28,10 +34,9 @@ for (i in names(Morpho_t[4:8])) {
   print(bmorpho)
 } 
 
+##Biomass traits (fresh weight, dry weight)
 
-#Biomasse 
-
-# Shapiro test
+#Performing Shapiro–Wilk test
 spb <- numeric()
 nor_spb <- c()
 for(i in names(Weight_ion[4:5])) { 
@@ -39,9 +44,11 @@ for(i in names(Weight_ion[4:5])) {
   spb[i] <- shapiro.test(an2$residuals)$p.value
   nor_spb <- c(nor_spb, ifelse (spb[i] <= 0.05, "False", "True"))
 }
+
+#Creating summary table with the results
 spb_table <- data.frame ("P-value" = spb, "Normality" = nor_spb)
 
-# boxplot and statistical differences
+#Performing significance test and plotting the results and values distribution
 for (i in names(Weight_ion[4:5])) {
   bwei <- ggboxplot(Weight_ion, 
                  x = "Treat_Contr",
@@ -55,8 +62,10 @@ for (i in names(Weight_ion[4:5])) {
 } 
 
 
-###  RWC, EL and chlorophyl content
-# Shapiro test
+##Relative water content (RWC), electrolyte leakage (EL),
+##chlorophyll content (SPAD)
+
+#Performing Shapiro–Wilk test
 spe <- numeric()
 nor_spe <- c()
 for(i in names(Weight_ion[c(6,12)])) { 
@@ -64,7 +73,10 @@ for(i in names(Weight_ion[c(6,12)])) {
   spe[i] <- shapiro.test(an3$residuals)$p.value
   nor_spe <- c(nor_spe, ifelse (spe[i] <= 0.05, "False", "True"))
 }
+
+#Creating summary table with the results
 spe_table <- data.frame ("P-value" = spe, "Normality" = nor_spe)
+
 
 nor_spc <- c()
 an4 <- aov(Chloro_c$Chlorophyll_Content ~ Chloro_c$Treat_Contr)
@@ -160,6 +172,4 @@ for (i in names(Gas_e_withoutNA[c(4,6:7)])) {
     stat_compare_means(data = Gas_e_withoutNA, method = "kruskal.test", label.x.npc = "center",
                        label.y.npc = "top")
   print(bgas)
-} 
-
-
+}

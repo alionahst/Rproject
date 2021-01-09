@@ -96,9 +96,9 @@ Additionally, we calculated mean and standard deviation values of treated and co
 #### 3. Correlation analysis.
 In order to see the degree of association between the morpho-physiological parameters (and, additionally, elevation) we performed Pearson correlation analysis. The results were visualized in the Figure 3.1??.
 
-???We started doing Pearson correlation using membership function values (MFV) of the 11 selected salt tolerance traits, the results were very similar to that in the article. But we discarded that analysis as we didn't understood the utility of it.
+We started doing Pearson correlation using membership function values (MFV) of the 11 selected salt tolerance traits, the results were very similar to that in the article. But we discarded that analysis as we didn't understood the utility of it.
 
-Instead we computed Pearson correlation on the means of all salt tolerance traits (treatment and control), as it shows (prior to calculating MFV) which values has positive correlation and which has the negative, thus allowing us to choose the appropriate formula for MFV calculation (see explanation of MFV calculation in the next chapter???).???
+Instead we computed Pearson correlation on the means of all salt tolerance traits (treatment and control), as it shows (prior to calculating MFV) which values has positive correlation and which has the negative, thus allowing us to choose the appropriate formula for MFV calculation (see explanation of MFV calculation in the next section).
 
 
 #### 4. Salt tolerant index (STI), membership function value (MFV) calculation.
@@ -115,13 +115,12 @@ The data of all morpho-physiological parameters (control and treatment) for each
 Then, we computed the MVF table using the formula provided in the article: **$Xp=[(X−Xmin)/(Xmax−Xmin)]×100%$**. For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula: **$Xp=[1−(X−Xmin)/(Xmax−Xmin)]×100%$**
 For calculating MFV, we used the same formula, however we used the min and max of the mean STI.
 
-
-We performed the Principal Component Analysis on the MFV values of all the variables, except for RWC and ICO2 because they did not show significant difference between treatment and control. We used 8 highest ranked variables from the results: PH, SL, RL, NL, DW, FW, LA, K_Na. 
-
 We computed the mean of MFV from MFV values of the variables above. With the results, we ranked the accessions from highly tolerant to highly sensitive. 
 
 
-We started pearson correlation but we still need to finish it. We started doing peason correlation using MFV values which results are very similar to the article. But we also computed on the raw data because we think it has more sence.
+We performed the Principal Component Analysis on the MFV values of all the variables, except for RWC and ICO2 because they did not show significant difference between treatment and control. We used 8 highest ranked variables from the results: PH, SL, RL, NL, DW, FW, LA, K_Na. 
+
+
 
 
 We still need to make the dendogram, add map with accession and check for correlation between altitude and MFV ranking. 
@@ -131,29 +130,33 @@ We still need to make the dendogram, add map with accession and check for correl
 ### Results 
 #####(Figures and tables with captions and description of what do they mean.)
 
-#### (1) Tidying of data
+#### 1. Data download and transformation.
 ```{r Tidy_data.R, message=FALSE}
-## Data download and transformation 
-# download excel sheet from internet and store it into Excel object
+###----Data download and transformation----###
+
+##Downloading the .xlsx data
+#download excel sheet from internet and store it into an Excel object
 Excel <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Raw_data_Afsar_et_al.%2C_2020-PeerJ_20.5.2020.xlsx"
 
-# create the folder "data" if it doesn't exist
+#create the folder "data" if it doesn't exist
 D <- "data"
 if (!dir.exists(D)) dir.create(D)
-
 f <- paste0 (D, "/data.xlsx")
-# download excel into the folder "data" (created beforehand) under the name "data.xlsx"
+
+#download excel into the folder "data" (created beforehand) under the name "data.xlsx"
 download.file(Excel, f, mode="wb")
-# get the name of excel sheets
+
+#get the names of the excel sheets
 excel.sheet <- excel_sheets(f)
 
-# created a list with the 4 sheet table from excel 
+##Tidying the .xlsx data
+#create a list with the 4 sheet table from excel to tidy it further
 X <- list()
 for (i in excel.sheet){
   X[[i]] <- as.data.frame(read_xlsx(f,i))
 }
 
-# organize column names and fill the first 2 columns
+#organize column names and fill the first 2 columns
 for(i in names(X)){
   names(X[[i]])[1:3] <- c("Number", "Code", "Treat_Contr")
   X[[i]] <- X[[i]][-1,]
@@ -166,13 +169,13 @@ for (i in seq_along(X)){
   X[[i]][-(2:3)] <- lapply(X[[i]][-(2:3)], as.numeric)
 }
 
-# creating data frames from different .xlsx sheets
+#creating data frames from different .xlsx sheets
 Morpho_t <- X$`Morphological traits`
 Weight_ion <- X$`FW DW RWC Ions EL`
 Chloro_c <- X$`Chlorophyll content`
 Gas_e <- X$`Gas Exchange parameters`
 
-#Changing names of the columns for more convinient use
+#changing names of the columns for more convinient use
 names(Morpho_t)[4:8] <- c('Shoot_Length', 
                           'Root_Length', 
                           'Plant_Height', 
@@ -193,8 +196,8 @@ names(Gas_e) [4:7] <- c('Photsynthesis_Rate',
                         'Transpiration_Rate', 
                         'Stomatal_Conductance')
 
-# adding NA cells into the missing 7th and 16th accession
-# creating a data frame with the missing data first
+#adding NA cells into the missing 7th and 16th accession
+#creating a data frame with the missing data first
 Gas_e_miss <- data.frame (Number = rep(c(7, 16), each = 8),
                           Code = rep(c("Es-7", "Es-16"), each = 8),
                           Treat_Contr = rep(c("Treatment", "Control",
@@ -203,35 +206,45 @@ Gas_e_miss <- data.frame (Number = rep(c(7, 16), each = 8),
                           Intercellular_CO2 = rep(NA, 16),
                           Transpiration_Rate = rep(NA, 16),
                           Stomatal_Conductance = rep(NA, 16))
+
 #changing the numbers in "Number" column
 Gas_e$Number <- replace(Gas_e$Number, , rep(c(1:6, 8:15, 17:25), each = 8))
-# adding NA cells into the missing 7th and 16th accession
+
+#adding NA cells into the missing 7th and 16th accession
 if (!(is.element('Es-7', Gas_e$Code))) Gas_e <- rbind(Gas_e, Gas_e_miss)
-#Sorting the variables according to Number
+
+#sorting the variables according to Number
 Gas_e <- Gas_e[order(Gas_e$Number),]
-#Rewriting row names to correspond the ordered data
+
+#rewriting row names to correspond to the ordered data
 row.names(Gas_e) <- c(1:200)
 
-# downloading data for the location of accessions
+##Downloading the .docx data
+#downloading data for the location of accessions
 word <- "https://dfzljdn9uc3pi.cloudfront.net/2020/9749/1/Table_S1.docx"
 w <- paste0(D, "/location.docx")
 download.file(word, w, mode="wb")
 
+##Tidying the .docx data
 #creating data frame for the location of accessions
 Acc_loc <- docx_extract_all_tbls(read_docx(w, track_changes = NULL),
                                  guess_header = TRUE, preserve = FALSE,
                                  trim = TRUE)
 Acc_loc <- as.data.frame(Acc_loc)
+
 #removing m from Elevation column 
 Acc_loc$Elevation <- sub(' m', '', Acc_loc$Elevation)
+
 #transforming data in the accession_loc
 Acc_loc[c(1,6)] <- lapply(Acc_loc[c(1,6)], as.numeric)
 Acc_loc[-c(1,6)] <- lapply(Acc_loc[-c(1,6)], as.factor)
+
 #In order to fit the length of this table to the length of the ultimate table
 #we need to double all the rows
 Acc_loc_double <- Acc_loc[rep(1:25, each = 2), ]
 
-# create summary table for morphological trait
+## Creating the summarized table to work with
+#create summary table for morphological trait
 a <- Morpho_t %>% 
   group_by(Number, Code, Treat_Contr) %>% 
   summarise(Shoot_Length = mean(Shoot_Length),
@@ -280,16 +293,12 @@ e <- e[6]
 
 #create data frame with all the summarized tables 
 table <- data.frame(a, b, c, d, e)
+
+## Creating the caption for the summary table
+knitr::kable(table, caption = "Table 1.1 Mean values of salt tolerance traits for each accession and treatment type", align="c" , digits = round(2))
 ```
-
-```{r, tidy table}
-knitr::kable(table, caption = "Table 1. Mean values of variables for each accessions and treatments", align="c" , digits = round(2))
-```
-
-
-
-##### (2) Statistical analysis on variables 
-##### i. Morphological traits
+#### (2) Statistical analysis on variables 
+#### i. Morphological traits
 There is a statistical difference between control and treatment for all morphological trait
 
 - **Shoot length (SL)**: Shoot length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for SL in salt-stressed plants is 1.10 ± 0.48 and 2.30 ± 0.56 for control plants. SL stress index of accessions varied from 16.73 to 89.12
@@ -839,13 +848,22 @@ dend <- important_var %>% # change MFV_Ranked with important_var in function of 
 #plot dendogram
 dend %>% plot(main = "MFV Dendrogram")
 ```
-#### (9) Accessions map
+#### (9) Accessions map and location correlation
 
+```{r}
+# Correlation between mean MFV (of 8 important ) and elevation 
+Elev_Cor <- as.data.frame(MFV$Mean)
+Elev_Cor$Elevation <- Acc_loc$Elevation
+
+cor_1 <- rcorr(as.matrix(Elev_Cor))
+cor_1_result <- paste(round(cor_1$r[2,1], 2), sep = " - correlation coefficient")
+knitr::kable(cor_1_result, caption = "Table 9.1. Correlation of mean MFV and elevation", align="c")
+```
 
 
 
 ### Discussion 
-####From your objectives.
+#### From your objectives.
 The priliminary results, despite being slightly different from that in the article produced the ranking that corresponds to the groups (Highly tolerant - Highly sensitive) outlined in the article. 
 
 

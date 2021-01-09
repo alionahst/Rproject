@@ -21,7 +21,7 @@ corrplot(M1, p.mat = res1$p, sig.level = .05, type = "lower")
 
 
 
-# Correlation between mean MFV (of 8 important ) and elevation 
+# Correlation between mean MFV (of 8 important ) and elevation
 Elev_Cor <- as.data.frame(MFV$Mean)
 Elev_Cor$Elevation <- Acc_loc$Elevation
 
