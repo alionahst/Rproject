@@ -148,7 +148,7 @@ for(i in names(Weight_ion[7:11])) {
 spw_table <- data.frame ("P-value" = spw, "Normality" = nor_spw)
 
 #Performing significance test and plotting the results and values distribution
-for (i in names(Weight_ion[7:11])) {
+for (i in (7:11)) {
   bwei3 <- ggboxplot(Weight_ion, 
                  x = "Treat_Contr",
                  y = names(Weight_ion[i]), 
@@ -192,7 +192,7 @@ banova <- ggboxplot(Gas_e_withoutNA,
 banova  +   stat_compare_means(method = "anova") +
   theme(legend.position = "None") +
   labs(x = "",
-       caption = paste("Table 2. 11 Distribution boxplot of the mean values of the",
+       caption = paste("Table 2. 16 Distribution boxplot of the mean values of the",
                        names(Gas_e_withoutNA[5])))
 #for photosynthesis rate, transpiration rate, stomatal conductance
 #(with Kruskal-Wallis results)
@@ -209,7 +209,7 @@ for (i in c(4,6:7)) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
     labs(x = "",
-         caption = paste("Table 2.", ifelse((i<5), paste(i+8), paste(i+7)),
+         caption = paste("Table 2.", ifelse((i<5), paste(i+13), paste(i+12)),
                          "Distribution boxplot of the mean values of the",
                          names(Gas_e_withoutNA[i])))
   print(bgas)

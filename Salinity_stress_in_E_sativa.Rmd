@@ -53,13 +53,13 @@ library(tidyverse)
 ```
 
 
-### Introduction
+## Introduction
 Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. As function of their location, plants from the same species can exhibit different tolerance to abiotic stress. In the study we will review, 25 accessions of *Eruca sativa* from different regions of Pakistan were analyzed. Each accession have been separated into two groups  according to the received treatment: first group underwent salt stress (150 mM NaCl) during two weeks and the second was the control. Following that 19 morpho-physiological traits were measured.
 
-The data was obtained from the paper [**"Evaluation of salt tolerance in *Eruca sativa* accessions based on morpho-physiological traits"**
+The data was obtained from the paper [**"Evaluation of salt tolerance in *Eruca sativa* accessions based on morpho-physiological traits"** 
 (Afsar et. al 2020)](https://peerj.com/articles/9749/)
 
-### Objectives and hypotheses
+## Objectives and hypotheses
 Our main objectives are:
 
 1. Explore the effects of salt stress on various morpho-physiological traits in different *E. sativa* accessions. 
@@ -75,25 +75,25 @@ Main hypothesis:
 - Geographical location and/or elevation may impact adaptation to salinity. 
 
 
-### Methods 
+## Methods 
 What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
 
-#### 1. Downloading and tidying the data.
+### 1. Downloading and tidying the data.
 First we had to download the data.xls file from the paper. The tables needed to be tidied (column names organized, empty cells filled, the values formatted, etc.). Then we had to download the location of accessions.doc data and tidied this table as well.
 
 In order to be able to work with all of morpho-physiological parameters we had to unify them (because of different number of replicates in different categories of morpho-physiological traits measures). The unification was done trough the mean in every accession and treatment. With unified data we created a summary table (Table 1).
 
-#### 2. Test of normality and statistical difference of variables.
+### 2. Test of normality and statistical difference of variables.
 Once we had the summary table, we tested the normality of variables with 
 Shapiro–Wilk test. Our Null Hypothesis (H0) was that morpho-physiological parameters' distribution was normal. The results for every group of morpho-physiological traits were summarized in tables (Table 2-6).
 
 If the H0 was accepted (p > 0.05) we used ANOVA, otherwise (p < 0.05) we proceeded with Kruskal-Wallis test to see if there was a significant difference between salt-treated and control plants for each variable.
-The parameters' distributions and results of normality tests were visualized in the boxplot figures (Figure ..-..)
+The parameters' distributions and results of normality tests were visualized in the boxplot figures (Figure 2.1-2.19)
 
-Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into tables (Table 7-8).
+Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into tables (Table 2.1-2.5).
 
 
-#### 3. Correlation analysis.
+### 3. Correlation analysis.
 In order to see the degree of association between the morpho-physiological parameters (and, additionally, elevation) we performed Pearson correlation analysis. The results were visualized in the Figure 3.1??.
 
 We started doing Pearson correlation using membership function values (MFV) of the 11 selected salt tolerance traits, the results were very similar to that in the article. But we discarded that analysis as we didn't understood the utility of it.
@@ -101,7 +101,7 @@ We started doing Pearson correlation using membership function values (MFV) of t
 Instead we computed Pearson correlation on the means of all salt tolerance traits (treatment and control), as it shows (prior to calculating MFV) which values has positive correlation and which has the negative, thus allowing us to choose the appropriate formula for MFV calculation (see explanation of MFV calculation in the next section).
 
 
-#### 4. Salt tolerant index (STI), membership function value (MFV) calculation.
+### 4. Salt tolerant index (STI), membership function value (MFV) calculation.
 
 In order to evaluate degree of salt tolerance (define the susceptible and resistant accessions), first we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the salt-tolerance index (STI) - ratio of treated plant values to control.
 
@@ -127,10 +127,10 @@ We still need to make the dendogram, add map with accession and check for correl
 
 
 
-### Results 
+## Results 
 #####(Figures and tables with captions and description of what do they mean.)
 
-#### 1. Data download and transformation.
+### 1. Data download and transformation.
 ```{r Tidy_data.R, message=FALSE}
 ###----Data download and transformation----###
 
@@ -297,9 +297,10 @@ table <- data.frame(a, b, c, d, e)
 ##Creating the caption for the summary table
 knitr::kable(table, caption = "Table 1.1 Mean values of salt tolerance traits for each accession and treatment type", align="c" , digits = round(2))
 ```
-#### (2) Statistical analysis on variables 
-#### i. Morphological traits
-There is a statistical difference between control and treatment for all morphological trait
+
+### 2. Initial statistical analysis. Normality test and significant difference test. 
+#### 2.1 Morphological traits
+There is a statistical difference between control and treatment for all morphological traits
 
 - **Shoot length (SL)**: Shoot length is significantly reduced in the salt-stressed plants compared with the control (p < 0.05). The mean value for SL in salt-stressed plants is 1.10 ± 0.48 and 2.30 ± 0.56 for control plants. SL stress index of accessions varied from 16.73 to 89.12
 
@@ -318,7 +319,7 @@ NL stress index of accessions varied from 28.00 to 94.12
 The mean value for LA in salt-stressed plants is 0.03 ± 0.02 and 0.07 ± 0.03 for control plants. 
 LA stress index of accessions varied from 75.95 to 100
 
-```{r Normality test Morphological traits}
+```{r Normality test of morphological traits}
 #Performing Shapiro–Wilk test of normality
 spm <- numeric()
 nor_spm <- c()
@@ -331,28 +332,31 @@ for(i in names(Morpho_t[4:8])) {
 spm_table <- data.frame ("P-value" = spm, "Normality" = nor_spm)
 
 #Creating the caption for the summary table
-knitr::kable(spm_table, caption = "Table 2.1 Shapiro–Wilk test of normality results for morphological traits", align="c")
+knitr::kable(spm_table, caption = "Table 2.1 Shapiro–Wilk test results for morphological traits", align="c")
 ```
 
-```{r Significance test Morphological traits, fig.cap ="blabla"}
+```{r Significance test of morphological traits}
 #Performing significance test and plotting the results and values distribution
-for (i in names(Morpho_t[4:8])) {
-  bmorpho <- ggboxplot(Morpho_t, 
-                 x = "Treat_Contr",
-                 y = names(Morpho_t[i]), 
-                 color = names(Morpho_t[3]),
-                 palette = c("blue", "red"),
-                 add = "jitter") + 
-    stat_compare_means(data = Morpho_t, method = "kruskal.test", 
+for (i in (4:8)) {
+  bmorpho <- ggboxplot(Morpho_t,
+                       x = "Treat_Contr",
+                       y = names(Morpho_t[i]),
+                       color = names(Morpho_t[3]),
+                       palette = c("blue", "red"),
+                       add = "jitter") +
+    stat_compare_means(data = Morpho_t, method = "kruskal.test",
                        label.x.npc = "center",
                        label.y.npc = "top") +
+    theme(legend.position = "None") +
     labs(x = "",
-         caption = "Table")
+         caption = paste("Figure 2.", (i-3),
+                         "Distribution boxplot of the mean values of the",
+                         names(Morpho_t[i])))
   print(bmorpho)
-} 
+}
 ```
 
-##### ii) Biomass
+#### 2.2 Biomass traits
 - **Fresh weight (FW)**:
 Fresh weight is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for FW in salt-stressed plants 96.22 ± 66.00 and 241.06 ± 164.75 for control plants.
@@ -364,7 +368,8 @@ Dry weight is significantly reduced in the salt-stressed plants compared with th
 The mean value for DW in salt-stressed plants is 6.26 ± 4.00 and 10.58 ± 6.89 for control plants.
 DW stress index of accessions varied from 24.67 to 88.26
 
-```{r Biomass normality test}
+```{r Normality test of biomass traits}
+#Performing Shapiro–Wilk test of normality
 spb <- numeric()
 nor_spb <- c()
 for(i in names(Weight_ion[4:5])) { 
@@ -372,31 +377,36 @@ for(i in names(Weight_ion[4:5])) {
   spb[i] <- shapiro.test(an2$residuals)$p.value
   nor_spb <- c(nor_spb, ifelse (spb[i] <= 0.05, "False", "True"))
 }
+
+#Creating summary table with the results
 spb_table <- data.frame ("P-value" = spb, "Normality" = nor_spb)
 
-
-
-knitr::kable(spb_table, caption = "Table 3. Shapiro test results for biomass", align="c")
+#Creating the caption for the summary table
+knitr::kable(spb_table, caption = "Table 2.2 Shapiro–Wilk test results for biomass traits", align="c")
 ```
 
-```{r Biomass significant difference}
-for (i in names(Weight_ion[c(6,12)])) {
-  bwei2 <- ggboxplot(Weight_ion, 
+```{r Significance test of biomass traits}
+#Performing significance test and plotting the results and values distribution
+for (i in (4:5)) {
+  bwei <- ggboxplot(Weight_ion, 
                  x = "Treat_Contr",
                  y = names(Weight_ion[i]), 
                  color = names(Weight_ion[3]),
                  palette = c("blue", "red"),
                  add = "jitter") + 
-    stat_compare_means(data = Weight_ion, method = "kruskal.test", label.x.npc = "center",
-                       label.y.npc = "top")
-  print(bwei2)
+    stat_compare_means(data = Weight_ion, method = "kruskal.test",
+                       label.x.npc = "center",
+                       label.y.npc = "top") +
+    theme(legend.position = "None") +
+    labs(x = "",
+         caption = paste("Figure 2.", (i+2),
+                         "Distribution boxplot of the mean values of the",
+                         names(Weight_ion[i])))
+  print(bwei)
 } 
-
-
 ```
 
-
-##### iii) RWC, EL and chlorophyll content
+#### 2.3 Relative water content (RWC), electrolyte leakage (EL) and chlorophyll content (SPAD or CC)
 - **Relative water content (RWC)**:
 Relative water content is not significantly different in the salt-stressed plants compared with the control (p > 0.05).
 The mean value for RWC in salt-stressed plants 92.77 X ± 2.65 and 92.10 ± 7.00 for control plants.
@@ -407,10 +417,11 @@ Electrolyte leakage is significantly increased in the salt-stressed plants compa
 The mean value for EL in salt-stressed plants is 60.60 ± 9.32 and 56.51 ± 6.48 for control plants.
 
 
-- **Chlorophyll content (CC)**: 
+- **Chlorophyll content (SPAD or CC)**: 
 Chlorophyll content is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for CC in salt-stressed plants is 14.06 ± 6.02 and 18.17 ± 4.79 for control plants.
-```{r RWC, EL and chlorophyll content normality test}
+```{r Normality test of RWC, EL and SPAD}
+#Performing Shapiro–Wilk test of normality on the RWC and EL
 spe <- numeric()
 nor_spe <- c()
 for(i in names(Weight_ion[c(6,12)])) { 
@@ -418,50 +429,62 @@ for(i in names(Weight_ion[c(6,12)])) {
   spe[i] <- shapiro.test(an3$residuals)$p.value
   nor_spe <- c(nor_spe, ifelse (spe[i] <= 0.05, "False", "True"))
 }
+
+#Creating summary table with the results for RWC and EL
 spe_table <- data.frame ("P-value" = spe, "Normality" = nor_spe)
 
+#Performing Shapiro–Wilk test of normality on the SPAD
 nor_spc <- c()
 an4 <- aov(Chloro_c$Chlorophyll_Content ~ Chloro_c$Treat_Contr)
 spc <- shapiro.test(an4$residuals)$p.value
-nor_spc <- c(nor_spc, ifelse (spc <= 0.05, "False", "True"))
 
+#Creating summary table with the results for SPAD
+nor_spc <- c(nor_spc, ifelse (spc <= 0.05, "False", "True"))
 spc_table <- data.frame ("P-value" = spc, "Normality" = nor_spc)
 row.names(spc_table) <- "Chlorophyll_Content"
 
+#Uniting the summary tables with the results for RWC+EL and SPAD
 spec_table <- dplyr::bind_rows(spe_table, spc_table)
 
-
-knitr::kable(spec_table, caption = "Table 4. Shapiro test results for RWC, EL and chlorophyll content", align="c")
+#Creating the caption for the summary table
+knitr::kable(spec_table, caption = "Table 2.3 Shapiro–Wilk test results for RWC, EL and SPAD", align="c")
 ```
 
-```{r RWC, EL and chlorophyll content significant difference}
-for (i in names(Weight_ion[7:11])) {
-  bwei3 <- ggboxplot(Weight_ion, 
+```{r Significance test of RWC, EL and SPAD}
+#for RWC and EL
+for (i in (c(6,12))) {
+  bwei2 <- ggboxplot(Weight_ion, 
                  x = "Treat_Contr",
                  y = names(Weight_ion[i]), 
                  color = names(Weight_ion[3]),
                  palette = c("blue", "red"),
                  add = "jitter") + 
-    stat_compare_means(data = Weight_ion, method = "kruskal.test", label.x.npc = "center",
-                       label.y.npc = "top")
-  print(bwei3)
+    stat_compare_means(data = Weight_ion, method = "kruskal.test",
+                       label.x.npc = "center",
+                       label.y.npc = "top") +
+    theme(legend.position = "None") +
+    labs(x = "",
+         caption = paste("Figure 2.", ifelse((i<7), paste(i+2), paste(i-3)),
+                         "Distribution boxplot of the mean values of the",
+                         names(Weight_ion[i])))
+  print(bwei2)
 } 
-
+#for SPAD
 bchlo <- ggboxplot(Chloro_c, 
                  x = "Treat_Contr",
                  y = "Chlorophyll_Content", 
                  color = names(Chloro_c[3]),
                  palette = c("blue", "red"),
                  add = "jitter") 
-bchlo + stat_compare_means(data = Chloro_c, method = "kruskal.test", label.x.npc = "center",
-                       label.y.npc = "top")
+bchlo + stat_compare_means(data = Chloro_c, method = "kruskal.test", 
+                           label.x.npc = "center",
+                           label.y.npc = "top") +
+  theme(legend.position = "None") +
+  labs(x = "", caption = paste("Fifure 2. 10 Distribution boxplot of the mean values of the",
+                       names(Chloro_c[4])))
 ```
 
-
-
-
-
-##### iv) Mineral ion content
+#### 2.4 Mineral ion content
 - **Sodium (Na)**:
 Sodium is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for Na in salt-stressed plants is 30.03 ± 8.84 and 13.60 ± 5.00 for control plants.
@@ -485,8 +508,8 @@ The mean value for Mg in salt-stressed plants is 4.37 ± 1.83 and 5.95 ± 2.85 f
 - **K/Na ratio**:
 K/Na ratio is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for K/Na ratio in salt-stressed plants is 0.67 ± 0.20 and 1.20 ± 0.36 for control plants.
-
-```{r Mineral ion content normality test}
+```{r Normality test of mineral ion content}
+#Performing Shapiro–Wilk test of normality
 spw <- numeric()
 nor_spw <- c()
 for(i in names(Weight_ion[7:11])) { 
@@ -494,31 +517,36 @@ for(i in names(Weight_ion[7:11])) {
   spw[i] <- shapiro.test(an5$residuals)$p.value
   nor_spw <- c(nor_spw, ifelse (spw[i] <= 0.05, "False", "True"))
 }
+
+#Creating summary table with the results
 spw_table <- data.frame ("P-value" = spw, "Normality" = nor_spw)
 
-knitr::kable(spw_table, caption = "Table 5. Shapiro test results for Mineral ion content", align="c")
+#Creating the caption for the summary table
+knitr::kable(spw_table, caption = "Table 2.4 Shapiro–Wilk test results for mineral ion content ", align="c")
 ```
 
-```{r Mineral ion content significant difference}
-for (i in names(Weight_ion[7:11])) {
+```{r Significance test of mineral ion content}
+#Performing significance test and plotting the results and values distribution
+for (i in (7:11)) {
   bwei3 <- ggboxplot(Weight_ion, 
                  x = "Treat_Contr",
                  y = names(Weight_ion[i]), 
                  color = names(Weight_ion[3]),
                  palette = c("blue", "red"),
                  add = "jitter") + 
-    stat_compare_means(data = Weight_ion, method = "kruskal.test", label.x.npc = "center",
-                       label.y.npc = "top")
+    stat_compare_means(data = Weight_ion, method = "kruskal.test",
+                       label.x.npc = "center",
+                       label.y.npc = "top") +
+    theme(legend.position = "None") +
+    labs(x = "",
+         caption = paste("Figure 2.", (i+4),
+                         "Distribution boxplot of the mean values of the",
+                         names(Weight_ion[i])))
   print(bwei3)
-} 
+}
 ```
 
-
-
-
-
-
-##### v) Gas exchange attributes
+#### 2.5 Gas exchange attributes
 - **Photosynthesis rate (PR)**:
 Photosynthesus rate is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for PR in salt-stressed plants is 1.95 ± 1.02 and 7.53 ± 4.84 for control plants.
@@ -535,41 +563,58 @@ The mean value for TR in salt-stressed plants is 0.94 ± 0.48 and 2.57 ± 1.13 f
 Stomatal conductance is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for SC in salt-stressed plants is 0.039 ± 0.02 and 0.15 ± 0.08 for control plants.
 
-```{r Gas exchange attributes normality test}
+```{r Normality test of gas exchange attributes}
+#Performing Shapiro–Wilk test of normality
 spg <- numeric()
 nor_spg <- c()
-for (i in names(Gas_e[c(4,5,6:7)])) { 
+for (i in names(Gas_e[c(4:7)])) { 
   an6 <- aov(Gas_e[, i] ~ Gas_e$Treat_Contr)
   spg[i] <- shapiro.test(an6$residuals)$p.value
   nor_spg <- c(nor_spg, ifelse (spg[i] <= 0.05, "False", "True"))
 }
 
+#Creating summary table with the results
 spg_table <- data.frame ("P-value" = spg, "Normality" = nor_spg)
 
-knitr::kable(spg_table, caption = "Table 6. Shapiro test results for gas exchange attributes", align="c")
+#Creating the caption for the summary table
+knitr::kable(spg_table, caption = "Table 2.5 Shapiro–Wilk test results for gas exchange attributes", align="c")
 ```
 
-```{r Gas exchange attributes significant difference}
+```{r Significance test of gas exchange attributes}
+#Performing significance test and plotting the results and values distribution
+#for intercellular CO2 (with ANOVA results, as this is the only normally distributed value)
 Gas_e_withoutNA <- na.omit(Gas_e)
-for (i in names(Gas_e_withoutNA[c(4,6:7)])) {
-  bgas <- ggboxplot(Gas_e_withoutNA, 
-                 x = "Treat_Contr",
-                 y = names(Gas_e_withoutNA[i]), 
-                 color = names(Gas_e_withoutNA[3]),
-                 palette = c("blue", "red"),
-                 add = "jitter") + 
-    stat_compare_means(data = Gas_e_withoutNA, method = "kruskal.test", label.x.npc = "center",label.y.npc = "top")
-print(bgas)} 
-
 banova <- ggboxplot(Gas_e_withoutNA,
           x="Treat_Contr", 
           y= "Intercellular_CO2",
           color = names(Gas_e_withoutNA[3]),
           palette = c("blue", "red"),
           add = "jitter") 
-banova  +   stat_compare_means(method = "anova")  
+banova  +   stat_compare_means(method = "anova") +
+  theme(legend.position = "None") +
+  labs(x = "",
+       caption = paste("Figure 2. 16 Distribution boxplot of the mean values of the",
+                       names(Gas_e_withoutNA[5])))
+#for photosynthesis rate, transpiration rate, stomatal conductance
+#(with Kruskal-Wallis results)
+for (i in c(4,6:7)) {
+  bgas <- ggboxplot(Gas_e_withoutNA, 
+                 x = "Treat_Contr",
+                 y = names(Gas_e_withoutNA[i]), 
+                 color = names(Gas_e_withoutNA[3]),
+                 palette = c("blue", "red"),
+                 add = "jitter") + 
+    stat_compare_means(data = Gas_e_withoutNA, method = "kruskal.test",
+                       label.x.npc = "center",
+                       label.y.npc = "top") +
+    theme(legend.position = "None") +
+    labs(x = "",
+         caption = paste("Figure 2.", ifelse((i<5), paste(i+13), paste(i+12)),
+                         "Distribution boxplot of the mean values of the",
+                         names(Gas_e_withoutNA[i])))
+  print(bgas)
+}
 ```
-
 
 
 
