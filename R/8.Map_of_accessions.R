@@ -1,4 +1,5 @@
-##--experimenting with mapping the data--##
+###--Map of accessions and correlation between ranking and elevation--###
+
 #install.packages("biogeo")
 library("biogeo") #important! don't forget to add
 
@@ -35,5 +36,12 @@ ggplot(map.acc, aes(x = Longitude,
   geom_point() +
   geom_text(aes(label = code), nudge_x = -0.2, size = 3, check_overlap = T) +
   borders(database = "world", regions = "Pakistan") +
-  ggtitle("Accessions location in Pakistan")
+  ggtitle("Accessions location in Pakistan") +
   theme_minimal()
+  
+#Checking the correlation between mean MFV (of 6 important traits) and elevation
+Elev_Cor <- as.data.frame(MFV$Mean)
+Elev_Cor$Elevation <- Acc_loc$Elevation
+#printing the correlation results  
+cor_1 <- rcorr(as.matrix(Elev_Cor))
+cor_1$r[2,1]
