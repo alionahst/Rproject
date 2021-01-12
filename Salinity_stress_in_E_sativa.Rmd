@@ -21,6 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r packages and libraries required, message=FALSE}
+#install.packages("biogeo")
 #install.packages("corrplot")
 #install.packages("dendextend")
 #install.packages("docxtractr")
@@ -36,7 +37,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #install.packages("tidyr")
 #install.packages("tidyverse")
 
-
+library(biogeo)
 library(corrplot)
 library(dendextend)
 library(docxtractr)
