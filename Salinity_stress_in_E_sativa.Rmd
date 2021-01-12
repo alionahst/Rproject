@@ -26,13 +26,17 @@ knitr::opts_chunk$set(echo = TRUE)
 #install.packages("dendextend")
 #install.packages("docxtractr")
 #install.packages("dplyr")
+#install.packages("factoextra")
 #install.packages("Formula")
 #install.packages("ggfortify")
 #install.packages("ggplot2", dependencies = TRUE)
 #install.packages("ggpubr")
 #install.packages("Hmisc")
 #install.packages("lattice")
+#install.packages("raster")
 #install.packages("readxl")
+#install.packages("sf")
+#install.packages("sp")
 #install.packages("survival")
 #install.packages("tidyr")
 #install.packages("tidyverse")
@@ -42,13 +46,17 @@ library(corrplot)
 library(dendextend)
 library(docxtractr)
 library(dplyr)
+library(factoextra)
 library(Formula)
 library(ggfortify)
 library(ggplot2)
 library(ggpubr)
 library(Hmisc)
 library(lattice)
+#library(raster) because it masks tidyr functions
 library(readxl)
+library(sf)
+library(sp)
 library(survival)
 library(tidyr)
 library(tidyverse)
@@ -83,7 +91,7 @@ What have you done? And what did you use to do it? Step by step, so anyone could
 ### 1. Downloading and tidying the data.
 First we had to download the data.xls file from the paper. The tables needed to be tidied (column names organized, empty cells filled, the values formatted, etc.). Then we had to download the location of accessions.doc data and tidied this table as well.
 
-In order to be able to work with all of morpho-physiological parameters we had to unify them (because of different number of replicates in different categories of morpho-physiological traits measures). The unification was done trough the mean in every accession and treatment. With unified data we created a summary table (Table 1).
+In order to be able to work with all of morpho-physiological parameters we had to unify them (because of different number of replicates in different categories of morpho-physiological traits measures). The unification was done trough the mean in every accession and treatment. With unified data we created a summary table (Table 1.1).
 
 ### 2. Test of normality and statistical difference of variables.
 Once we had the summary table, we tested the normality of variables with 
@@ -188,7 +196,7 @@ Weight_ion <- X$`FW DW RWC Ions EL`
 Chloro_c <- X$`Chlorophyll content`
 Gas_e <- X$`Gas Exchange parameters`
 
-#changing names of the columns for more convinient use
+#changing names of the columns for more convenient use
 names(Morpho_t)[4:8] <- c('Shoot_Length', 
                           'Root_Length', 
                           'Plant_Height', 
@@ -916,7 +924,10 @@ dend <- important_var %>%
 
 ### 8. Map of accessions map and location correlation analysis
 ```{r}
-###--Map of accessions and correlation between ranking and elevation--###
+###--Map of accessions--###
+
+#install.packages("biogeo")
+library("biogeo") #important! don't forget to add
 
 #Creating data frame for the future map from Acc_loc table
 map.acc <- data.frame(code = Acc_loc$Code,
@@ -940,21 +951,28 @@ map.acc$code <- sub('Es-', '', map.acc$code)
 #creating data.frame for colors to correspond to ranking of accessions
 colors <- data.frame(accession = as.numeric(row.names(MFV_Ranked)),
                      mean_MFV = MFV_Ranked$Mean,
-                     Category = MFV_Ranked$Category)
+                     category = as.factor(MFV_Ranked$Category))
+#Renaming the categories, so that legend is shown in order of salt tolerance increase, not in alphabetical order
+colors$category <- sub('Highly sensitive', '1. Highly sensitive', colors$category)
+colors$category <- sub('Sensitive', '2. Sensitive', colors$category)
+colors$category <- sub('Moderately tolerant', '3. Moderately tolerant', colors$category)
+colors$category <- sub('Tolerant', '4. Tolerant', colors$category)
+colors$category <- sub('Highly tolerant', '5. Highly tolerant', colors$category)
+
 colors <- colors[order(colors[,1]),] #ordering the categories according to accessions numbers
-#creating a map
+
+#Creating a map
 ggplot(map.acc, aes(x = Longitude, 
                     y = Latitude, 
-                    color = as.factor(colors$Category))) +
-  labs(colour = "Categories according to salt tolerance ranking") + #legend title
-  geom_point() + #making points of accessions visible
-  geom_text(aes(label = code), #creating labels for accessions
-            nudge_x = -0.2,    #shifting the position of labels
-            size = 3,
-            check_overlap = T) + #don't allow to use overlapping text
-  borders(database = "world", regions = "Pakistan") + #adding Pakistan layer
-  ggtitle("Accessions location in Pakistan") + #adding table title
+                    color = as.character(colors$category))) +
+  labs(colour = "Salt tolerance ranks") +
+  geom_point() +
+  geom_text(aes(label = code), nudge_x = -0.4, size = 3, check_overlap = T) +
+  borders(database = "world", regions = "Pakistan") +
+  ggtitle("Accessions locations in Pakistan") +
   theme_minimal()
+
+###--Correlation between ranking and elevation--###
   
 #Checking the correlation between mean MFV (of 6 important traits) and elevation
 Elev_Cor <- as.data.frame(MFV$Mean)

@@ -53,7 +53,7 @@ Weight_ion <- X$`FW DW RWC Ions EL`
 Chloro_c <- X$`Chlorophyll content`
 Gas_e <- X$`Gas Exchange parameters`
 
-#changing names of the columns for more convinient use
+#changing names of the columns for more convenient use
 names(Morpho_t)[4:8] <- c('Shoot_Length', 
                           'Root_Length', 
                           'Plant_Height', 
