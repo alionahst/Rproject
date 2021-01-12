@@ -91,12 +91,3 @@ Sd_Control <-   y %>%
 Treatment <- c('Treatment','Control')
 SD <- rbind(Sd_Treatment,Sd_Control)
 SD$Treat_Contr <- Treatment
-
-
-
-
-
-
-
-
-
