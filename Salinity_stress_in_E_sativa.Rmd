@@ -101,7 +101,9 @@ We started doing Pearson correlation using membership function values (MFV) of t
 Instead we computed Pearson correlation on the means of all salt tolerance traits (treatment and control), as it shows (prior to calculating MFV) which values has positive correlation and which has the negative, thus allowing us to choose the appropriate formula for MFV calculation (see explanation of MFV calculation in the next section).
 
 
-### 4. Salt tolerant index (STI), membership function value (MFV) calculation.
+### 4. Salt tolerant index (STI)
+
+### 5. membership function value (MFV) calculation.
 
 In order to evaluate degree of salt tolerance (define the susceptible and resistant accessions), first we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the salt-tolerance index (STI) - ratio of treated plant values to control.
 
@@ -124,6 +126,22 @@ We performed the Principal Component Analysis on the MFV values of all the varia
 
 
 We still need to make the dendogram, add map with accession and check for correlation between altitude and MFV ranking. 
+
+
+### 5. PCA
+
+
+### 6. Salt-tolerance evaluation: ranking and dendogram 
+In order to evaluate salt tolerance, we made accessions groups that behave similarly under salt stress. This was based on the MFV mean of the 8 highest ranked physio-morphological parameters from PCA analysis. 
+
+The ranking was done by ordering MFV mean from highest MFV mean to the smallest one. Then the groups were adressed according to the same logic as the paper (with higher MFV mean corresponding to higher salt tolerance): 4% accessions as highly tolerant, 16% as tolerant, 60% as moderately tolerant, 16% as sensitive and finally 4% as highly sensitive.
+
+The dendogram was established based on MFV mean. 
+
+
+### 7.Accessions map and location correlation ?
+
+
 
 
 
@@ -874,7 +892,7 @@ MFV <- MFV %>%
 
 MFV_Ranked <- MFV[order(-MFV$Mean),]
 MFV_Ranked <- MFV_Ranked[20]
-MFV_Ranked$Category <- c("Highly tolerant",(rep("Tolerant", 5)), (rep("Moderately tolerant", 13)), (rep("Sensitive", 5)), "Highly sensitive")
+MFV_Ranked$Category <- c("Highly tolerant",(rep("Tolerant", 4)), (rep("Moderately tolerant", 15)), (rep("Sensitive", 4)), "Highly sensitive" )
 
 knitr::kable(MFV_Ranked, caption = "Table 7.1. Salt tolerance ranking based on MFV mean from 8 variables identified by PCA", align="c")
 ```
