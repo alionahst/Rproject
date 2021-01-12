@@ -723,8 +723,8 @@ Treatment <- c('Treatment','Control')
 SD <- rbind(Sd_Treatment,Sd_Control)
 SD$Treat_Contr <- Treatment
 
-knitr::kable(Means, caption = "Table 7. Summary table for the mean of treated and control plants")
-knitr::kable(SD, caption = "Table 8. Summary table for the standard deviation (SD) of treated and control plants")
+knitr::kable(Means, caption = "Table 2.1 Summary table for the mean of treated and control plants")
+knitr::kable(SD, caption = "Table 2.2 Summary table for the standard deviation (SD) of treated and control plants")
 ```
 
 
@@ -894,7 +894,7 @@ MFV_Ranked$Category <- c("Highly tolerant",(rep("Tolerant", 4)), (rep("Moderatel
 
 knitr::kable(MFV_Ranked, caption = "Table 7.1. Salt tolerance ranking based on MFV mean from 6 variables identified by PCA", align="c")
 ```
-```{r, fig.cap = "Figure 8.1. The MFV dendogram based on 8 variables identified by PCA"}
+```{r, fig.cap = "Figure 7.1. The MFV dendogram based on 8 variables identified by PCA"}
 
 #table with MFV from 6 important variables of PCA
 important_var <- na.omit(MFV)
@@ -907,7 +907,7 @@ dend <- important_var %>%
   hclust(method = "ward.D2") %>% 
   as.dendrogram %>%
   set("branches_k_color", 
-      value = c("red", "green","orange", "yellow"),
+      value = c("#CC66FF", "#33CCFF","#99FF66", "#00CC33"),
       k = 4)%>% # make the 4 groups and color for groups
   plot(main = "MFV Dendrogram") # plot dendogram
 ```
@@ -923,7 +923,7 @@ Elev_Cor$Elevation <- Acc_loc$Elevation
 
 cor_1 <- rcorr(as.matrix(Elev_Cor))
 cor_1_result <- paste(round(cor_1$r[2,1], 2), sep = " - correlation coefficient")
-knitr::kable(cor_1_result, caption = "Table 9.1. Correlation of mean MFV and elevation", align="c")
+knitr::kable(cor_1_result, caption = "Table 8.1. Correlation of mean MFV and elevation", align="c")
 ```
 
 
