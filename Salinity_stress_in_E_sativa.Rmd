@@ -102,9 +102,6 @@ Instead we computed Pearson correlation on the means of all salt tolerance trait
 
 
 ### 4. Salt tolerant index (STI)
-
-### 5. membership function value (MFV) calculation.
-
 In order to evaluate degree of salt tolerance (define the susceptible and resistant accessions), first we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the salt-tolerance index (STI) - ratio of treated plant values to control.
 
 Here we deviated from the 
@@ -112,23 +109,19 @@ Here we deviated from the
 we needed to rank the 
 We created another table with data converted into salt tolerance index (STI): .
 
-The data of all morpho-physiological parameters (control and treatment) for each accession was converted to the salt-tolerance index (STI) which is the ratio of the value for the NaCl-treated plant/value for the control. For the categorization of E. sativa accessions according to their salt tolerance, membership function value (MFV) was applied as previously described (Chen et al., 2012). The MFV was calculated according to the following formula:
+??The data of all morpho-physiological parameters (control and treatment) for each accession was converted to the salt-tolerance index (STI) which is the ratio of the value for the NaCl-treated plant/value for the control. For the categorization of E. sativa accessions according to their salt tolerance, membership function value (MFV) was applied as previously described (Chen et al., 2012). The MFV was calculated according to the following formula:
+
+### 5. membership function value (MFV) calculation.
+
 
 Then, we computed the MVF table using the formula provided in the article: **$Xp=[(X−Xmin)/(Xmax−Xmin)]×100%$**. For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula: **$Xp=[1−(X−Xmin)/(Xmax−Xmin)]×100%$**
 For calculating MFV, we used the same formula, however we used the min and max of the mean STI.
 
-We computed the mean of MFV from MFV values of the variables above. With the results, we ranked the accessions from highly tolerant to highly sensitive. 
-
-
-We performed the Principal Component Analysis on the MFV values of all the variables, except for RWC and ICO2 because they did not show significant difference between treatment and control. We used 8 highest ranked variables from the results: PH, SL, RL, NL, DW, FW, LA, K_Na. 
-
-
-
-
-We still need to make the dendogram, add map with accession and check for correlation between altitude and MFV ranking. 
 
 
 ### 5. PCA
+
+??We performed the Principal Component Analysis on the MFV values of all the variables, except for RWC and ICO2 because they did not show significant difference between treatment and control. We used 8 highest ranked variables from the results: PH, SL, RL, NL, DW, FW, LA, K_Na. 
 
 
 ### 6. Salt-tolerance evaluation: ranking and dendogram 
@@ -139,7 +132,7 @@ The ranking was done by ordering MFV mean from highest MFV mean to the smallest 
 The dendogram was established based on MFV mean. And 4 groups were formed as in the paper work. 
 
 ### 7.Accessions map and location correlation ?
-
+We still need to add map with accession and check for correlation between altitude and MFV ranking. 
 
 
 
