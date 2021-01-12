@@ -92,7 +92,6 @@ The parameters' distributions and results of normality tests were visualized in 
 
 Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into tables (Table 2.1-2.5).
 
-
 ### 3. Correlation analysis.
 In order to see the degree of association between the morpho-physiological parameters (and, additionally, elevation) we performed Pearson correlation analysis. The results were visualized in the Figure 3.1??.
 
@@ -100,31 +99,43 @@ We started doing Pearson correlation using membership function values (MFV) of t
 
 Instead we computed Pearson correlation on the means of all salt tolerance traits (treatment and control), as it shows (prior to calculating MFV) which values has positive correlation and which has the negative, thus allowing us to choose the appropriate formula for MFV calculation (see explanation of MFV calculation in the next section).
 
+### 4. Salt tolerant index (STI)
+In order to evaluate degree of salt tolerance (to later define the susceptible and resistant accessions), first we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the salt-tolerance index (STI). STI is the ratio of the values of every morpho-physiological parameters of treated plants to control .
 
-### 4. Salt tolerant index (STI), membership function value (MFV) calculation.
+Here we deviated from the paper in the method to calculate STI. We considered that the way the authors calculated STI on accessions was not appropriate. We think that they arbitrary paired plants from treatment and control. Instead, we calculated STI ratio on the means of treated plants and control for every parameter. STI results are summarized in Table 3.1.
 
-In order to evaluate degree of salt tolerance (define the susceptible and resistant accessions), first we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the salt-tolerance index (STI) - ratio of treated plant values to control.
+### 5. membership function value (MFV) calculation.
+Membership function value allows to make the different variables comparable between each other, so they can be used together in order to make a ranking. 
 
-Here we deviated from the 
+We calculated the MVF values using the formula provided in the article: **$Xp=[(X−Xmin)/(Xmax−Xmin)]×100%$**. 
+For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula: 
+**$Xp=[1−(X−Xmin)/(Xmax−Xmin)]×100%$**
+To define which morpho-physiological parameters were inversly related, we used the results of the correlation analysis. 
 
-we needed to rank the 
-We created another table with data converted into salt tolerance index (STI): .
+### 6. PCA
+ 
+??We performed the Principal Component Analysis on the MFV values of all the variables, except for RWC and ICO2 because they did not show significant difference between treatment and control. We used 6 highest ranked variables from the results: PH, SL, RL, NL, DW, FW, LA, K_Na. 
 
-The data of all morpho-physiological parameters (control and treatment) for each accession was converted to the salt-tolerance index (STI) which is the ratio of the value for the NaCl-treated plant/value for the control. For the categorization of E. sativa accessions according to their salt tolerance, membership function value (MFV) was applied as previously described (Chen et al., 2012). The MFV was calculated according to the following formula:
-
-Then, we computed the MVF table using the formula provided in the article: **$Xp=[(X−Xmin)/(Xmax−Xmin)]×100%$**. For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula: **$Xp=[1−(X−Xmin)/(Xmax−Xmin)]×100%$**
-For calculating MFV, we used the same formula, however we used the min and max of the mean STI.
-
-We computed the mean of MFV from MFV values of the variables above. With the results, we ranked the accessions from highly tolerant to highly sensitive. 
-
-
-We performed the Principal Component Analysis on the MFV values of all the variables, except for RWC and ICO2 because they did not show significant difference between treatment and control. We used 8 highest ranked variables from the results: PH, SL, RL, NL, DW, FW, LA, K_Na. 
-
-
+excluded: non significant paramterers (RWC, ICO2)
+Excluded non correlating parameters (pearson): Ca, K, Mg, Na 
 
 
-We still need to make the dendogram, add map with accession and check for correlation between altitude and MFV ranking. 
+### 7. Salt-tolerance evaluation: ranking and dendogram 
+In order to evaluate salt tolerance, we made accession groups that behave similarly under salt stress. This was based on the MFV mean of the 6 highest ranked physio-morphological parameters from PCA analysis. 
 
+The ranking was done by ordering MFV mean values from the highest to the smallest one. Then the groups were adressed according to the same logic as in the paper (with higher MFV mean value corresponding to higher salt tolerance): 4% accessions were classified as highly tolerant, 16% as tolerant, 60% as moderately tolerant, 16% as sensitive and finally 4% as highly sensitive.
+
+The dendogram was established based on MFV mean (6 highest). And 4 groups were formed as in the paper work. 
+
+### 8.Accessions map and location correlation ?
+Additionally, we wanted to check if the salt tolerance was correlated to elevation. So we made a Pearson correlation analysis between MFV mean (6 highest) and elevation. 
+
+We still need to add map with accession and check for correlation between altitude and MFV ranking. 
+
+
+? overlaping accessions were removed (11 and 15)
+11 overlap with 9
+and 15 overlap with 12
 
 
 ## Results 
@@ -716,7 +727,8 @@ knitr::kable(Means, caption = "Table 7. Summary table for the mean of treated an
 knitr::kable(SD, caption = "Table 8. Summary table for the standard deviation (SD) of treated and control plants")
 ```
 
-##### (3) Pearson correlation 
+
+### 3. Pearson correlation 
 ```{r Pearson test, fig.cap = "Figure 3.1. Pearson correlation table for all variables. X represent non-significative correlation (p-value > 0.05)"}
 # table with all the variables but without 3 first columns
 all_data <- na.omit(table[4:23])
@@ -726,9 +738,10 @@ M1 <-cor(all_data)
 corrplot(M1, p.mat = res1$p, sig.level = .05, type = "lower")
 
 ```
+We can see that morphological traits are positively and strongly correlated (close to 1). Biomass is also positively correlated to morphological traits. 
 
 
-#### (4) Salt tolerance index (STI)
+### 4. Salt tolerance index (STI)
 ```{r STI}
 x <- data.frame(dplyr::filter(table, table$Treat_Contr=="Treatment"))
 x <- x[-(1:3)]
@@ -799,7 +812,7 @@ knitr::kable(STI, caption = "Table 4.1. Summary table for salt tolerance index")
 ```
 
 
-#### (5) Membership function value (MFV) 
+### 5. Membership function value (MFV) 
 ```{r MFV}
 #Membership function value 
 # 1-results for the traits inversely related to salt tolerance: which are electrolyte leakage, Na, K and Ca
@@ -828,7 +841,7 @@ MFV <- STI %>%
 knitr::kable(MFV, caption = "Table 5.1. MFV table based on STI", align="c")
 ```
 
-#### (6) Principal component analysis (PCA)
+### 6. Principal component analysis (PCA)
 ```{r PCA}
 ####------PCA on MFV-------###
 
@@ -866,40 +879,42 @@ print(MFV_var_scores_ranked) # Result from PCA analysis (from PCA_analysis.R)
 
 
 
-#### (7) MFV Ranking 
+### 7. Salt-tolerance evaluation: ranking and dendogram
 ```{r MFV ranking}
+# We used 6 highest ranked variables to include in the final MFV based ranking of salt tolerance
+# Add into the data the mean MFV column from the 6 important variables 
 MFV <- MFV %>%
-  mutate(Mean = rowMeans(MFV[c(1:7, 15)], na.rm=T))%>%
+  mutate(Mean = rowMeans(MFV[c(1:4, 6:7)], na.rm=T))%>%
   select(SL, RL, PH, NL, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC, Mean)
 
+# create the ranking table out of MFV mean from 6 important variables
 MFV_Ranked <- MFV[order(-MFV$Mean),]
 MFV_Ranked <- MFV_Ranked[20]
-MFV_Ranked$Category <- c("Highly tolerant",(rep("Tolerant", 5)), (rep("Moderately tolerant", 13)), (rep("Sensitive", 5)), "Highly sensitive")
+MFV_Ranked$Category <- c("Highly tolerant",(rep("Tolerant", 4)), (rep("Moderately tolerant", 15)), (rep("Sensitive", 4)), "Highly sensitive" )
 
-knitr::kable(MFV_Ranked, caption = "Table 7.1. Salt tolerance ranking based on MFV mean from 8 variables identified by PCA", align="c")
+knitr::kable(MFV_Ranked, caption = "Table 7.1. Salt tolerance ranking based on MFV mean from 6 variables identified by PCA", align="c")
 ```
-
-
-#### (8) Dendogram
 ```{r, fig.cap = "Figure 8.1. The MFV dendogram based on 8 variables identified by PCA"}
-#table with MFV from 8 important variables of PCA
+
+#table with MFV from 6 important variables of PCA
 important_var <- na.omit(MFV)
-important_var <- MFV[c(1:7, 15)]
+important_var <- MFV[c(1:4, 6:7)]
 
 #make the dendogram
-dend <- important_var %>% # change MFV_Ranked with important_var in function of professor answer 
+dend <- important_var %>% 
   scale %>% 
   dist(method = "euclidean") %>% 
   hclust(method = "ward.D2") %>% 
   as.dendrogram %>%
   set("branches_k_color", 
-      value = c("red", "orange","blue", "green"), 
-      k = 4)
-
-#plot dendogram
-dend %>% plot(main = "MFV Dendrogram")
+      value = c("red", "green","orange", "yellow"),
+      k = 4)%>% # make the 4 groups and color for groups
+  plot(main = "MFV Dendrogram") # plot dendogram
 ```
-#### (9) Accessions map and location correlation
+
+
+
+### 8. Accessions map and location correlation
 
 ```{r}
 # Correlation between mean MFV (of 8 important ) and elevation 
@@ -913,8 +928,10 @@ knitr::kable(cor_1_result, caption = "Table 9.1. Correlation of mean MFV and ele
 
 
 
-### Discussion 
-#### From your objectives.
+
+
+## Discussion 
+(From your objectives)
 The priliminary results, despite being slightly different from that in the article produced the ranking that corresponds to the groups (Highly tolerant - Highly sensitive) outlined in the article. 
 
 
@@ -924,7 +941,7 @@ The priliminary results, despite being slightly different from that in the artic
 
 
 
-### Conclusions
+## Conclusions
 The analysis is not yet completed, so conclusions will be drawn later.
 
 
