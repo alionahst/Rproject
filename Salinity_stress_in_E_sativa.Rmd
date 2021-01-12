@@ -119,19 +119,19 @@ For calculating MFV, we used the same formula, however we used the min and max o
 
 
 
-### 5. PCA
+### 6. PCA
 
 ??We performed the Principal Component Analysis on the MFV values of all the variables, except for RWC and ICO2 because they did not show significant difference between treatment and control. We used 8 highest ranked variables from the results: PH, SL, RL, NL, DW, FW, LA, K_Na. 
 
 
-### 6. Salt-tolerance evaluation: ranking and dendogram 
+### 7. Salt-tolerance evaluation: ranking and dendogram 
 In order to evaluate salt tolerance, we made accessions groups that behave similarly under salt stress. This was based on the MFV mean of the 8 highest ranked physio-morphological parameters from PCA analysis. 
 
 The ranking was done by ordering MFV mean from highest MFV mean to the smallest one. Then the groups were adressed according to the same logic as the paper (with higher MFV mean corresponding to higher salt tolerance): 4% accessions as highly tolerant, 16% as tolerant, 60% as moderately tolerant, 16% as sensitive and finally 4% as highly sensitive.
 
 The dendogram was established based on MFV mean. And 4 groups were formed as in the paper work. 
 
-### 7.Accessions map and location correlation ?
+### 8.Accessions map and location correlation ?
 We still need to add map with accession and check for correlation between altitude and MFV ranking. 
 
 
