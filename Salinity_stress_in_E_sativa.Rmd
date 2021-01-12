@@ -36,6 +36,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #install.packages("tidyr")
 #install.packages("tidyverse")
 
+
 library(corrplot)
 library(dendextend)
 library(docxtractr)
@@ -141,7 +142,7 @@ and 15 overlap with 12
 ## Results 
 #####(Figures and tables with captions and description of what do they mean.)
 
-### 1. Data download and transformation.
+### 1. Data download and transformation
 ```{r Tidy_data.R, message=FALSE}
 ###----Data download and transformation----###
 
@@ -309,7 +310,7 @@ table <- data.frame(a, b, c, d, e)
 knitr::kable(table, caption = "Table 1.1 Mean values of salt tolerance traits for each accession and treatment type", align="c" , digits = round(2))
 ```
 
-### 2. Initial statistical analysis. Normality test and significant difference test. 
+### 2. Initial statistical analysis. Normality test and significant difference test
 #### 2.1 Morphological traits
 There is a statistical difference between control and treatment for all morphological traits
 
@@ -627,8 +628,6 @@ for (i in c(4,6:7)) {
 }
 ```
 
-
-
 ```{r recap table for mean and median}
 x <- data.frame(dplyr::filter(table, table$Treat_Contr=="Treatment"))
 x <- x[-(1:3)]
@@ -914,16 +913,54 @@ dend <- important_var %>%
 
 
 
-### 8. Accessions map and location correlation
-
+### 8. Map of accessions map and location correlation analysis
 ```{r}
-# Correlation between mean MFV (of 8 important ) and elevation 
+###--Map of accessions and correlation between ranking and elevation--###
+
+#Creating data frame for the future map from Acc_loc table
+map.acc <- data.frame(code = Acc_loc$Code,
+                      lat = Acc_loc$Latitude,
+                      long = Acc_loc$Longitude)
+#separating longitude and latitude data into separate columns according to degrees minutes, seconds and cardinals
+map.acc <- separate(map.acc, lat, c("lt.d", "lt.m", "lt.s", "lt.cr"))
+map.acc <- separate(map.acc, long, c("ln.d", "ln.m", "ln.s", "ln.cr"))
+#creating data frame with decimal coordinates
+map.acc <- data.frame(code = map.acc$code,
+                      Latitude = (dms2dd(as.numeric(map.acc$lt.d),
+                                    as.numeric(map.acc$lt.m),
+                                    as.numeric(map.acc$lt.s),
+                                    map.acc$lt.cr)),
+                      Longitude = (dms2dd(as.numeric(map.acc$ln.d),
+                                     as.numeric(map.acc$ln.m),
+                                     as.numeric(map.acc$ln.s),
+                                     map.acc$ln.cr)))
+#Taking out "Es-" part from future labels
+map.acc$code <- sub('Es-', '', map.acc$code)
+#creating data.frame for colors to correspond to ranking of accessions
+colors <- data.frame(accession = as.numeric(row.names(MFV_Ranked)),
+                     mean_MFV = MFV_Ranked$Mean,
+                     Category = MFV_Ranked$Category)
+colors <- colors[order(colors[,1]),] #ordering the categories according to accessions numbers
+#creating a map
+ggplot(map.acc, aes(x = Longitude, 
+                    y = Latitude, 
+                    color = as.factor(colors$Category))) +
+  labs(colour = "Categories according to salt tolerance ranking") + #legend title
+  geom_point() + #making points of accessions visible
+  geom_text(aes(label = code), #creating labels for accessions
+            nudge_x = -0.2,    #shifting the position of labels
+            size = 3,
+            check_overlap = T) + #don't allow to use overlapping text
+  borders(database = "world", regions = "Pakistan") + #adding Pakistan layer
+  ggtitle("Accessions location in Pakistan") + #adding table title
+  theme_minimal()
+  
+#Checking the correlation between mean MFV (of 6 important traits) and elevation
 Elev_Cor <- as.data.frame(MFV$Mean)
 Elev_Cor$Elevation <- Acc_loc$Elevation
-
+#printing the correlation results  
 cor_1 <- rcorr(as.matrix(Elev_Cor))
-cor_1_result <- paste(round(cor_1$r[2,1], 2), sep = " - correlation coefficient")
-knitr::kable(cor_1_result, caption = "Table 8.1. Correlation of mean MFV and elevation", align="c")
+cor_1$r[2,1]
 ```
 
 
