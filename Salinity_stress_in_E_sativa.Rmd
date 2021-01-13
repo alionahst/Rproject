@@ -87,34 +87,33 @@ Main hypothesis:
 What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
 
 ### 1. Downloading and tidying the data.
-First we had to download the data.xls file from the paper. The tables needed to be tidied (column names organized, empty cells filled, the values formatted, etc.). Then we had to download the location of accessions.doc data and tidied this table as well.
+First we had to download the data.xls file from the paper. The tables needed to be tidied (column names organized, empty cells filled, the values formatted, etc.). Then we had to download the location of accessions.doc data and tidy this table as well.
 
-In order to be able to work with all of morpho-physiological parameters we had to unify them (because of different number of replicates in different categories of morpho-physiological traits measures). The unification was done trough the mean in every accession and treatment. With unified data we created a summary table (Table 1.1).
+In order to be able to work with all of morpho-physiological parameters we had to unify them (because of different number of replicates in different categories of morpho-physiological traits measurments). The unification was done trough the mean in every accession and treatment. With unified data we created a summary table (Table 1.1).
 
 ### 2. Test of normality and statistical difference of variables.
 Once we had the summary table, we tested the normality of variables with 
-Shapiro–Wilk test. Our Null Hypothesis (H0) was that morpho-physiological parameters' distribution was normal. The results for every group of morpho-physiological traits were summarized in tables (Table 2-6).
+Shapiro–Wilk test. Our Null Hypothesis (H0) was that morpho-physiological parameters' distribution was normal. The results for every group of morpho-physiological traits were summarized in tables (Table 2.1-2.5).
 
 If the H0 was accepted (p > 0.05) we used ANOVA, otherwise (p < 0.05) we proceeded with Kruskal-Wallis test to see if there was a significant difference between salt-treated and control plants for each variable.
 The parameters' distributions and results of normality tests were visualized in the boxplot figures (Figure 2.1-2.19)
 
-Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into tables (Table 2.1-2.5).
+Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into tables (Table 2.6-2.7).
 
 ### 3. Correlation analysis.
-In order to see the degree of association between the morpho-physiological parameters (and, additionally, elevation) we performed Pearson correlation analysis. The results were visualized in the Figure 3.1??.
+In order to see the degree of association between the morpho-physiological parameters (and, additionally, elevation) we performed Pearson correlation analysis. The results were visualized in the Figure 3.1.
 
 We started doing Pearson correlation using membership function values (MFV) of the 11 selected salt tolerance traits, the results were very similar to that in the article. But we discarded that analysis as we didn't understood the utility of it.
 
-Instead we computed Pearson correlation on the means of all salt tolerance traits (treatment and control), as it shows (prior to calculating MFV) which values has positive correlation and which has the negative, thus allowing us to choose the appropriate formula for MFV calculation (see explanation of MFV calculation in the next section).
+Instead we computed Pearson correlation on the means of all salt tolerance traits (treatment and control), as it shows (prior to calculating MFV) which values has positive correlation and which has the negative, thus allowing us to choose the appropriate formula for MFV calculation (see explanation of MFV calculation in the next sections).
 
 ### 4. Salt tolerant index (STI)
-In order to evaluate degree of salt tolerance (to later define the susceptible and resistant accessions), first we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the salt-tolerance index (STI). STI is the ratio of the values of every morpho-physiological parameters of treated plants to control .
+In order to evaluate degree of salt tolerance (to later define the susceptible and resistant accessions), we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the salt-tolerance index (STI). STI is the ratio of the values of every morpho-physiological parameters of treated plants to control.
 
-Here we deviated from the paper in the method to calculate STI. We considered that the way the authors calculated STI on accessions was not appropriate. We think that they arbitrary paired plants from treatment and control. Instead, we calculated STI ratio on the means of treated plants and control for every parameter. STI results are summarized in Table 3.1.
+Here we deviated from the paper in the method of STI calculation. We considered that the way the authors calculated STI on accessions was not appropriate. We think that they arbitrary paired plants from treatment and control. Instead, we calculated STI ratio on the means of treated plants and control for every parameter. STI results are summarized in the Table 4.1.
 
 ### 5. Membership function value (MFV)
-Membership function value allows to make the different variables comparable between each other, so they can be used together in order to make a ranking. 
-
+Membership function value allows to make the different variables comparable between each other, so they can be used together in order to make a ranking.
 We calculated the MVF values using the formula provided in the article:
 
 <center> **$Xp=[(X−Xmin)/(Xmax−Xmin)]×100%$** </center>
@@ -123,13 +122,13 @@ For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, 
 
 <center> **$Xp=[1−(X−Xmin)/(Xmax−Xmin)]×100%$** </center>
 
-To define which morpho-physiological parameters were inversly related, we used the results of the correlation analysis. 
+To define which morpho-physiological parameters were inversly related, we used the results of the correlation analysis. MFV calculation results are summarized in the Table 5.1.
 
 ### 6. The principal component analysis (PCA)
  
-The principal component analysis (PCA) allows to reduce the dimensionality of a multivariate data to two (or more) principal components, that can be visualized graphically. We performed PCA using MFV values of selected variables. **RWC** and **ICO2** were excluded because they did not show significant difference between treatment and control (according to Kruskal-Wallis and ANOVA tests). **Mg**, and **Ca** were excluded because they showed little correlation with the rest of the parameters (according to the Pearson correlation analysis). **K** and **Na** also showed somewhat lesser extent of correlation, but main reason for their exclusion was the availability of **K/Na** ratio, that, basically, unifies the two. Thus we included the following traits into the PCA: **SL**, **RL**, **PH**, **LN**, **LA**, **FW**, **DW**, **EL**, **CC**, **K_Na**, **PR**, **TR**, **SC**.
+The principal component analysis (PCA) allows to reduce the dimensionality of a multivariate data to two (or more) principal components, that can be visualized graphically. We performed PCA using MFV values of selected variables. **RWC** and **ICO2** were excluded because they did not show significant difference between treatment and control (according to Kruskal-Wallis and ANOVA tests). **Mg**, and **Ca** were excluded because they showed little correlation with the rest of the parameters (according to the Pearson correlation analysis). **K** and **Na** also showed somewhat lesser extent of correlation, but main reason for their exclusion was the availability of **K/Na** ratio, that, basically, unified the two. Thus we included the following traits into the PCA: **SL**, **RL**, **PH**, **LN**, **LA**, **FW**, **DW**, **EL**, **CC**, **K_Na**, **PR**, **TR**, **SC**.
 
-The results were plotted. First plot represented contribution of principal components to the variance of the data (Figure 8.1). Scatter plot of loadings and individuals allowed us to visualize the groupings among accessions (Figure 8.2). And the last plot was used to conclude main variables, contributing to salt tolerance, that later were used in MFV ranking (Figure 8.3).
+The results were plotted. First plot represented contribution of principal components to the variance of the data (Figure 8.1). Second plot is the scatter plot individuals (our data) allowed us to visualize the groupings among accessions (Figure 8.2). The third plot is the loadings correlation circle. It gives additional idea about how the variables contribute to data projection on the principal components. And the last plot was used to conclude the choice of main variables, that contributes to salt tolerance (Figure 8.3). Chosen variables were later used in MFV ranking .
 
 ### 7. Salt-tolerance evaluation: ranking and dendrogram 
 In order to evaluate salt tolerance, we needed to group accessions that behave similarly under salt stress. This was achieved, based on the MFV mean of the 6 highest ranked physio-morphological parameters from PCA analysis (**PH**, **SL**,  **LN**, **RL**, **DW**, **FW**). 
@@ -435,7 +434,7 @@ for (i in (4:5)) {
 } 
 ```
 
-#### 2.3 Relative water content (RWC), electrolyte leakage (EL) and chlorophyll content (SPAD or CC)
+#### 2.3 Relative water content (RWC), electrolyte leakage (EL) and chlorophyll content (CC)
 - **Relative water content (RWC)**:
 Relative water content is not significantly different in the salt-stressed plants compared with the control (p > 0.05).
 The mean value for RWC in salt-stressed plants 92.77 X ± 2.65 and 92.10 ± 7.00 for control plants.
@@ -446,10 +445,10 @@ Electrolyte leakage is significantly increased in the salt-stressed plants compa
 The mean value for EL in salt-stressed plants is 60.60 ± 9.32 and 56.51 ± 6.48 for control plants.
 
 
-- **Chlorophyll content (SPAD or CC)**: 
+- **Chlorophyll content (CC)**: 
 Chlorophyll content is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for CC in salt-stressed plants is 14.06 ± 6.02 and 18.17 ± 4.79 for control plants.
-```{r Normality test of RWC, EL and SPAD}
+```{r Normality test of RWC, EL and CC}
 #Performing Shapiro–Wilk test of normality on the RWC and EL
 spe <- numeric()
 nor_spe <- c()
@@ -462,24 +461,24 @@ for(i in names(Weight_ion[c(6,12)])) {
 #Creating summary table with the results for RWC and EL
 spe_table <- data.frame ("P-value" = spe, "Normality" = nor_spe)
 
-#Performing Shapiro–Wilk test of normality on the SPAD
+#Performing Shapiro–Wilk test of normality on the CC
 nor_spc <- c()
 an4 <- aov(Chloro_c$Chlorophyll_Content ~ Chloro_c$Treat_Contr)
 spc <- shapiro.test(an4$residuals)$p.value
 
-#Creating summary table with the results for SPAD
+#Creating summary table with the results for CC
 nor_spc <- c(nor_spc, ifelse (spc <= 0.05, "False", "True"))
 spc_table <- data.frame ("P-value" = spc, "Normality" = nor_spc)
 row.names(spc_table) <- "Chlorophyll_Content"
 
-#Uniting the summary tables with the results for RWC+EL and SPAD
+#Uniting the summary tables with the results for RWC+EL and CC
 spec_table <- dplyr::bind_rows(spe_table, spc_table)
 
 #Creating the caption for the summary table
-knitr::kable(spec_table, caption = "Table 2.3 Shapiro–Wilk test results for RWC, EL and SPAD", align="c")
+knitr::kable(spec_table, caption = "Table 2.3 Shapiro–Wilk test results for RWC, EL and CC", align="c")
 ```
 
-```{r Significance test of RWC, EL and SPAD}
+```{r Significance test of RWC, EL and CC}
 #for RWC and EL
 for (i in (c(6,12))) {
   bwei2 <- ggboxplot(Weight_ion, 
@@ -498,7 +497,7 @@ for (i in (c(6,12))) {
                          names(Weight_ion[i])))
   print(bwei2)
 } 
-#for SPAD
+#for CC
 bchlo <- ggboxplot(Chloro_c, 
                  x = "Treat_Contr",
                  y = "Chlorophyll_Content", 
@@ -739,8 +738,8 @@ Treatment <- c('Treatment','Control')
 SD <- rbind(Sd_Treatment,Sd_Control)
 SD$Treat_Contr <- Treatment
 
-knitr::kable(Means, caption = "Table 2.1 Summary table for the mean of treated and control plants")
-knitr::kable(SD, caption = "Table 2.2 Summary table for the standard deviation (SD) of treated and control plants")
+knitr::kable(Means, caption = "Table 2.6 Summary table for the mean of treated and control plants")
+knitr::kable(SD, caption = "Table 2.7 Summary table for the standard deviation (SD) of treated and control plants")
 ```
 
 
@@ -763,81 +762,84 @@ x <- data.frame(dplyr::filter(table, table$Treat_Contr=="Treatment"))
 x <- x[-(1:3)]
 y <- data.frame(dplyr::filter(table, table$Treat_Contr=="Control"))
 y <- y[-(1:3)]
-
 #salt tolerance index for morphological traits
-STI_Shoot_Length <- x[1]/y[1]
-STI_Root_Length <- x[2]/y[2]
-STI_Plant_Height <- x[3]/y[3]
-STI_Leaf_Number <- x[4]/y[4]
-STI_Leaf_Area <- x[5]/y[5]
+STI_SL <- x[1]/y[1]
+STI_RL <- x[2]/y[2]
+STI_PH <- x[3]/y[3]
+STI_LN <- x[4]/y[4]
+STI_LA <- x[5]/y[5]
 #salt tolerance index for biomass
-STI_Fresh_Weight <- x[6]/y[6]
-STI_Dry_Weight <- x[7]/y[7]
+STI_FW <- x[6]/y[6]
+STI_DW <- x[7]/y[7]
 #salt tolerance index for RWC, EL and Chlorophyll content
-STI_Relative_water_content  <- x[8]/y[8]
-names(STI_Relative_water_content)[1] <- "Relative_water_content" # change the name of the column of the data
-STI_Electrolyte_Leakage  <- x[14]/y[14]
-STI_Chlorophyll_Content <- x[15]/y[15]
-# salt tolerance index for Mineral ion content
+STI_RWC  <- x[8]/y[8]
+STI_EL  <- x[14]/y[14]
+STI_CC <- x[15]/y[15]
+#salt tolerance index for Mineral ion content
 STI_Na <- x[9]/y[9]
 STI_K <- x[10]/y[10]
 STI_Ca <- x[11]/y[11]
 STI_Mg <- x[12]/y[12]
 STI_K_Na <- x[13]/y[13]
-# salt tolerance index for Gas exchange attributes
-STI_Photosynthesis_rate <- x[16]/y[16]
-STI_Intercellular_CO2 <- x[17]/y[17]
-STI_Transpiration_Rate <- x[18]/y[18]
-STI_Stomatal_Conductance <- x[19]/y[19]
+# salt tolerance index for gas exchange attributes
+STI_PR <- x[16]/y[16]
+STI_ICO2 <- x[17]/y[17]
+STI_TR <- x[18]/y[18]
+STI_SC <- x[19]/y[19]
 #Creating a summary data.frame
-STI <- data.frame(STI_Shoot_Length,
-                  STI_Root_Length, 
-                  STI_Plant_Height, 
-                  STI_Leaf_Number, 
-                  STI_Leaf_Area, 
-                  STI_Fresh_Weight, 
-                  STI_Dry_Weight,
-                  STI_Relative_water_content, 
-                  STI_Electrolyte_Leakage,
+STI <- data.frame(STI_SL,
+                  STI_RL, 
+                  STI_PH, 
+                  STI_LN, 
+                  STI_LA, 
+                  STI_FW, 
+                  STI_DW,
+                  STI_RWC, 
+                  STI_EL,
                   STI_Na,
                   STI_K,
                   STI_Ca,
                   STI_Mg,
                   STI_K_Na,
-                  STI_Chlorophyll_Content,
-                  STI_Photosynthesis_rate,
-                  STI_Intercellular_CO2,
-                  STI_Transpiration_Rate,
-                  STI_Stomatal_Conductance)
+                  STI_CC,
+                  STI_PR,
+                  STI_ICO2,
+                  STI_TR,
+                  STI_SC)
+#setting names of columns to compact the table view
+STI_names <- c("STI_SL", "STI_RL", "STI_PH", "STI_LN", "STI_LA", "STI_FW", "STI_DW", "STI_RWC", "STI_EL", "STI_Na", "STI_K",
+               "STI_Ca", "STI_Mg", "STI_K_Na", "STI_CC", "STI_PR", "STI_ICO2", "STI_TR", "STI_SC")
+names(STI) <- STI_names
 #Creating a table with the results and a caption for it
-knitr::kable(STI, caption = "Table 4.1. Summary table for salt tolerance index", align="c", digits = round(2) )
+knitr::kable(STI, caption = "Table 4.1. Summary table for salt tolerance index", align="c", digits = round(2))
 ```
 
 
 ### 5. Membership function value (MFV) 
 ```{r MFV}
 #Membership function value 
+library(dplyr)
 # 1-results for the traits inversely related to salt tolerance: which are electrolyte leakage, Na, K and Ca
 MFV <- STI %>%
-  mutate(SL = (STI$Shoot_Length - min(STI$Shoot_Length))/(max(STI$Shoot_Length)- min(STI$Shoot_Length)),
-         RL = (STI$Root_Length - min(STI$Root_Length))/(max(STI$Root_Length)- min(STI$Root_Length)),
-         PH = (STI$Plant_Height - min(STI$Plant_Height))/(max(STI$Plant_Height)- min(STI$Plant_Height)),
-         LN = (STI$Leaf_Number - min(STI$Leaf_Number))/(max(STI$Leaf_Number)- min(STI$Leaf_Number)),
-         LA = (STI$Leaf_Area - min(STI$Leaf_Area))/(max(STI$Leaf_Area)- min(STI$Leaf_Area)),
-         FW = (STI$Fresh_Weight - min(STI$Fresh_Weight))/(max(STI$Fresh_Weight)- min(STI$Fresh_Weight)) ,
-         DW = (STI$Dry_Weight - min(STI$Dry_Weight))/(max(STI$Dry_Weight)- min(STI$Dry_Weight)),
-         RWC = (STI$Relative_water_content - min(STI$Relative_water_content))/(max(STI$Relative_water_content)- min(STI$Relative_water_content)),
-         EL = 1-(STI$Electrolyte_Leakage - min(STI$Electrolyte_Leakage))/(max(STI$Electrolyte_Leakage)- min(STI$Electrolyte_Leakage)),
-         CC = (STI$Chlorophyll_Content - min(STI$Chlorophyll_Content))/(max(STI$Chlorophyll_Content)- min(STI$Chlorophyll_Content)),
-         Na = 1-(STI$Na - min(STI$Na))/(max(STI$Na)- min(STI$Na)),
-         K = 1-(STI$K - min(STI$K))/(max(STI$K)- min(STI$K)),
-         Ca =1- (STI$Ca - min(STI$Ca))/(max(STI$Ca)- min(STI$Ca)),
-         Mg=(STI$Mg - min(STI$Mg))/(max(STI$Mg)- min(STI$Mg)),
-         K_Na= (STI$K_Na - min(STI$K_Na))/(max(STI$K_Na)- min(STI$K_Na)),
-         PR= (STI$Photsynthesis_Rate - min(STI$Photsynthesis_Rate, na.rm=T))/(max(STI$Photsynthesis_Rate, na.rm=T)- min(STI$Photsynthesis_Rate, na.rm=T)),
-         ICO2= (STI$Intercellular_CO2 - min(STI$Intercellular_CO2, na.rm=T))/(max(STI$Intercellular_CO2, na.rm=T)- min(STI$Intercellular_CO2, na.rm=T)),
-         TR= (STI$Transpiration_Rate - min(STI$Transpiration_Rate, na.rm=T))/(max(STI$Transpiration_Rate, na.rm=T)- min(STI$Transpiration_Rate, na.rm=T)),
-         SC= (STI$Stomatal_Conductance - min(STI$Stomatal_Conductance, na.rm=T))/(max(STI$Stomatal_Conductance, na.rm=T)- min(STI$Stomatal_Conductance, na.rm=T)))%>%
+  mutate(SL = (STI$STI_SL - min(STI$STI_SL))/(max(STI$STI_SL)- min(STI$STI_SL)),
+         RL = (STI$STI_RL - min(STI$STI_RL))/(max(STI$STI_RL)- min(STI$STI_RL)),
+         PH = (STI$STI_PH - min(STI$STI_PH))/(max(STI$STI_PH)- min(STI$STI_PH)),
+         LN = (STI$STI_LN - min(STI$STI_LN))/(max(STI$STI_LN)- min(STI$STI_LN)),
+         LA = (STI$STI_LA - min(STI$STI_LA))/(max(STI$STI_LA)- min(STI$STI_LA)),
+         FW = (STI$STI_FW - min(STI$STI_FW))/(max(STI$STI_FW)- min(STI$STI_FW)),
+         DW = (STI$STI_DW - min(STI$STI_DW))/(max(STI$STI_DW)- min(STI$STI_DW)),
+         RWC = (STI$STI_RWC - min(STI$STI_RWC))/(max(STI$STI_RWC)- min(STI$STI_RWC)),
+         EL = 1-(STI$STI_EL - min(STI$STI_EL))/(max(STI$STI_EL)- min(STI$STI_EL)),
+         CC = (STI$STI_CC - min(STI$STI_CC))/(max(STI$STI_CC)- min(STI$STI_CC)),
+         Na = 1-(STI$STI_Na - min(STI$STI_Na))/(max(STI$STI_Na)- min(STI$STI_Na)),
+         K = 1-(STI$STI_K - min(STI$STI_K))/(max(STI$STI_K)- min(STI$STI_K)),
+         Ca = 1- (STI$STI_Ca - min(STI$STI_Ca))/(max(STI$STI_Ca)- min(STI$STI_Ca)),
+         Mg = (STI$STI_Mg - min(STI$STI_Mg))/(max(STI$STI_Mg)- min(STI$STI_Mg)),
+         K_Na = (STI$STI_K_Na - min(STI$STI_K_Na))/(max(STI$STI_K_Na)- min(STI$STI_K_Na)),
+         PR = (STI$STI_PR - min(STI$STI_PR, na.rm=T))/(max(STI$STI_PR, na.rm=T)- min(STI$STI_PR, na.rm=T)),
+         ICO2 = (STI$STI_ICO2 - min(STI$STI_ICO2, na.rm=T))/(max(STI$STI_ICO2, na.rm=T)- min(STI$STI_ICO2, na.rm=T)),
+         TR = (STI$STI_TR - min(STI$STI_TR, na.rm=T))/(max(STI$STI_TR, na.rm=T)- min(STI$STI_TR, na.rm=T)),
+         SC = (STI$STI_SC - min(STI$STI_SC, na.rm=T))/(max(STI$STI_SC, na.rm=T)- min(STI$STI_SC, na.rm=T)))%>%
   select(SL, RL, PH, LN, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC)
 #Creating a table with the results and a caption for it
 knitr::kable(MFV, caption = "Table 5.1. MFV table based on STI", align="c", digits = round(2))
@@ -930,8 +932,6 @@ dend <- important_var %>%
   plot(main = "MFV Dendrogram") # plot dendrogram
 ```
 
-
-
 ### 8. Map of accessions and elevation correlation analysis
 #### Location and salt tolerance.
 
@@ -983,7 +983,7 @@ ggplot(map.acc, aes(x = Longitude,
   theme_minimal()
 ```
 #### 8.2 Correlation analysis of elevation and mean MFV
-Correlation coefficient (0,07) showed no link between elevation and salt tolerance (p = 0,75).
+Correlation coefficient (-0,07) showed no link between elevation and salt tolerance (p = 0,75).
 ```{r}
 ###--Correlation between ranking and elevation--###
   
