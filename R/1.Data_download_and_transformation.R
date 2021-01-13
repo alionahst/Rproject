@@ -57,7 +57,7 @@ Gas_e <- X$`Gas Exchange parameters`
 names(Morpho_t)[4:8] <- c('Shoot_Length', 
                           'Root_Length', 
                           'Plant_Height', 
-                          'Number_Leaves', 
+                          'Leaf_Number', 
                           'Leaf_Area')
 names(Chloro_c)[4] <- c('Chlorophyll_Content')
 names(Weight_ion) [4:12] <- c('Fresh_Weight', 
@@ -79,7 +79,7 @@ names(Gas_e) [4:7] <- c('Photsynthesis_Rate',
 Gas_e_miss <- data.frame (Number = rep(c(7, 16), each = 8),
                           Code = rep(c("Es-7", "Es-16"), each = 8),
                           Treat_Contr = rep(c("Treatment", "Control",
-                                            "Treatment", "Control"), each = 4),
+                                              "Treatment", "Control"), each = 4),
                           Photsynthesis_Rate = rep(NA, 16),
                           Intercellular_CO2 = rep(NA, 16),
                           Transpiration_Rate = rep(NA, 16),
@@ -128,7 +128,7 @@ a <- Morpho_t %>%
   summarise(Shoot_Length = mean(Shoot_Length),
             Root_Length = mean(Root_Length), 
             Plant_Height = mean(Plant_Height), 
-            Number_Leaves = mean(Number_Leaves), 
+            Leaf_Number = mean(Leaf_Number), 
             Leaf_Area = mean(Leaf_Area))
 
 # remove NA values from Weight_ion table

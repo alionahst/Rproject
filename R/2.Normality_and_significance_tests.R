@@ -32,14 +32,14 @@ for (i in (4:8)) {
                        label.x.npc = "center",
                        label.y.npc = "top") +
     theme(legend.position = "None") +
-    labs(x = "",
-         caption = paste("Table 2.", (i-3),
-                         "Distribution boxplot of the mean values of the",
+    labs(x = "", title = paste("Boxplot of the", names(Morpho_t[i])),
+         caption = paste("Figure 2.", (i-3),
+                         "Distribution of the mean values of the",
                          names(Morpho_t[i])))
   print(bmorpho)
 }
 
-##Biomass traits (fresh weight, dry weight)
+##Normality test of biomass traits (fresh weight, dry weight)
 
 #Performing Shapiro–Wilk test of normality
 spb <- numeric()
@@ -56,18 +56,18 @@ spb_table <- data.frame ("P-value" = spb, "Normality" = nor_spb)
 #Performing significance test and plotting the results and values distribution
 for (i in (4:5)) {
   bwei <- ggboxplot(Weight_ion, 
-                 x = "Treat_Contr",
-                 y = names(Weight_ion[i]), 
-                 color = names(Weight_ion[3]),
-                 palette = c("blue", "red"),
-                 add = "jitter") + 
+                    x = "Treat_Contr",
+                    y = names(Weight_ion[i]), 
+                    color = names(Weight_ion[3]),
+                    palette = c("blue", "red"),
+                    add = "jitter") + 
     stat_compare_means(data = Weight_ion, method = "kruskal.test",
                        label.x.npc = "center",
                        label.y.npc = "top") +
     theme(legend.position = "None") +
-    labs(x = "",
-         caption = paste("Table 2.", (i+2),
-                         "Distribution boxplot of the mean values of the",
+    labs(x = "", title = paste("Boxplot of the", names(Weight_ion[i])),
+         caption = paste("Figure 2.", (i+2),
+                         "Distribution of the mean values of the",
                          names(Weight_ion[i])))
   print(bwei)
 } 
@@ -100,37 +100,37 @@ row.names(spc_table) <- "Chlorophyll_Content"
 #Uniting the summary tables with the results for RWC+EL and SPAD
 spec_table <- dplyr::bind_rows(spe_table, spc_table)
 
-#Performing significance test and plotting the results and values distribution
 #for RWC and EL
 for (i in (c(6,12))) {
   bwei2 <- ggboxplot(Weight_ion, 
-                 x = "Treat_Contr",
-                 y = names(Weight_ion[i]), 
-                 color = names(Weight_ion[3]),
-                 palette = c("blue", "red"),
-                 add = "jitter") + 
+                     x = "Treat_Contr",
+                     y = names(Weight_ion[i]), 
+                     color = names(Weight_ion[3]),
+                     palette = c("blue", "red"),
+                     add = "jitter") + 
     stat_compare_means(data = Weight_ion, method = "kruskal.test",
                        label.x.npc = "center",
                        label.y.npc = "top") +
     theme(legend.position = "None") +
-    labs(x = "",
-         caption = paste("Table 2.", ifelse((i<7), paste(i+2), paste(i-3)),
-                         "Distribution boxplot of the mean values of the",
+    labs(x = "", title = paste("Boxplot of the", names(Weight_ion[i])),
+         caption = paste("Figure 2.", ifelse((i<7), paste(i+2), paste(i-3)),
+                         "Distribution of the mean values of the",
                          names(Weight_ion[i])))
   print(bwei2)
 } 
 #for SPAD
 bchlo <- ggboxplot(Chloro_c, 
-                 x = "Treat_Contr",
-                 y = "Chlorophyll_Content", 
-                 color = names(Chloro_c[3]),
-                 palette = c("blue", "red"),
-                 add = "jitter") 
+                   x = "Treat_Contr",
+                   y = "Chlorophyll_Content", 
+                   color = names(Chloro_c[3]),
+                   palette = c("blue", "red"),
+                   add = "jitter") 
 bchlo + stat_compare_means(data = Chloro_c, method = "kruskal.test", 
                            label.x.npc = "center",
                            label.y.npc = "top") +
   theme(legend.position = "None") +
-  labs(x = "", caption = paste("Table 2. 10 Distribution boxplot of the mean values of the",
+  labs(x = "", title = paste("Boxplot of the", names(Chloro_c[4])),
+       caption = paste("Fifure 2. 10 Distribution of the mean values of the",
                        names(Chloro_c[4])))
 
 ##Mineral ion content (Na, K, Ca, Mg, K/Na)
@@ -150,21 +150,21 @@ spw_table <- data.frame ("P-value" = spw, "Normality" = nor_spw)
 #Performing significance test and plotting the results and values distribution
 for (i in (7:11)) {
   bwei3 <- ggboxplot(Weight_ion, 
-                 x = "Treat_Contr",
-                 y = names(Weight_ion[i]), 
-                 color = names(Weight_ion[3]),
-                 palette = c("blue", "red"),
-                 add = "jitter") + 
+                     x = "Treat_Contr",
+                     y = names(Weight_ion[i]), 
+                     color = names(Weight_ion[3]),
+                     palette = c("blue", "red"),
+                     add = "jitter") + 
     stat_compare_means(data = Weight_ion, method = "kruskal.test",
                        label.x.npc = "center",
                        label.y.npc = "top") +
     theme(legend.position = "None") +
-    labs(x = "",
-         caption = paste("Table 2.", (i+4),
-                         "Distribution boxplot of the mean values of the",
+    labs(x = "", title = paste("Boxplot of the", names(Weight_ion[i])),
+         caption = paste("Figure 2.", (i+4),
+                         "Distribution of the mean values of the",
                          names(Weight_ion[i])))
   print(bwei3)
-} 
+}
 
 ##Gas parameters (photosynthesis rate, intercellular CO2, transpiration rate,
 ##stomatal conductance)
@@ -183,34 +183,34 @@ spg_table <- data.frame ("P-value" = spg, "Normality" = nor_spg)
 
 #Performing significance test and plotting the results and values distribution
 #for intercellular CO2 (with ANOVA results, as this is the only normally distributed value)
+Gas_e_withoutNA <- na.omit(Gas_e)
 banova <- ggboxplot(Gas_e_withoutNA,
-          x="Treat_Contr", 
-          y= "Intercellular_CO2",
-          color = names(Gas_e_withoutNA[3]),
-          palette = c("blue", "red"),
-          add = "jitter") 
+                    x="Treat_Contr", 
+                    y= "Intercellular_CO2",
+                    color = names(Gas_e_withoutNA[3]),
+                    palette = c("blue", "red"),
+                    add = "jitter") 
 banova  +   stat_compare_means(method = "anova") +
   theme(legend.position = "None") +
-  labs(x = "",
-       caption = paste("Table 2. 16 Distribution boxplot of the mean values of the",
+  labs(x = "", title = paste("Boxplot of the", names(Gas_e_withoutNA[5])),
+       caption = paste("Figure 2. 16 Distribution of the mean values of the",
                        names(Gas_e_withoutNA[5])))
 #for photosynthesis rate, transpiration rate, stomatal conductance
 #(with Kruskal-Wallis results)
-Gas_e_withoutNA <- na.omit(Gas_e)
 for (i in c(4,6:7)) {
   bgas <- ggboxplot(Gas_e_withoutNA, 
-                 x = "Treat_Contr",
-                 y = names(Gas_e_withoutNA[i]), 
-                 color = names(Gas_e_withoutNA[3]),
-                 palette = c("blue", "red"),
-                 add = "jitter") + 
+                    x = "Treat_Contr",
+                    y = names(Gas_e_withoutNA[i]), 
+                    color = names(Gas_e_withoutNA[3]),
+                    palette = c("blue", "red"),
+                    add = "jitter") + 
     stat_compare_means(data = Gas_e_withoutNA, method = "kruskal.test",
                        label.x.npc = "center",
                        label.y.npc = "top") +
     theme(legend.position = "None") +
-    labs(x = "",
-         caption = paste("Table 2.", ifelse((i<5), paste(i+13), paste(i+12)),
-                         "Distribution boxplot of the mean values of the",
+    labs(x = "", title = paste("Boxplot of the", names(Gas_e_withoutNA[i])),
+         caption = paste("Figure 2.", ifelse((i<5), paste(i+13), paste(i+12)),
+                         "Distribution of the mean values of the",
                          names(Gas_e_withoutNA[i])))
   print(bgas)
 }
