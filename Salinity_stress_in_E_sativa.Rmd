@@ -128,32 +128,26 @@ To define which morpho-physiological parameters were inversly related, we used t
  
 The principal component analysis (PCA) allows to reduce the dimensionality of a multivariate data to two (or more) principal components, that can be visualized graphically. We performed PCA using MFV values of selected variables. **RWC** and **ICO2** were excluded because they did not show significant difference between treatment and control (according to Kruskal-Wallis and ANOVA tests). **Mg**, and **Ca** were excluded because they showed little correlation with the rest of the parameters (according to the Pearson correlation analysis). **K** and **Na** also showed somewhat lesser extent of correlation, but main reason for their exclusion was the availability of **K/Na** ratio, that, basically, unified the two. Thus we included the following traits into the PCA: **SL**, **RL**, **PH**, **LN**, **LA**, **FW**, **DW**, **EL**, **CC**, **K_Na**, **PR**, **TR**, **SC**.
 
-The results were plotted. First plot represented contribution of principal components to the variance of the data (Figure 8.1). Second plot is the scatter plot individuals (our data) allowed us to visualize the groupings among accessions (Figure 8.2). The third plot is the loadings correlation circle. It gives additional idea about how the variables contribute to data projection on the principal components. And the last plot was used to conclude the choice of main variables, that contributes to salt tolerance (Figure 8.3). Chosen variables were later used in MFV ranking .
+The results were plotted. First plot represented contribution of principal components to the variance of the data (Figure 8.1). Second plot is the scatter plot individuals (our data) allowed us to visualize the groupings among accessions (Figure 8.2). It must be mentioned that initial analysis did not contain these groupings, they were added after cluster analysis results for additional visualization and do not interfere with data projections in any way. The third plot is the loadings correlation circle. It gives an idea about how the variables contribute to data projection on the principal components. And the last plot was used to conclude the choice of main variables, that contributes to salt tolerance (Figure 8.3). Red dashed line on the plot shows the level of contribution if all the variables contributed equally. This was our cut off line for the choice of the main variables for MFV ranking and cluster analysis.
 
 ### 7. Salt-tolerance evaluation: ranking and dendrogram 
 In order to evaluate salt tolerance, we needed to group accessions that behave similarly under salt stress. This was achieved, based on the MFV mean of the 6 highest ranked physio-morphological parameters from PCA analysis (**PH**, **SL**,  **LN**, **RL**, **DW**, **FW**). 
 
 The ranking was done by ordering MFV mean values from the highest to the smallest one.
 
-
 ???Then the groups were addressed according to the same logic as in the paper (with higher MFV mean value corresponding to higher salt tolerance): 4% accessions were classified as highly tolerant, 16% as tolerant, 60% as moderately tolerant, 16% as sensitive and finally 4% as highly sensitive.???
 
 Then the groups were addressed according to the PCA visualization and dendrogram clustering, both methods allowed us to identify 3 groups ranked from tolerant, moderately tolerant to susceptible.
 
-The dendrogram was established based on MFV mean (6 highest). And 3 groups were formed. 
+The dendrogram was established based on MFV mean (6 highest). And 3 groups were formed according to the biggest distance.? 
 
-### 8.Accessions map and location correlation ?
+### 8.Accessions map and location correlation
 To visually evaluate possible link between accession salt tolerance and their location we created a map, where each accession was presented and colored according to the salt tolerance ranking.
 To make data more readeble overlapping accessions were removed with a code(11 and 15)
 11 overlap with 9
 and 15 overlap with 12
 
 Additionally, we wanted to check if the salt tolerance was correlated to elevation. So we made a Pearson correlation analysis between MFV mean (6 highest) and elevation. The results were presented in the Table 8.1
-
-
-
-? 
-
 
 ## Results 
 #####(Figures and tables with captions and description of what do they mean.)
@@ -811,7 +805,7 @@ STI_names <- c("STI_SL", "STI_RL", "STI_PH", "STI_LN", "STI_LA", "STI_FW", "STI_
                "STI_Ca", "STI_Mg", "STI_K_Na", "STI_CC", "STI_PR", "STI_ICO2", "STI_TR", "STI_SC")
 names(STI) <- STI_names
 #Creating a table with the results and a caption for it
-knitr::kable(STI, caption = "Table 4.1. Summary table for salt tolerance index", align="c", digits = round(2))
+knitr::kable(STI, caption = "Table 4.1. Summary table for salt tolerance indices", align="c", digits = round(2))
 ```
 
 
@@ -842,10 +836,11 @@ MFV <- STI %>%
          SC = (STI$STI_SC - min(STI$STI_SC, na.rm=T))/(max(STI$STI_SC, na.rm=T)- min(STI$STI_SC, na.rm=T)))%>%
   select(SL, RL, PH, LN, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC)
 #Creating a table with the results and a caption for it
-knitr::kable(MFV, caption = "Table 5.1. MFV table based on STI", align="c", digits = round(2))
+knitr::kable(MFV, caption = "Table 5.1. Summary table of membership function values (MFV) calculated from STI", align="c", digits = round(2))
 ```
 
 ### 6. Principal component analysis (PCA)
+As it was mentioned in the methods, we included 13 variables into the PCA: **SL**, **RL**, **PH**, **LN**, **LA**, **FW**, **DW**, **EL**, **CC**, **K/Na**, **PR**, **TR**, **SC**. PCA produced principal components with the variation contributed by the first 2 components equal to 53,3% (PC1 - 34,4% and PC2 - 18,9%).
 ```{r PCA, fig.cap = "Figure 6.1 Percent of variance of principal components"}
 ####------PCA on MFV-------###
 #doing the PCA, adding the scaling into the function
@@ -860,16 +855,24 @@ PCA_eval <- fviz_eig(MFV_salt.pca,
 print(PCA_eval)
 ```
 
+The scatter plot (Figure 6.2) shows the projection of data on PC1 and PC2 dimensions, allowing us to recognize groups of accessions (according to their salt tolerance) defined by MFV ranking and cluster analysis. Different groups are represented bu different colors as shown in the legend.  
+
 ```{r PCA_ind, fig.cap = "Figure 6.2 Plot of data projections onto the prinsipal components. Groups according to salt tolerance"}
 #creating vector for colors to correspond to ranking of accessions
-colors_PCA <- c(3:1, 3, 2, 2, 2, 3, 2, 3, 3, 3:1, 1, 1, 3, rep(2, 6))
-#making a score rplot of PC1 and PC2
+colors_PCA <- c("3. Tolerant", "2. Moderately tolerant", "1. Sensitive",
+                "3. Tolerant", "2. Moderately tolerant", "2. Moderately tolerant",
+                "2. Moderately tolerant", "3. Tolerant", "2. Moderately tolerant",
+                "3. Tolerant", "3. Tolerant", "3. Tolerant", "2. Moderately tolerant",
+                "1. Sensitive", "1. Sensitive", "1. Sensitive", "3. Tolerant",
+                "2. Moderately tolerant", "2. Moderately tolerant",
+                "2. Moderately tolerant", "2. Moderately tolerant",
+                "2. Moderately tolerant", "2. Moderately tolerant")
+
+#making a scatterplot of PC1 and PC2
 PCA_ind <- fviz_pca_ind(MFV_salt.pca,
                         repel = TRUE, # Avoid text overlapping
-                        geom = c("text", "point"),
                         labelsize = 5,
                         pointsize = 2,
-                        pointshape = 1,
                         habillage = colors_PCA,
                         addEllipses = TRUE,
                         ellipse.level = 0.95,
@@ -879,8 +882,9 @@ PCA_ind <- fviz_pca_ind(MFV_salt.pca,
 print(PCA_ind)
 ```
 
-```{r PCA_var, fig.cap = "Figure 6.3 Correlation circle and loading scores of variables to principal components"}
+The loading plot illustrates how much different traits contribute into data distribution (grouping). In particular, it shows that all morphological traits, as well as biomass characteristics, electrolyte leakage (in one direction) and K/Na ratio (in opposite direction) are responsible for distributing data projections along PC1. While gas characteristics (one direction) and chlorophyll content (opposite direction) contribute to data distribution along PC2.  
 
+```{r PCA_var, fig.cap = "Figure 6.3 Correlation circle and loading scores of variables to principal components"}
 #making loadings plot
 PCA_var <- fviz_pca_var(MFV_salt.pca,
                         col.var = "#2E9FDF",
@@ -889,17 +893,22 @@ PCA_var <- fviz_pca_var(MFV_salt.pca,
 print(PCA_var)
 ```
 
+The last figure (Figure 6.4) presents variables according to the percentage, that they contribute to principal component 1. Red dashed line, as was previously mentioned in the Methods, was the cut off line and allowed us to narrow the quantity of variables to the most important 6: **PH**, **SL**, **LN**, **RL**, **DW**, **FW**. Those variables were later used for MFV ranking and cluster analysis.
+
 ```{r PCA_contr, fig.cap = "Figure 6.4 Persentage of variables influence on the first principal component"}
 #Contributions of variables to PC1
-PCA_contr <- fviz_contrib(MFV_salt.pca, choice = "var", axes = 1, top = 13,
+PCA_contr <- fviz_contrib(MFV_salt.pca,
+                          choice = "var",
+                          axes = 1,
+                          top = 13,
                           sortcontrib = "asc",
                           title = "Contribution of variables to PC1")
 print(PCA_contr)
 ```
 
-
-
 ### 7. Salt-tolerance evaluation: ranking and dendrogram
+The ranking of accessions according to their salt tolerance is summarized in Table 7.1. However, the categories of salt tolerance were defined based on cluster analysis and can be seen in the dendrogram (Figure 7.1). Colors represents groups according to salt tolerance: tolerant - blue, moderately tolerate - green and sensitive - red. Therefore, 8 accessions were included into the tolerant group (accessions ## 12, 9, 1, 19, 11, 13, 4, 7), 4 accessions were included into the sensitive group (accessions ## 3, 18, 17, 15) and the rest were included into the moderately tolerant group (13 accessions: 5, 2, 6, 14, 20, 22, 10, 25, 21, 24, 23, 8, 16).
+
 ```{r MFV ranking}
 # We used 6 highest ranked variables to include in the final MFV based ranking of salt tolerance
 # Add into the data the mean MFV column from the 6 important variables 
@@ -927,7 +936,7 @@ dend <- important_var %>%
   hclust(method = "ward.D2") %>% 
   as.dendrogram %>%
   set("branches_k_color",                                   #setting the color 
-      value = c("#FF3333", "#3366CC", "#009966"), #of the branches 
+      value = c("#FF3333", "#3366CC", "#009966"),           #of the branches 
       k = 3)%>% # make the 3 groups and color for groups    #according to the clusters
   plot(main = "MFV Dendrogram") # plot dendrogram
 ```
@@ -936,7 +945,7 @@ dend <- important_var %>%
 #### Location and salt tolerance.
 
 The map of accessions showed no visible patterns of accessions distribution according to their salt tolerance ranking.
-The only accession, whose tolerance might be linked to location is Ess-1, that is closest to the shore.
+The only accession, whose tolerance might be linked to its location is Ess-1, that is closest to the shore.
 ```{r, fig.cap = "Figure 8.1. Map of *E. sativa* accessions"}
 ###--Map of accessions--###
 #Creating data frame for the future map from Acc_loc table
