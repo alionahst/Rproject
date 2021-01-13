@@ -568,7 +568,7 @@ summary {
 <li><a href="#membership-function-value-mfv">5. Membership function value (MFV)</a></li>
 <li><a href="#the-principal-component-analysis-pca">6. The principal component analysis (PCA)</a></li>
 <li><a href="#salt-tolerance-evaluation-ranking-and-dendrogram">7. Salt-tolerance evaluation: ranking and dendrogram</a></li>
-<li><a href="#accessions-map-and-location-correlation">8.Accessions map and location correlation</a></li>
+<li><a href="#accessions-map-and-location-correlation">8. Accessions map and location correlation</a></li>
 </ul></li>
 <li><a href="#results">Results</a><ul>
 <li><a href="#data-download-and-transformation">1. Data download and transformation</a></li>
@@ -585,7 +585,7 @@ summary {
 <li><a href="#principal-component-analysis-pca">6. Principal component analysis (PCA)</a></li>
 <li><a href="#salt-tolerance-evaluation-ranking-and-dendrogram-1">7. Salt-tolerance evaluation: ranking and dendrogram</a></li>
 <li><a href="#map-of-accessions-and-elevation-correlation-analysis">8. Map of accessions and elevation correlation analysis</a><ul>
-<li><a href="#location-and-salt-tolerance.">Location and salt tolerance.</a></li>
+<li><a href="#location-and-salt-tolerance.">8.1 Location and salt tolerance.</a></li>
 <li><a href="#correlation-analysis-of-elevation-and-mean-mfv">8.2 Correlation analysis of elevation and mean MFV</a></li>
 </ul></li>
 </ul></li>
@@ -709,14 +709,13 @@ padding: 2em;}
 <p>The dendrogram was established based on MFV mean (6 highest). And 3 groups were formed according to the biggest distance.?</p>
 </div>
 <div id="accessions-map-and-location-correlation" class="section level3">
-<h3>8.Accessions map and location correlation</h3>
-<p>To visually evaluate possible link between accession salt tolerance and their location we created a map, where each accession was presented and colored according to the salt tolerance ranking. To make data more readeble overlapping accessions were removed with a code(11 and 15) 11 overlap with 9 and 15 overlap with 12</p>
+<h3>8. Accessions map and location correlation</h3>
+<p>To visually evaluate possible link between accession salt tolerance and their location we created a map, where each accession was presented and colored according to the salt tolerance ranking. To make data more readable overlapping accessions were removed with a code.</p>
 <p>Additionally, we wanted to check if the salt tolerance was correlated to elevation. So we made a Pearson correlation analysis between MFV mean (6 highest) and elevation. The results were presented in the Table 8.1</p>
 </div>
 </div>
 <div id="results" class="section level2">
 <h2>Results</h2>
-<p>#####(Figures and tables with captions and description of what do they mean.)</p>
 <div id="data-download-and-transformation" class="section level3">
 <h3>1. Data download and transformation</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">###----Data download and transformation----</span><span class="al">###</span></span>
@@ -4465,7 +4464,7 @@ Figure 7.1. The MFV dendrogram based on 6 main variables identified by PCA
 <div id="map-of-accessions-and-elevation-correlation-analysis" class="section level3">
 <h3>8. Map of accessions and elevation correlation analysis</h3>
 <div id="location-and-salt-tolerance." class="section level4">
-<h4>Location and salt tolerance.</h4>
+<h4>8.1 Location and salt tolerance.</h4>
 <p>The map of accessions showed no visible patterns of accessions distribution according to their salt tolerance ranking. The only accession, whose tolerance might be linked to its location is Ess-1, that is closest to the shore.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">###--Map of accessions--</span><span class="al">###</span></span>
 <span id="cb26-2"><a href="#cb26-2"></a><span class="co">#Creating data frame for the future map from Acc_loc table</span></span>

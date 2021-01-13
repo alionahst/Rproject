@@ -141,17 +141,13 @@ Then the groups were addressed according to the PCA visualization and dendrogram
 
 The dendrogram was established based on MFV mean (6 highest). And 3 groups were formed according to the biggest distance.? 
 
-### 8.Accessions map and location correlation
+### 8. Accessions map and location correlation
 To visually evaluate possible link between accession salt tolerance and their location we created a map, where each accession was presented and colored according to the salt tolerance ranking.
-To make data more readeble overlapping accessions were removed with a code(11 and 15)
-11 overlap with 9
-and 15 overlap with 12
+To make data more readable overlapping accessions were removed with a code.
 
 Additionally, we wanted to check if the salt tolerance was correlated to elevation. So we made a Pearson correlation analysis between MFV mean (6 highest) and elevation. The results were presented in the Table 8.1
 
 ## Results 
-#####(Figures and tables with captions and description of what do they mean.)
-
 ### 1. Data download and transformation
 ```{r Tidy_data.R, message=FALSE}
 ###----Data download and transformation----###
@@ -508,12 +504,12 @@ bchlo + stat_compare_means(data = Chloro_c, method = "kruskal.test",
 
 #### 2.4 Mineral ion content
 - **Sodium (Na)**:
-Sodium is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+Sodium is significantly increased in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for Na in salt-stressed plants is 30.03 ± 8.84 and 13.60 ± 5.00 for control plants.
 
 
 - **Potassium (K)**:
-Potassium is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+Potassium is significantly increased in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for K in salt-stressed plants is 19.72 ± 7.48 and 15.48 ± 6.09 for control plants.
 
 
@@ -570,7 +566,7 @@ for (i in (7:11)) {
 
 #### 2.5 Gas exchange attributes
 - **Photosynthesis rate (PR)**:
-Photosynthesus rate is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+Photosynthesis rate is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for PR in salt-stressed plants is 1.95 ± 1.02 and 7.53 ± 4.84 for control plants.
 
 - **Intercellular CO2 (ICO2)**:
@@ -808,7 +804,6 @@ names(STI) <- STI_names
 knitr::kable(STI, caption = "Table 4.1. Summary table for salt tolerance indices", align="c", digits = round(2))
 ```
 
-
 ### 5. Membership function value (MFV) 
 ```{r MFV}
 #Membership function value 
@@ -855,7 +850,7 @@ PCA_eval <- fviz_eig(MFV_salt.pca,
 print(PCA_eval)
 ```
 
-The scatter plot (Figure 6.2) shows the projection of data on PC1 and PC2 dimensions, allowing us to recognize groups of accessions (according to their salt tolerance) defined by MFV ranking and cluster analysis. Different groups are represented bu different colors as shown in the legend.  
+The scatter plot (Figure 6.2) shows the projection of data on PC1 and PC2 dimensions, allowing us to recognize groups of accessions (according to their salt tolerance) defined by MFV ranking and cluster analysis. Different groups are represented by different colors as shown in the legend.  
 
 ```{r PCA_ind, fig.cap = "Figure 6.2 Plot of data projections onto the prinsipal components. Groups according to salt tolerance"}
 #creating vector for colors to correspond to ranking of accessions
@@ -942,7 +937,7 @@ dend <- important_var %>%
 ```
 
 ### 8. Map of accessions and elevation correlation analysis
-#### Location and salt tolerance.
+#### 8.1 Location and salt tolerance.
 
 The map of accessions showed no visible patterns of accessions distribution according to their salt tolerance ranking.
 The only accession, whose tolerance might be linked to its location is Ess-1, that is closest to the shore.
