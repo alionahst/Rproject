@@ -62,7 +62,7 @@ library(tidyverse)
 
 
 ## Introduction
-Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. As function of their location, plants from the same species can exhibit different tolerance to abiotic stress. In the study we will review, 25 accessions of *Eruca sativa* from different regions of Pakistan were analyzed. Each accession have been separated into two groups  according to the received treatment: first group underwent salt stress (150 mM NaCl) during two weeks and the second was the control. Following that 19 morpho-physiological traits were measured.
+Under abiotic stress such as salinity, several morphological and physiological parameters of plants are affected. As function of their phenotypic diversity, plants from the same species can exhibit different tolerance to abiotic stress. In the study we will review, 25 accessions of *Eruca sativa* from different regions of Pakistan were analyzed. Each accession have been separated into two groups  according to the received treatment: first group underwent salt stress (150 mM NaCl) during two weeks and the second was the control. Lastly, 19 morpho-physiological traits were measured.
 
 The data was obtained from the paper [**"Evaluation of salt tolerance in *Eruca sativa* accessions based on morpho-physiological traits"** 
 (Afsar et. al 2020)](https://peerj.com/articles/9749/)
@@ -70,13 +70,13 @@ The data was obtained from the paper [**"Evaluation of salt tolerance in *Eruca 
 ## Objectives and hypotheses
 Our main objectives are:
 
-1. Explore the effects of salt stress on various morpho-physiological traits in different *E. sativa* accessions. 
-2. Identify traits the salt stress has the biggest influence on.
-3. Define the susceptible and resistant accessions.
+1. Explore effects of salt stress on various morpho-physiological traits in different *E. sativa* accessions. 
+2. Identify traits that salt stress has the biggest influence on.
+3. Define tolerant and sensitive accessions.
 4. Compare our results with the ones from the paper.
 5. Explore if location can be linked to salt-tolerance.
 
-Main hypothesis:
+Main hypotheses:
 
 - We expect to observe statistically significant differences in morpho-physiological traits between control and salt-treated plants.
 - Salt-tolerant and salt-susceptible accessions will belong to different groups based on how much salt stress affects morpho-physiological parameters.
@@ -84,36 +84,34 @@ Main hypothesis:
 
 
 ## Methods 
-What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
-
 ### 1. Downloading and tidying the data.
-First we had to download the data.xls file from the paper. The tables needed to be tidied (column names organized, empty cells filled, the values formatted, etc.). Then we had to download the location of accessions.doc data and tidy this table as well.
+First we had to download the data.xls file from the paper. The tables needed to be tidied (column names organized, empty cells filled, values formatted, etc.). Then we had to download the location of accessions.doc data and tidy this table as well.
 
-In order to be able to work with all of morpho-physiological parameters we had to unify them (because of different number of replicates in different categories of morpho-physiological traits measurments). The unification was done trough the mean in every accession and treatment. With unified data we created a summary table (Table 1.1).
+In order to be able to work with all of morpho-physiological parameters, we had to unify them (because of different number of replicates in different categories of morpho-physiological traits measurements). The unification was done through the mean in every accession and treatment. With unified data we created a summary table (Table 1.1).
 
 ### 2. Test of normality and statistical difference of variables.
 Once we had the summary table, we tested the normality of variables with 
-Shapiro–Wilk test. Our Null Hypothesis (H0) was that morpho-physiological parameters' distribution was normal. The results for every group of morpho-physiological traits were summarized in tables (Table 2.1-2.5).
+Shapiro–Wilk test. Our Null Hypothesis (H0) was that morpho-physiological parameters' distribution was normal. The results for every group of morpho-physiological traits were summarized in tables **(Table 2.1-2.5)**.
 
 If the H0 was accepted (p > 0.05) we used ANOVA, otherwise (p < 0.05) we proceeded with Kruskal-Wallis test to see if there was a significant difference between salt-treated and control plants for each variable.
-The parameters' distributions and results of normality tests were visualized in the boxplot figures (Figure 2.1-2.19)
+The parameters' distributions and results of normality tests were visualized in the boxplot figures **(Figure 2.1-2.19)**
 
-Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into tables (Table 2.6-2.7).
+Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into tables **(Table 2.6-2.7)**.
 
 ### 3. Correlation analysis.
-In order to see the degree of association between the morpho-physiological parameters (and, additionally, elevation) we performed Pearson correlation analysis. The results were visualized in the Figure 3.1.
+In order to see the degree of association between the morpho-physiological parameters (and additionally elevation), we performed Pearson correlation analysis. The results were visualized in the **Figure 3.1**.
 
-We started doing Pearson correlation using membership function values (MFV) of the 11 selected salt tolerance traits, the results were very similar to that in the article. But we discarded that analysis as we didn't understood the utility of it.
+We started doing Pearson correlation using Membership Function Values (MFV) of the 11 selected morpho-physiological traits, following the article logic. The results were very similar to the ones in the article, but we discarded them as we didn't understand their utility. Instead we computed Pearson correlation on the means of all morpho-physiological traits (treatment and control). Consecutively, we were able to see (prior to calculating MFV) which values had positive correlation and which had the negative. That allowed us to choose the appropriate formula for MFV calculation (explanation of MFV calculation is in the next sections).
 
-Instead we computed Pearson correlation on the means of all salt tolerance traits (treatment and control), as it shows (prior to calculating MFV) which values has positive correlation and which has the negative, thus allowing us to choose the appropriate formula for MFV calculation (see explanation of MFV calculation in the next sections).
+### 4. Salt Tolerance Index (STI)
+To evaluate degree of salt tolerance (so that later we can define the tolerant and sensitive accessions), we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the Salt-tolerance Index (STI). STI is the ratio of the values of every morpho-physiological parameters of treated plants to control:
 
-### 4. Salt tolerant index (STI)
-In order to evaluate degree of salt tolerance (to later define the susceptible and resistant accessions), we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the salt-tolerance index (STI). STI is the ratio of the values of every morpho-physiological parameters of treated plants to control.
+<center> **$STI=Vtreatment/Vcontrol$** </center>
 
-Here we deviated from the paper in the method of STI calculation. We considered that the way the authors calculated STI on accessions was not appropriate. We think that they arbitrary paired plants from treatment and control. Instead, we calculated STI ratio on the means of treated plants and control for every parameter. STI results are summarized in the Table 4.1.
+At this point we deviated from the paper in the method of STI calculation. We considered that the way the authors calculated STI on accessions was not appropriate, because we think that they arbitrary paired plants from treatment and control. Instead, we calculated STI ratio on the means of treated plants and control for every parameter. STI results are summarized in the **Table 4.1**.
 
 ### 5. Membership function value (MFV)
-Membership function value allows to make the different variables comparable between each other, so they can be used together in order to make a ranking.
+Membership Function Value allows to make the different variables comparable between each other, so they can be used together in order to make a ranking.
 We calculated the MVF values using the formula provided in the article:
 
 <center> **$Xp=[(X−Xmin)/(Xmax−Xmin)]×100%$** </center>
@@ -122,24 +120,20 @@ For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, 
 
 <center> **$Xp=[1−(X−Xmin)/(Xmax−Xmin)]×100%$** </center>
 
-To define which morpho-physiological parameters were inversly related, we used the results of the correlation analysis. MFV calculation results are summarized in the Table 5.1.
+To define which morpho-physiological parameters were inversely related, we used the results of the correlation analysis. MFV calculation results are summarized in the Table 5.1.
 
-### 6. The principal component analysis (PCA)
+### 6. The Principal Component Analysis (PCA)
  
-The principal component analysis (PCA) allows to reduce the dimensionality of a multivariate data to two (or more) principal components, that can be visualized graphically. We performed PCA using MFV values of selected variables. **RWC** and **ICO2** were excluded because they did not show significant difference between treatment and control (according to Kruskal-Wallis and ANOVA tests). **Mg**, and **Ca** were excluded because they showed little correlation with the rest of the parameters (according to the Pearson correlation analysis). **K** and **Na** also showed somewhat lesser extent of correlation, but main reason for their exclusion was the availability of **K/Na** ratio, that, basically, unified the two. Thus we included the following traits into the PCA: **SL**, **RL**, **PH**, **LN**, **LA**, **FW**, **DW**, **EL**, **CC**, **K_Na**, **PR**, **TR**, **SC**.
+The Principal Component Analysis (PCA) allows to reduce the dimensionality of a multivariate data to two (or more) principal components, that can be visualized graphically. We performed PCA using MFV values of selected variables. **RWC** and **ICO2** were excluded because they did not show significant difference between treatment and control (according to Kruskal-Wallis and ANOVA tests). **Mg**, and **Ca** were excluded because they showed little correlation with the rest of the parameters (according to the Pearson correlation analysis). **K** and **Na** also showed somewhat lesser extent of correlation, but the main reason for their exclusion was the availability of **K/Na** ratio, that, basically, unified the two. Thus we included the following traits into the PCA: **SL**, **RL**, **PH**, **LN**, **LA**, **FW**, **DW**, **EL**, **CC**, **K_Na**, **PR**, **TR**, **SC**.
 
-The results were plotted. First plot represented contribution of principal components to the variance of the data (Figure 8.1). Second plot is the scatter plot individuals (our data) allowed us to visualize the groupings among accessions (Figure 8.2). It must be mentioned that initial analysis did not contain these groupings, they were added after cluster analysis results for additional visualization and do not interfere with data projections in any way. The third plot is the loadings correlation circle. It gives an idea about how the variables contribute to data projection on the principal components. And the last plot was used to conclude the choice of main variables, that contributes to salt tolerance (Figure 8.3). Red dashed line on the plot shows the level of contribution if all the variables contributed equally. This was our cut off line for the choice of the main variables for MFV ranking and cluster analysis.
+The results were plotted. First plot represented contribution of principal components to the variance of the data (**Figure 8.1**). Second plot is the scatter plot individuals (our data) allowed us to visualize the groupings among accessions (**Figure 8.2**). It must be mentioned that initial analysis did not contain these groupings, they were added after cluster analysis results for additional visualization and do not interfere with data projections in any way. The third plot is the loadings correlation circle (**Figure 8.3**). It gives an idea about how the variables contribute to data projection on the principal components. The last plot was used to conclude the choice of main variables, that contributes to salt tolerance (**Figure 8.4**). Red dashed line is the mean contribution percentage of all the variables in the first principal component. It was our cessation level for the choice of the main variables for MFV ranking and cluster analysis.
 
 ### 7. Salt-tolerance evaluation: ranking and dendrogram 
-In order to evaluate salt tolerance, we needed to group accessions that behave similarly under salt stress. This was achieved, based on the MFV mean of the 6 highest ranked physio-morphological parameters from PCA analysis (**PH**, **SL**,  **LN**, **RL**, **DW**, **FW**). 
+To evaluate salt tolerance, we needed to group accessions that behave similarly under salt stress. This was achieved, based on the MFV mean of the 6 highest ranked physio-morphological parameters from PCA analysis (**PH**, **SL**,  **LN**, **RL**, **DW**, **FW**). 
 
-The ranking was done by ordering MFV mean values from the highest to the smallest one.
+The ranking was done by ordering MFV mean values from the highest to the smallest. Then the groups were addressed according to the PCA visualization and dendrogram clustering, both methods allowed us to identify 3 groups ranked from tolerant, moderately tolerant to susceptible.
 
-???Then the groups were addressed according to the same logic as in the paper (with higher MFV mean value corresponding to higher salt tolerance): 4% accessions were classified as highly tolerant, 16% as tolerant, 60% as moderately tolerant, 16% as sensitive and finally 4% as highly sensitive.???
-
-Then the groups were addressed according to the PCA visualization and dendrogram clustering, both methods allowed us to identify 3 groups ranked from tolerant, moderately tolerant to susceptible.
-
-The dendrogram was established based on MFV mean (6 highest). And 3 groups were formed according to the biggest distance.? 
+The dendrogram was established based on MFV mean (6 highest values) and 3 groups were formed according to the biggest distance between them.
 
 ### 8. Accessions map and location correlation
 To visually evaluate possible link between accession salt tolerance and their location we created a map, where each accession was presented and colored according to the salt tolerance ranking.
@@ -202,7 +196,7 @@ names(Morpho_t)[4:8] <- c('Shoot_Length',
 names(Chloro_c)[4] <- c('Chlorophyll_Content')
 names(Weight_ion) [4:12] <- c('Fresh_Weight', 
                               'Dry_Weight', 
-                              'RWC',
+                              'Relative_water_content',
                               'Na',
                               'K', 
                               'Ca', 
@@ -278,7 +272,7 @@ b <- Weight_ion %>%
   group_by(Number, Code, Treat_Contr) %>% 
   summarise(Fresh_Weight= mean(Fresh_Weight),
             Dry_Weight= mean(Dry_Weight),
-            RWC = mean(RWC),
+            Relative_water_content = mean(Relative_water_content),
             Na =mean(Na),
             K =mean(K),
             Ca =mean(Ca),
@@ -329,7 +323,7 @@ RL stress index of accessions varied from 15.91 to 73.53
 The mean value for PH in salt-stressed plants is 2.18 ± 0.76 and 4.43 ± 0.77 for control plants. 
 PH stress index of accessions varied from 19.83 to 74.07 
 
-- **Leaf Number (LN)**: Number of leaves is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
+- **Leaf number (LN)**: Number of leaves is significantly reduced in the salt-stressed plants compared with the control (p < 0.05).
 The mean value for LN in salt-stressed plants is 2.43 ± 0.82 and 4.22 ± 0.78 for control plants. 
 LN stress index of accessions varied from 28.00 to 94.12
 
@@ -350,7 +344,7 @@ for(i in names(Morpho_t[4:8])) {
 spm_table <- data.frame ("P-value" = spm, "Normality" = nor_spm)
 
 #Creating the caption for the summary table
-knitr::kable(spm_table, caption = "Table 2.1 Shapiro–Wilk test results for morphological traits", align="c")
+knitr::kable(spm_table, caption = "Table 2.1 Shapiro–Wilk test results for morphological traits", align="c", digits = 32)
 ```
 
 ```{r Significance test of morphological traits}
@@ -367,9 +361,7 @@ for (i in (4:8)) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
      labs(x = "", title = paste("Boxplot of the", names(Morpho_t[i])),
-         caption = paste("Figure 2.", (i-3),
-                         "Distribution of the mean values of the",
-                         names(Morpho_t[i])))
+         caption = paste("Figure 2.", (i-3), " Distribution of the mean values of the ", names(Morpho_t[i]), sep = ""))
   print(bmorpho)
 }
 ```
@@ -400,7 +392,7 @@ for(i in names(Weight_ion[4:5])) {
 spb_table <- data.frame ("P-value" = spb, "Normality" = nor_spb)
 
 #Creating the caption for the summary table
-knitr::kable(spb_table, caption = "Table 2.2 Shapiro–Wilk test results for biomass traits", align="c")
+knitr::kable(spb_table, caption = "Table 2.2 Shapiro–Wilk test results for biomass traits", align="c", digits = 32)
 ```
 
 ```{r Significance test of biomass traits}
@@ -417,9 +409,7 @@ for (i in (4:5)) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
     labs(x = "", title = paste("Boxplot of the", names(Weight_ion[i])),
-         caption = paste("Figure 2.", (i+2),
-                         "Distribution of the mean values of the",
-                         names(Weight_ion[i])))
+         caption = paste("Figure 2.", (i+2), " Distribution of the mean values of the ", names(Weight_ion[i]), sep = ""))
   print(bwei)
 } 
 ```
@@ -465,7 +455,7 @@ row.names(spc_table) <- "Chlorophyll_Content"
 spec_table <- dplyr::bind_rows(spe_table, spc_table)
 
 #Creating the caption for the summary table
-knitr::kable(spec_table, caption = "Table 2.3 Shapiro–Wilk test results for RWC, EL and CC", align="c")
+knitr::kable(spec_table, caption = "Table 2.3 Shapiro–Wilk test results for RWC, EL and CC", align="c", digits = 32)
 ```
 
 ```{r Significance test of RWC, EL and CC}
@@ -482,9 +472,7 @@ for (i in (c(6,12))) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
      labs(x = "", title = paste("Boxplot of the", names(Weight_ion[i])),
-          caption = paste("Figure 2.", ifelse((i<7), paste(i+2), paste(i-3)),
-                         "Distribution of the mean values of the",
-                         names(Weight_ion[i])))
+          caption = paste("Figure 2.", ifelse((i<7), paste(i+2), paste(i-3)), " Distribution of the mean values of the ", names(Weight_ion[i]), sep = ""))
   print(bwei2)
 } 
 #for CC
@@ -499,7 +487,7 @@ bchlo + stat_compare_means(data = Chloro_c, method = "kruskal.test",
                            label.y.npc = "top") +
   theme(legend.position = "None") +
    labs(x = "", title = paste("Boxplot of the", names(Chloro_c[4])),
-         caption = paste("Fifure 2. 10 Distribution of the mean values of the", names(Chloro_c[4])))
+         caption = paste("Figure 2.10 Distribution of the mean values of the", names(Chloro_c[4])))
 ```
 
 #### 2.4 Mineral ion content
@@ -540,7 +528,7 @@ for(i in names(Weight_ion[7:11])) {
 spw_table <- data.frame ("P-value" = spw, "Normality" = nor_spw)
 
 #Creating the caption for the summary table
-knitr::kable(spw_table, caption = "Table 2.4 Shapiro–Wilk test results for mineral ion content ", align="c")
+knitr::kable(spw_table, caption = "Table 2.4 Shapiro–Wilk test results for mineral ion content ", align="c", digits = 32)
 ```
 
 ```{r Significance test of mineral ion content}
@@ -557,9 +545,7 @@ for (i in (7:11)) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
     labs(x = "", title = paste("Boxplot of the", names(Weight_ion[i])),
-         caption = paste("Figure 2.", (i+4),
-                         "Distribution of the mean values of the",
-                         names(Weight_ion[i])))
+         caption = paste("Figure 2.", (i+4), " Distribution of the mean values of the ", names(Weight_ion[i]), sep = ""))
   print(bwei3)
 }
 ```
@@ -595,7 +581,7 @@ for (i in names(Gas_e[c(4:7)])) {
 spg_table <- data.frame ("P-value" = spg, "Normality" = nor_spg)
 
 #Creating the caption for the summary table
-knitr::kable(spg_table, caption = "Table 2.5 Shapiro–Wilk test results for gas exchange attributes", align="c")
+knitr::kable(spg_table, caption = "Table 2.5 Shapiro–Wilk test results for gas exchange attributes", align="c", digits = 32)
 ```
 
 ```{r Significance test of gas exchange attributes}
@@ -611,8 +597,7 @@ banova <- ggboxplot(Gas_e_withoutNA,
 banova  +   stat_compare_means(method = "anova") +
   theme(legend.position = "None") +
   labs(x = "", title = paste("Boxplot of the", names(Gas_e_withoutNA[5])),
-       caption = paste("Figure 2. 16 Distribution of the mean values of the",
-                       names(Gas_e_withoutNA[5])))
+       caption = paste("Figure 2.16 Distribution of the mean values of the", names(Gas_e_withoutNA[5])))
 #for photosynthesis rate, transpiration rate, stomatal conductance
 #(with Kruskal-Wallis results)
 for (i in c(4,6:7)) {
@@ -627,9 +612,7 @@ for (i in c(4,6:7)) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
     labs(x = "", title = paste("Boxplot of the", names(Gas_e_withoutNA[i])),
-         caption = paste("Figure 2.", ifelse((i<5), paste(i+13), paste(i+12)),
-                         "Distribution of the mean values of the",
-                         names(Gas_e_withoutNA[i])))
+         caption = paste("Figure 2.", ifelse((i<5), paste(i+13), paste(i+12)), " Distribution of the mean values of the ", names(Gas_e_withoutNA[i]), sep = ""))
   print(bgas)
 }
 ```
@@ -648,7 +631,7 @@ Mean_Treat <- x %>%
             Mean_LA = mean(Leaf_Area),
             Mean_FW = mean(Fresh_Weight),
             Mean_DW = mean(Dry_Weight),
-            Mean_RWC = mean(RWC),
+            Mean_RWC = mean(Relative_water_content),
             Mean_Na = mean(Na),
             Mean_K = mean(K),
             Mean_Ca = mean(Ca),
@@ -668,7 +651,7 @@ Mean_Control <- y %>%
             Mean_LA = mean(Leaf_Area),
             Mean_FW = mean(Fresh_Weight),
             Mean_DW = mean(Dry_Weight),
-            Mean_RWC = mean(RWC),
+            Mean_RWC = mean(Relative_water_content),
             Mean_Na = mean(Na),
             Mean_K = mean(K),
             Mean_Ca = mean(Ca),
@@ -692,7 +675,7 @@ Sd_Treatment <- x %>%
             SD_LA = sd(Leaf_Area),
             SD_FW = sd(Fresh_Weight),
             SD_DW = sd(Dry_Weight),
-            SD_RWC = sd(RWC),
+            SD_RWC = sd(Relative_water_content),
             SD_Na = sd(Na),
             SD_K = sd(K),
             SD_Ca = sd(Ca),
@@ -712,7 +695,7 @@ Sd_Control <-   y %>%
             SD_LA = sd(Leaf_Area),
             SD_FW = sd(Fresh_Weight),
             SD_DW = sd(Dry_Weight),
-            SD_RWC = sd(RWC),
+            SD_RWC = sd(Relative_water_content),
             SD_Na = sd(Na),
             SD_K = sd(K),
             SD_Ca = sd(Ca),
@@ -804,6 +787,7 @@ names(STI) <- STI_names
 knitr::kable(STI, caption = "Table 4.1. Summary table for salt tolerance indices", align="c", digits = round(2))
 ```
 
+
 ### 5. Membership function value (MFV) 
 ```{r MFV}
 #Membership function value 
@@ -833,6 +817,7 @@ MFV <- STI %>%
 #Creating a table with the results and a caption for it
 knitr::kable(MFV, caption = "Table 5.1. Summary table of membership function values (MFV) calculated from STI", align="c", digits = round(2))
 ```
+
 
 ### 6. Principal component analysis (PCA)
 As it was mentioned in the methods, we included 13 variables into the PCA: **SL**, **RL**, **PH**, **LN**, **LA**, **FW**, **DW**, **EL**, **CC**, **K/Na**, **PR**, **TR**, **SC**. PCA produced principal components with the variation contributed by the first 2 components equal to 53,3% (PC1 - 34,4% and PC2 - 18,9%).
@@ -901,6 +886,7 @@ PCA_contr <- fviz_contrib(MFV_salt.pca,
 print(PCA_contr)
 ```
 
+
 ### 7. Salt-tolerance evaluation: ranking and dendrogram
 The ranking of accessions according to their salt tolerance is summarized in Table 7.1. However, the categories of salt tolerance were defined based on cluster analysis and can be seen in the dendrogram (Figure 7.1). Colors represents groups according to salt tolerance: tolerant - blue, moderately tolerate - green and sensitive - red. Therefore, 8 accessions were included into the tolerant group (accessions ## 12, 9, 1, 19, 11, 13, 4, 7), 4 accessions were included into the sensitive group (accessions ## 3, 18, 17, 15) and the rest were included into the moderately tolerant group (13 accessions: 5, 2, 6, 14, 20, 22, 10, 25, 21, 24, 23, 8, 16).
 
@@ -936,11 +922,12 @@ dend <- important_var %>%
   plot(main = "MFV Dendrogram") # plot dendrogram
 ```
 
+
 ### 8. Map of accessions and elevation correlation analysis
 #### 8.1 Location and salt tolerance.
 
 The map of accessions showed no visible patterns of accessions distribution according to their salt tolerance ranking.
-The only accession, whose tolerance might be linked to its location is Ess-1, that is closest to the shore.
+The only accession, whose tolerance might be linked to its location is Ess-1, that is closest to the coast.
 ```{r, fig.cap = "Figure 8.1. Map of *E. sativa* accessions"}
 ###--Map of accessions--###
 #Creating data frame for the future map from Acc_loc table
@@ -1002,7 +989,29 @@ ell_MFV_cor <- data.frame("Correlation coefficient" = round(cor_1$r[2,1], 2),
 knitr::kable(ell_MFV_cor, caption = "Table 8.1 Elevation and MFV mean correlation analysis results", align="c", digits = round(2))
 ```
 
-## Discussion 
+
+## Discussion
+### 1. Effects of salt stress on morpho-physiological traits of *E. sativa* accessions.
+For the most of morpho-physiological traits salt stress caused significant differentiation of parameters.
+Traits that were reduced in salt stressed plants:
+i. Morphological (shoot length, root length, plant height, leaf number, leaf area)
+ii. Biomass (Fresh weight, Dry weight)
+iii. 
+
+
+
+1. Explore the effects of salt stress on various morpho-physiological traits in different *E. sativa* accessions. 
+2. Identify traits the salt stress has the biggest influence on.
+3. Define tolerant and sensitive accessions.
+4. Compare our results with the ones from the paper.
+5. Explore if location can be linked to salt-tolerance.
+
+Main hypothesis:
+
+- We expect to observe statistically significant differences in morpho-physiological traits between control and salt-treated plants.
+- Salt-tolerant and salt-susceptible accessions will belong to different groups based on how much salt stress affects morpho-physiological parameters.
+- Geographical location and/or elevation may impact adaptation to salinity. 
+
 (From your objectives)
 The preliminary results, despite being slightly different from that in the article produced the ranking that corresponds to the groups (Tolerant - Sensitive) outlined in the article. 
 
@@ -1014,6 +1023,8 @@ The preliminary results, despite being slightly different from that in the artic
 
 
 ## Conclusions
+
+
 
 
 
