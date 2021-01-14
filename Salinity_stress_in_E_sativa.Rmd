@@ -726,7 +726,10 @@ res1 <- cor.mtest(all_data, conf.level = .95)
 M1 <-cor(all_data)
 corrplot(M1, p.mat = res1$p, sig.level = .05, type = "lower")
 ```
-We can see that morphological traits are positively and strongly correlated (close to 1). Biomass is also positively correlated to morphological traits. 
+We can see that morphological traits are positively and strongly correlated (close to 1). Biomass, K/Na ratio, chlorophyll content, photosynthesis rate, transpiration rate and stomatal conductance are also positively correlated to morphological traits.
+However, Na, K, Ca and electrolyte leakage are negatively correlated to morphological traits. 
+Finally, relative water content, Mg, intercellular CO2 and elevation have no correlation (p>0.05).
+
 
 
 ### 4. Salt tolerance index (STI)
