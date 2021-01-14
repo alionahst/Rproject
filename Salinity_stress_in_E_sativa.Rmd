@@ -840,7 +840,7 @@ print(PCA_eval)
 
 The scatter plot (Figure 6.2) shows the projection of data on PC1 and PC2 dimensions, allowing us to recognize groups of accessions (according to their salt tolerance) defined by MFV ranking and cluster analysis. Different groups are represented by different colors as shown in the legend.  
 
-```{r PCA_ind, fig.cap = "Figure 6.2 Plot of data projections onto the prinsipal components. Groups according to salt tolerance"}
+```{r PCA_ind, fig.cap = "Figure 6.2 Plot of data projections onto the principal components. Groups according to salt tolerance"}
 #creating vector for colors to correspond to ranking of accessions
 colors_PCA <- c("3. Tolerant", "2. Moderately tolerant", "1. Sensitive",
                 "3. Tolerant", "2. Moderately tolerant", "2. Moderately tolerant",
@@ -876,9 +876,9 @@ PCA_var <- fviz_pca_var(MFV_salt.pca,
 print(PCA_var)
 ```
 
-The last figure (Figure 6.4) presents variables according to the percentage, that they contribute to principal component 1. Red dashed line, as was previously mentioned in the Methods, was the cut off line and allowed us to narrow the quantity of variables to the most important 6: **PH**, **SL**, **LN**, **RL**, **DW**, **FW**. Those variables were later used for MFV ranking and cluster analysis.
+The last figure (Figure 6.4) presents variables according to the percentage, that they contribute to principal component 1. Red dashed line, as was previously mentioned in the Methods, was cessation level and allowed us to narrow the quantity of variables to the most important 6: **PH**, **SL**, **LN**, **RL**, **DW**, **FW**. Those variables were later used for MFV ranking and cluster analysis.
 
-```{r PCA_contr, fig.cap = "Figure 6.4 Persentage of variables influence on the first principal component"}
+```{r PCA_contr, fig.cap = "Figure 6.4 Percentage of variables influence on the first principal component"}
 #Contributions of variables to PC1
 PCA_contr <- fviz_contrib(MFV_salt.pca,
                           choice = "var",
@@ -995,16 +995,28 @@ knitr::kable(ell_MFV_cor, caption = "Table 8.1 Elevation and MFV mean correlatio
 
 ## Discussion
 ### 1. Effects of salt stress on morpho-physiological traits of *E. sativa* accessions.
-For the most of morpho-physiological traits salt stress caused significant differentiation of parameters.
-Traits that were reduced in salt stressed plants:
-i. Morphological (shoot length, root length, plant height, leaf number, leaf area)
-ii. Biomass (Fresh weight, Dry weight)
-iii. 
+For the most of morpho-physiological traits salt stress caused significant decrease of parameters, except for electrolyte leakage and some mineral ion content traits (Na, K, Ca), that were significantly increased. Also, salt stress didn't seem to affect relative water content and intercellular CO2.
+
+### 2. Morpho-physiological traits that were the most affected by salt stress.
+PCA analysis allowed us to identify 6 morpho-physiological traits that are the most relevant for the study of salt tolerance: plant height, shoot length, leaf number, root length, dry weight and fresh weight. This choice was based on the **Figure 6.4**, because they were above the line of mean contribution percentage of all the variables in the first principal component.
+
+### 3. Accessions salt tolerance ranking and grouping
+From deprogram (**Figure 7.1**) and ranking table (**Table 7.1**) we established 3 groups according to salt tolerance:
+- Tolerant accessions (12, 9, 1, 19, 11, 13, 4, 7);
+- Moderately tolerant accessions (5, 2, 6, 14, 20, 22, 10, 25, 21, 24, 23, 8, 16);
+- Sensitive accessions (3, 18, 17, 15).
+Later we introduced the groups to the PCA scatterplot (**Figure 6.2**) and we saw that data projections (accessions) were clustered accordingly.
+
+### 4. Results comparison with  
 
 
 
-1. Explore the effects of salt stress on various morpho-physiological traits in different *E. sativa* accessions. 
-2. Identify traits the salt stress has the biggest influence on.
+
+### 5. Influence of location on salt tolerance
+According to **Figure 8.1** and **Table 8.2** no link between location and salt tolerance was established.
+
+
+We were curious to explore the possible link between accessions location elevation  
 3. Define tolerant and sensitive accessions.
 4. Compare our results with the ones from the paper.
 5. Explore if location can be linked to salt-tolerance.
