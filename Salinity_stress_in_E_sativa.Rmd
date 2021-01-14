@@ -1004,7 +1004,7 @@ knitr::kable(ell_MFV_cor, caption = "Table 8.1 Elevation and MFV mean correlatio
 
 ## Discussion 
 (From your objectives)
-The preliminary results, despite being slightly different from that in the article produced the ranking that corresponds to the groups (Highly tolerant - Highly sensitive) outlined in the article. 
+The preliminary results, despite being slightly different from that in the article produced the ranking that corresponds to the groups (Tolerant - Sensitive) outlined in the article. 
 
 
 
@@ -1014,7 +1014,7 @@ The preliminary results, despite being slightly different from that in the artic
 
 
 ## Conclusions
-The analysis is not yet completed, so conclusions will be drawn later.
+
 
 
 
