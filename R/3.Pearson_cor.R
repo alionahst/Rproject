@@ -13,7 +13,7 @@ all_data <- na.omit(table[4:23])
 res1 <- cor.mtest(all_data, conf.level = .95)
 #Plot the results
 M1 <-cor(all_data)
-corrplot(M1, p.mat = res1$p, sig.level = .05, type = "lower")
+corrplot(M1, p.mat = res1$p, sig.level = .05, type = "lower", tl.srt=25)
 
 # get p-value of all_data
 #cor_1 <- rcorr(as.matrix(all_data)) #not used
