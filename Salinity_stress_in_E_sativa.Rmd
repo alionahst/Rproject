@@ -87,16 +87,16 @@ Main hypotheses:
 ### 1. Downloading and tidying the data.
 First we had to download the data.xls file from the paper. The tables needed to be tidied (column names organized, empty cells filled, values formatted, etc.). Then we had to download the location of accessions.doc data and tidy this table as well.
 
-In order to be able to work with all of morpho-physiological parameters, we had to unify them (because of different number of replicates in different categories of morpho-physiological traits measurements). The unification was done through the mean in every accession and treatment. With unified data we created a summary table (Table 1.1).
+In order to be able to work with all of morpho-physiological parameters, we had to unify them (because of different number of replicates in different categories of morpho-physiological traits measurements). The unification was done through the mean in every accession and treatment. With unified data we created a summary table (**Table 1.1**).
 
 ### 2. Test of normality and statistical difference of variables.
 Once we had the summary table, we tested the normality of variables with 
-Shapiro–Wilk test. Our Null Hypothesis (H0) was that morpho-physiological parameters' distribution was normal. The results for every group of morpho-physiological traits were summarized in tables **(Table 2.1-2.5)**.
+Shapiro–Wilk test. Our Null Hypothesis (H0) was that morpho-physiological parameters' distribution was normal. The results for every group of morpho-physiological traits were summarized in tables (**Table 2.1-2.5**).
 
 If the H0 was accepted (p > 0.05) we used ANOVA, otherwise (p < 0.05) we proceeded with Kruskal-Wallis test to see if there was a significant difference between salt-treated and control plants for each variable.
-The parameters' distributions and results of normality tests were visualized in the boxplot figures **(Figure 2.1-2.19)**
+The parameters' distributions and results of normality tests were visualized in the boxplot figures (**Figure 2.1-2.19**)
 
-Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into tables **(Table 2.6-2.7)**.
+Additionally, we calculated mean and standard deviation values of treated and control plants and summarized them into tables (**Table 2.6-2.7**).
 
 ### 3. Correlation analysis.
 In order to see the degree of association between the morpho-physiological parameters (and additionally elevation), we performed Pearson correlation analysis. The results were visualized in the **Figure 3.1**.
@@ -139,7 +139,7 @@ The dendrogram was established based on MFV mean (6 highest values) and 3 groups
 To visually evaluate possible link between accession salt tolerance and their location we created a map, where each accession was presented and colored according to the salt tolerance ranking.
 To make data more readable overlapping accessions were removed with a code.
 
-Additionally, we wanted to check if the salt tolerance was correlated to elevation. So we made a Pearson correlation analysis between MFV mean (6 highest) and elevation. The results were presented in the Table 8.1
+Additionally, we wanted to check if the salt tolerance was correlated to elevation. So we made a Pearson correlation analysis between MFV mean (6 highest) and elevation. The results were presented in the **Table 8.1**
 
 ## Results 
 ### 1. Data download and transformation
