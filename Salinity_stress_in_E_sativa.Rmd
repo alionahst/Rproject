@@ -120,7 +120,7 @@ For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, 
 
 <center> **$Xp=[1−(X−Xmin)/(Xmax−Xmin)]×100%$** </center>
 
-To define which morpho-physiological parameters were inversely related, we used the results of the correlation analysis. MFV calculation results are summarized in the Table 5.1.
+To define which morpho-physiological parameters were inversely related, we used the results of the correlation analysis. MFV calculation results are summarized in the **Table 5.1**.
 
 ### 6. The Principal Component Analysis (PCA)
  
@@ -282,7 +282,7 @@ b <- Weight_ion %>%
 #take only the columns number 4 to 12 to avoid repetition of number, code and treatment
 b <- b[4:12] 
 
-#Create summary table for Weight_ion
+#Create summary table for Chloro_c
 c <- Chloro_c %>% 
   group_by(Number, Code, Treat_Contr) %>% 
   summarise(Chlorophyll_Content = mean(Chlorophyll_Content))
@@ -838,7 +838,7 @@ PCA_eval <- fviz_eig(MFV_salt.pca,
 print(PCA_eval)
 ```
 
-The scatter plot (Figure 6.2) shows the projection of data on PC1 and PC2 dimensions, allowing us to recognize groups of accessions (according to their salt tolerance) defined by MFV ranking and cluster analysis. Different groups are represented by different colors as shown in the legend.  
+The scatter plot (**Figure 6.2**) shows the projection of data on PC1 and PC2 dimensions, allowing us to recognize groups of accessions (according to their salt tolerance) defined by MFV ranking and cluster analysis. Different groups are represented by different colors as shown in the legend.  
 
 ```{r PCA_ind, fig.cap = "Figure 6.2 Plot of data projections onto the principal components. Groups according to salt tolerance"}
 #creating vector for colors to correspond to ranking of accessions
@@ -876,7 +876,7 @@ PCA_var <- fviz_pca_var(MFV_salt.pca,
 print(PCA_var)
 ```
 
-The last figure (Figure 6.4) presents variables according to the percentage, that they contribute to principal component 1. Red dashed line, as was previously mentioned in the Methods, was cessation level and allowed us to narrow the quantity of variables to the most important 6: **PH**, **SL**, **LN**, **RL**, **DW**, **FW**. Those variables were later used for MFV ranking and cluster analysis.
+The last figure (**Figure 6.4**) presents variables according to the percentage, that they contribute to principal component 1. Red dashed line, as was previously mentioned in the Methods, was cessation level and allowed us to narrow the quantity of variables to the most important 6: **PH**, **SL**, **LN**, **RL**, **DW**, **FW**. Those variables were later used for MFV ranking and cluster analysis.
 
 ```{r PCA_contr, fig.cap = "Figure 6.4 Percentage of variables influence on the first principal component"}
 #Contributions of variables to PC1
@@ -891,7 +891,7 @@ print(PCA_contr)
 
 
 ### 7. Salt-tolerance evaluation: ranking and dendrogram
-The ranking of accessions according to their salt tolerance is summarized in Table 7.1. However, the categories of salt tolerance were defined based on cluster analysis and can be seen in the dendrogram (Figure 7.1). Colors represents groups according to salt tolerance: tolerant - blue, moderately tolerate - green and sensitive - red. Therefore, 8 accessions were included into the tolerant group (accessions ## 12, 9, 1, 19, 11, 13, 4, 7), 4 accessions were included into the sensitive group (accessions ## 3, 18, 17, 15) and the rest were included into the moderately tolerant group (13 accessions: 5, 2, 6, 14, 20, 22, 10, 25, 21, 24, 23, 8, 16).
+The ranking of accessions according to their salt tolerance is summarized in **Table 7.1**. However, the categories of salt tolerance were defined based on cluster analysis and can be seen in the dendrogram (**Figure 7.1**). Colors represents groups according to salt tolerance: tolerant - blue, moderately tolerate - green and sensitive - red. Therefore, 8 accessions were included into the tolerant group (accessions ## 12, 9, 1, 19, 11, 13, 4, 7), 4 accessions were included into the sensitive group (accessions ## 3, 18, 17, 15) and the rest were included into the moderately tolerant group (13 accessions: 5, 2, 6, 14, 20, 22, 10, 25, 21, 24, 23, 8, 16).
 
 ```{r MFV ranking}
 # We used 6 highest ranked variables to include in the final MFV based ranking of salt tolerance
