@@ -104,9 +104,10 @@ In order to see the degree of association between the morpho-physiological param
 We started doing Pearson correlation using Membership Function Values (MFV) of the 11 selected morpho-physiological traits, following the article logic. The results were very similar to the ones in the article, but we discarded them as we didn't understand their utility. Instead we computed Pearson correlation on the means of all morpho-physiological traits (treatment and control). Consecutively, we were able to see (prior to calculating MFV) which values had positive correlation and which had the negative. That allowed us to choose the appropriate formula for MFV calculation (explanation of MFV calculation is in the next sections).
 
 ### 4. Salt Tolerance Index (STI)
-To evaluate degree of salt tolerance (so that later we can define the tolerant and sensitive accessions), we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the Salt-tolerance Index (STI). STI is the ratio of the values of every morpho-physiological parameters of treated plants to control:
+To evaluate degree of salt tolerance (so that later we can define the tolerant and sensitive accessions), we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the Salt-tolerance Index (STI). STI is the ratio of the values of every morpho-physiological parameter of treated plants to control:
 
-<center> **$STI=Vtreatment/Vcontrol$** </center>
+
+<center> **$STI=V_{treatment}/V_{control}$** </center>
 
 At this point we deviated from the paper in the method of STI calculation. We considered that the way the authors calculated STI on accessions was not appropriate, because we think that they arbitrary paired plants from treatment and control. Instead, we calculated STI ratio on the means of treated plants and control for every parameter. STI results are summarized in the **Table 4.1**.
 
@@ -114,11 +115,11 @@ At this point we deviated from the paper in the method of STI calculation. We co
 Membership Function Value allows to make the different variables comparable between each other, so they can be used together in order to make a ranking.
 We calculated the MVF values using the formula provided in the article:
 
-<center> **$Xp=[(X−Xmin)/(Xmax−Xmin)]×100%$** </center>
+<center> **$Xp=[(X−X_{min})/(X_{max}−X_{min})]×100%$** </center>
 
 For the traits inversely related to salt tolerance (Electrolyte leakage, Na, K, Ca) we used the second formula:
 
-<center> **$Xp=[1−(X−Xmin)/(Xmax−Xmin)]×100%$** </center>
+<center> **$Xp=[1−(X−X_{min})/(X_{max}−X_{min})]×100%$** </center>
 
 To define which morpho-physiological parameters were inversely related, we used the results of the correlation analysis. MFV calculation results are summarized in the **Table 5.1**.
 
@@ -126,14 +127,14 @@ To define which morpho-physiological parameters were inversely related, we used 
  
 The Principal Component Analysis (PCA) allows to reduce the dimensionality of a multivariate data to two (or more) principal components, that can be visualized graphically. We performed PCA using MFV values of selected variables. **RWC** and **ICO2** were excluded because they did not show significant difference between treatment and control (according to Kruskal-Wallis and ANOVA tests). **Mg**, and **Ca** were excluded because they showed little correlation with the rest of the parameters (according to the Pearson correlation analysis). **K** and **Na** also showed somewhat lesser extent of correlation, but the main reason for their exclusion was the availability of **K/Na** ratio, that, basically, unified the two. Thus we included the following traits into the PCA: **SL**, **RL**, **PH**, **LN**, **LA**, **FW**, **DW**, **EL**, **CC**, **K_Na**, **PR**, **TR**, **SC**.
 
-The results were plotted. First plot represented contribution of principal components to the variance of the data (**Figure 8.1**). Second plot is the scatter plot individuals (our data) allowed us to visualize the groupings among accessions (**Figure 8.2**). It must be mentioned that initial analysis did not contain these groupings, they were added after cluster analysis results for additional visualization and do not interfere with data projections in any way. The third plot is the loadings correlation circle (**Figure 8.3**). It gives an idea about how the variables contribute to data projection on the principal components. The last plot was used to conclude the choice of main variables, that contributes to salt tolerance (**Figure 8.4**). Red dashed line is the mean contribution percentage of all the variables in the first principal component. It was our cessation level for the choice of the main variables for MFV ranking and cluster analysis.
+The results were plotted. First plot represented contribution of principal components to the variance of the data (**Figure 6.1**). Second plot is the scatter plot individuals (our data) allowed us to visualize the groupings among accessions (**Figure 6.2**). It must be mentioned that initial analysis did not contain these groupings, they were added after cluster analysis results for additional visualization and do not interfere with data projections in any way. The third plot is the loadings correlation circle (**Figure 6.3**). It gives an idea about how the variables contribute to data projection on the principal components. The last plot was used to conclude the choice of main variables, that contributes to salt tolerance (**Figure 6.4**). Red dashed line is the mean contribution percentage of all the variables in the first principal component. It was our cessation level for the choice of the main variables for MFV ranking and cluster analysis.
 
 ### 7. Salt-tolerance evaluation: ranking and dendrogram 
 To evaluate salt tolerance, we needed to group accessions that behave similarly under salt stress. This was achieved, based on the MFV mean of the 6 highest ranked physio-morphological parameters from PCA analysis (**PH**, **SL**,  **LN**, **RL**, **DW**, **FW**). 
 
-The dendrogram was established based on MFV of 6 highest values from PCA analysis. Three groups were formed. The cutting level was established above 50% of the maximal distance.
+The dendrogram (**Figure 7.1**) was established based on MFV of 6 highest values from PCA analysis. Three groups were formed. The cutting level was established above 50% of the maximal distance.
 
-The ranking was done by ordering MFV mean values from the highest to the smallest. Then the groups were addressed according to the PCA visualization and dendrogram clustering, both methods allowed us to identify 3 groups ranked from tolerant, moderately tolerant to susceptible.
+The ranking was done by ordering MFV mean values from the highest to the smallest. Then the groups were addressed according to the PCA visualization and dendrogram clustering, both methods allowed us to identify 3 groups ranked from tolerant, moderately tolerant to susceptible. Results are summarized in the **Table 7.1**.
 
 ### 8. Accessions map and location correlation
 To visually evaluate possible link between accession salt tolerance and their location we created a map, where each accession was presented and colored according to the salt tolerance ranking.
@@ -891,22 +892,7 @@ print(PCA_contr)
 
 
 ### 7. Salt-tolerance evaluation: ranking and dendrogram
-The ranking of accessions according to their salt tolerance is summarized in **Table 7.1**. However, the categories of salt tolerance were defined based on cluster analysis and can be seen in the dendrogram (**Figure 7.1**). Colors represents groups according to salt tolerance: tolerant - blue, moderately tolerate - green and sensitive - red. Therefore, 8 accessions were included into the tolerant group (accessions ## 12, 9, 1, 19, 11, 13, 4, 7), 4 accessions were included into the sensitive group (accessions ## 3, 18, 17, 15) and the rest were included into the moderately tolerant group (13 accessions: 5, 2, 6, 14, 20, 22, 10, 25, 21, 24, 23, 8, 16).
-
-```{r MFV ranking}
-# We used 6 highest ranked variables to include in the final MFV based ranking of salt tolerance
-# Add into the data the mean MFV column from the 6 important variables 
-MFV <- MFV %>%
-  mutate(Mean = rowMeans(MFV[c(1:4, 6:7)], na.rm=T))%>%
-  select(SL, RL, PH, LN, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC, Mean)
-
-# create the ranking table out of MFV mean from 6 important variables
-MFV_Ranked <- MFV[order(-MFV$Mean),]
-MFV_Ranked <- MFV_Ranked[20]
-MFV_Ranked$Category <- c(rep("Tolerant", 8), rep("Moderately tolerant", 13), rep("Sensitive", 4))
-
-knitr::kable(MFV_Ranked, caption = "Table 7.1. Salt tolerance ranking based on MFV mean from 6 variables identified by PCA", align="c", digits = round(2))
-```
+The categories of salt tolerance were defined based on cluster analysis and can be seen in the dendrogram (**Figure 7.1**). Colors represents groups according to salt tolerance: tolerant - blue, moderately tolerate - green and sensitive - red.
 
 ```{r, fig.cap = "Figure 7.1. The MFV dendrogram based on 6 main variables identified by PCA"}
 
@@ -923,6 +909,23 @@ dend <- important_var %>%
       value = c("#FF3333", "#3366CC", "#009966"),           #of the branches 
       k = 3)%>% # make the 3 groups and color for groups    #according to the clusters
   plot(main = "MFV Dendrogram") # plot dendrogram
+```
+
+The ranking of accessions according to their salt tolerance is summarized in **Table 7.1**. Corresponding to the clustering results, 8 accessions were included into the tolerant group (accessions ## 12, 9, 1, 19, 11, 13, 4, 7), 4 accessions were included into the sensitive group (accessions ## 3, 18, 17, 15) and the rest were included into the moderately tolerant group (13 accessions: 5, 2, 6, 14, 20, 22, 10, 25, 21, 24, 23, 8, 16).
+
+```{r MFV ranking}
+# We used 6 highest ranked variables to include in the final MFV based ranking of salt tolerance
+# Add into the data the mean MFV column from the 6 important variables 
+MFV <- MFV %>%
+  mutate(Mean = rowMeans(MFV[c(1:4, 6:7)], na.rm=T))%>%
+  select(SL, RL, PH, LN, LA, FW, DW, RWC, EL, CC, Na, K, Ca, Mg, K_Na, PR, ICO2, TR, SC, Mean)
+
+# create the ranking table out of MFV mean from 6 important variables
+MFV_Ranked <- MFV[order(-MFV$Mean),]
+MFV_Ranked <- MFV_Ranked[20]
+MFV_Ranked$Category <- c(rep("Tolerant", 8), rep("Moderately tolerant", 13), rep("Sensitive", 4))
+
+knitr::kable(MFV_Ranked, caption = "Table 7.1. Salt tolerance ranking based on MFV mean from 6 variables identified by PCA", align="c", digits = round(2))
 ```
 
 
@@ -1002,9 +1005,11 @@ PCA analysis allowed us to identify 6 morpho-physiological traits that are the m
 
 ### 3. Accessions salt tolerance ranking and grouping
 From deprogram (**Figure 7.1**) and ranking table (**Table 7.1**) we established 3 groups according to salt tolerance:
-- Tolerant accessions (12, 9, 1, 19, 11, 13, 4, 7);
-- Moderately tolerant accessions (5, 2, 6, 14, 20, 22, 10, 25, 21, 24, 23, 8, 16);
-- Sensitive accessions (3, 18, 17, 15).
+
+* Tolerant accessions (12, 9, 1, 19, 11, 13, 4, 7);
+* Moderately tolerant accessions (5, 2, 6, 14, 20, 22, 10, 25, 21, 24, 23, 8, 16);
+* Sensitive accessions (3, 18, 17, 15).
+
 Later we introduced the groups to the PCA scatterplot (**Figure 6.2**) and we saw that data projections (accessions) were clustered accordingly. Thus, supporting our second hypothesis. 
 
 ### 4. Results comparison with the study
@@ -1019,9 +1024,9 @@ According to our analysis, we conclude that the best traits to assess salt toler
 
 By comparing accessions, we can see that there is a phenotypical variation within *Eruca sativa* towards salt stress. 
 
-We did not see a pattern in the distribution of salt tolerance within accessions. It could be interesting to sample accessions more evenly in Paksistan and include climate specification of the area (soil salinity, precipitation, temperature...).
+We did not see a pattern in the distribution of salt tolerance within accessions. It could be interesting to sample accessions more evenly in Pakistan and include climate specification of the area (soil salinity, precipitation, temperature...).
 
-During the experiment, it is better to perform equal quantity of replicates. Furthermore, to be consistent in the analysis we need to have clear labels on the replicates. This is what we lacked to redo the same analysis.  
+During the experiment, it is better to perform equal quantity of replicates. Furthermore, to be consistent in the analysis we need to have clear labels on the replicates. This is what we lacked to redo the analysis in the same way as in the paper.  
 
 ## Post scriptum 
 During this project, we understood that clear methodology description and tidy data collection are important for an unambiguous and repeatable data analysis. 
