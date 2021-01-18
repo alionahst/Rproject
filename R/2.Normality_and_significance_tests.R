@@ -20,7 +20,6 @@ for(i in names(Morpho_t[4:8])) {
 #Creating summary table with the results
 spm_table <- data.frame ("P-value" = spm, "Normality" = nor_spm)
 
-#Performing significance test and plotting the results and values distribution
 for (i in (4:8)) {
   bmorpho <- ggboxplot(Morpho_t,
                        x = "Treat_Contr",
@@ -33,9 +32,7 @@ for (i in (4:8)) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
     labs(x = "", title = paste("Boxplot of the", names(Morpho_t[i])),
-         caption = paste("Figure 2.", (i-3),
-                         "Distribution of the mean values of the",
-                         names(Morpho_t[i])))
+         caption = paste("Figure 2.", (i-3), " Distribution of the mean values of the ", names(Morpho_t[i]), sep = ""))
   print(bmorpho)
 }
 
@@ -66,9 +63,7 @@ for (i in (4:5)) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
     labs(x = "", title = paste("Boxplot of the", names(Weight_ion[i])),
-         caption = paste("Figure 2.", (i+2),
-                         "Distribution of the mean values of the",
-                         names(Weight_ion[i])))
+         caption = paste("Figure 2.", (i+2), " Distribution of the mean values of the ", names(Weight_ion[i]), sep = ""))
   print(bwei)
 } 
 
@@ -87,18 +82,19 @@ for(i in names(Weight_ion[c(6,12)])) {
 #Creating summary table with the results for RWC and EL
 spe_table <- data.frame ("P-value" = spe, "Normality" = nor_spe)
 
-#Performing Shapiro–Wilk test of normality on the SPAD
+#Performing Shapiro–Wilk test of normality on the CC
 nor_spc <- c()
 an4 <- aov(Chloro_c$Chlorophyll_Content ~ Chloro_c$Treat_Contr)
 spc <- shapiro.test(an4$residuals)$p.value
 
-#Creating summary table with the results for SPAD
+#Creating summary table with the results for CC
 nor_spc <- c(nor_spc, ifelse (spc <= 0.05, "False", "True"))
 spc_table <- data.frame ("P-value" = spc, "Normality" = nor_spc)
 row.names(spc_table) <- "Chlorophyll_Content"
 
-#Uniting the summary tables with the results for RWC+EL and SPAD
+#Uniting the summary tables with the results for RWC+EL and CC
 spec_table <- dplyr::bind_rows(spe_table, spc_table)
+
 
 #for RWC and EL
 for (i in (c(6,12))) {
@@ -113,12 +109,10 @@ for (i in (c(6,12))) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
     labs(x = "", title = paste("Boxplot of the", names(Weight_ion[i])),
-         caption = paste("Figure 2.", ifelse((i<7), paste(i+2), paste(i-3)),
-                         "Distribution of the mean values of the",
-                         names(Weight_ion[i])))
+         caption = paste("Figure 2.", ifelse((i<7), paste(i+2), paste(i-3)), " Distribution of the mean values of the ", names(Weight_ion[i]), sep = ""))
   print(bwei2)
 } 
-#for SPAD
+#for CC
 bchlo <- ggboxplot(Chloro_c, 
                    x = "Treat_Contr",
                    y = "Chlorophyll_Content", 
@@ -130,8 +124,7 @@ bchlo + stat_compare_means(data = Chloro_c, method = "kruskal.test",
                            label.y.npc = "top") +
   theme(legend.position = "None") +
   labs(x = "", title = paste("Boxplot of the", names(Chloro_c[4])),
-       caption = paste("Fifure 2. 10 Distribution of the mean values of the",
-                       names(Chloro_c[4])))
+       caption = paste("Figure 2.10 Distribution of the mean values of the", names(Chloro_c[4])))
 
 ##Mineral ion content (Na, K, Ca, Mg, K/Na)
 
@@ -160,9 +153,7 @@ for (i in (7:11)) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
     labs(x = "", title = paste("Boxplot of the", names(Weight_ion[i])),
-         caption = paste("Figure 2.", (i+4),
-                         "Distribution of the mean values of the",
-                         names(Weight_ion[i])))
+         caption = paste("Figure 2.", (i+4), " Distribution of the mean values of the ", names(Weight_ion[i]), sep = ""))
   print(bwei3)
 }
 
@@ -193,8 +184,7 @@ banova <- ggboxplot(Gas_e_withoutNA,
 banova  +   stat_compare_means(method = "anova") +
   theme(legend.position = "None") +
   labs(x = "", title = paste("Boxplot of the", names(Gas_e_withoutNA[5])),
-       caption = paste("Figure 2. 16 Distribution of the mean values of the",
-                       names(Gas_e_withoutNA[5])))
+       caption = paste("Figure 2.16 Distribution of the mean values of the", names(Gas_e_withoutNA[5])))
 #for photosynthesis rate, transpiration rate, stomatal conductance
 #(with Kruskal-Wallis results)
 for (i in c(4,6:7)) {
@@ -209,8 +199,6 @@ for (i in c(4,6:7)) {
                        label.y.npc = "top") +
     theme(legend.position = "None") +
     labs(x = "", title = paste("Boxplot of the", names(Gas_e_withoutNA[i])),
-         caption = paste("Figure 2.", ifelse((i<5), paste(i+13), paste(i+12)),
-                         "Distribution of the mean values of the",
-                         names(Gas_e_withoutNA[i])))
+         caption = paste("Figure 2.", ifelse((i<5), paste(i+13), paste(i+12)), " Distribution of the mean values of the ", names(Gas_e_withoutNA[i]), sep = ""))
   print(bgas)
 }

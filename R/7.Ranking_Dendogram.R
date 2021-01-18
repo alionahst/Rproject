@@ -23,6 +23,6 @@ dend <- important_var %>%
   hclust(method = "ward.D2") %>% 
   as.dendrogram %>%
   set("branches_k_color",                                   #setting the color 
-      value = c("#FF3333", "#3366CC", "#009966"), #of the branches 
+      value = c("#FF3333", "#3366CC", "#009966"),           #of the branches 
       k = 3)%>% # make the 3 groups and color for groups    #according to the clusters
   plot(main = "MFV Dendrogram") # plot dendrogram
