@@ -62,7 +62,7 @@ names(Morpho_t)[4:8] <- c('Shoot_Length',
 names(Chloro_c)[4] <- c('Chlorophyll_Content')
 names(Weight_ion) [4:12] <- c('Fresh_Weight', 
                               'Dry_Weight', 
-                              'RWC',
+                              'Relative_water_content',
                               'Na',
                               'K', 
                               'Ca', 
@@ -138,7 +138,7 @@ b <- Weight_ion %>%
   group_by(Number, Code, Treat_Contr) %>% 
   summarise(Fresh_Weight= mean(Fresh_Weight),
             Dry_Weight= mean(Dry_Weight),
-            RWC = mean(RWC),
+            Relative_water_content = mean(Relative_water_content),
             Na =mean(Na),
             K =mean(K),
             Ca =mean(Ca),
@@ -148,7 +148,7 @@ b <- Weight_ion %>%
 #take only the columns number 4 to 12 to avoid repetition of number, code and treatment
 b <- b[4:12] 
 
-#Create summary table for Weight_ion
+#Create summary table for Chloro_c
 c <- Chloro_c %>% 
   group_by(Number, Code, Treat_Contr) %>% 
   summarise(Chlorophyll_Content = mean(Chlorophyll_Content))
