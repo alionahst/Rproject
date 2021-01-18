@@ -31,6 +31,7 @@ colors$category <- sub('Sensitive', '1. Sensitive', colors$category)
 colors$category <- sub('Moderately tolerant', '2. Moderately tolerant', colors$category)
 colors$category <- sub('Tolerant', '3. Tolerant', colors$category)
 
+
 colors <- colors[order(colors[,1]),] #ordering the categories according to accessions numbers
 
 #Creating a map
@@ -46,7 +47,7 @@ ggplot(map.acc, aes(x = Longitude,
   theme_minimal()
 
 ###--Correlation between ranking and elevation--###
-  
+
 #Checking the correlation between mean MFV (of 6 important traits) and elevation
 Elev_Cor <- as.data.frame(MFV$Mean)
 Elev_Cor$Elevation <- Acc_loc$Elevation
