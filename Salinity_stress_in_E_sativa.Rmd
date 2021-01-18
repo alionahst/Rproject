@@ -107,7 +107,7 @@ We started doing Pearson correlation using Membership Function Values (MFV) of t
 To evaluate degree of salt tolerance (so that later we can define the tolerant and sensitive accessions), we needed to convert all morpho-physiological parameters (control and treatment) for each accession to the Salt-tolerance Index (STI). STI is the ratio of the values of every morpho-physiological parameter of treated plants to control:
 
 
-<center> **$STI=V_{treatment}/V_{control}$** </center>
+<center> **$STI=MeanV_{treatment}/MeanV_{control}$** </center>
 
 At this point we deviated from the paper in the method of STI calculation. We considered that the way the authors calculated STI on accessions was not appropriate, because we think that they arbitrary paired plants from treatment and control. Instead, we calculated STI ratio on the means of treated plants and control for every parameter. STI results are summarized in the **Table 4.1**.
 
