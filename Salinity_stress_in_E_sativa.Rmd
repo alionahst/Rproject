@@ -132,7 +132,7 @@ The results were plotted. First plot represented contribution of principal compo
 ### 7. Salt-tolerance evaluation: ranking and dendrogram 
 To evaluate salt tolerance, we needed to group accessions that behave similarly under salt stress. This was achieved, based on the MFV mean of the 6 highest ranked physio-morphological parameters from PCA analysis (**PH**, **SL**,  **LN**, **RL**, **DW**, **FW**). 
 
-The dendrogram (**Figure 7.1**) was established based on MFV of 6 highest values from PCA analysis. Three groups were formed. The cutting level was established above 50% of the maximal distance.
+The dendrogram (**Figure 7.1**) was established based on MFV of 6 highest values from PCA analysis. Three groups were formed. The cutting level was established between distances 6 and 8.
 
 The ranking was done by ordering MFV mean values from the highest to the smallest. Then the groups were addressed according to the PCA visualization and dendrogram clustering, both methods allowed us to identify 3 groups ranked from tolerant, moderately tolerant to susceptible. Results are summarized in the **Table 7.1**.
 
